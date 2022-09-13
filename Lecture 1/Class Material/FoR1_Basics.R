@@ -1,0 +1,68 @@
+# This is a R script, one of various possible files that store and run code.
+# In R scripts, whatever comes after a # is considered text, and not code. We call this "commenting out".
+# We use commented out text throughout the course to explain what a line or chunk of code is doing.
+# We like scripts to be organized neatly, so when you use them in the future, you understand what you did.
+# Therefore, we start scripts with at least four lines (title, purpose,authors, and date).
+# We also add comments for things that are not obvious.
+
+
+# Title: Fundamentals of R (Basics)
+# Purpose: to showcase core R tasks (setwd, install.packages, load packages, import data, view data) for students of MINT338.
+# Authors: Henrique Sposito & Livio Silva-Muller
+# Date: September 2022
+
+
+## Let's tell R where it should read and save files by default.
+
+setwd("~/Desktop/L1_Class Material")#(1) find your working directory on the files tab in the lower right pane; 
+                                    #(2) click on the "more file command", and click " Set as Working Directory"
+                                    #(3) copy the code line from console pane in the lower left pane, paste it on the script.
+
+#alternatively, type setwd("~/") and hit tab to find the folder.
+
+#to run the code, select the lines and hit run on the top right corner of the top left pane.
+#alternatively, place your cursor on the line you want to run, and hit command+enter.
+
+
+## Now we need to install and load a few packages we intend to work with, for this class we will do some basic data cleaning and visualizing.
+
+install.packages("readr") #(1) click on "Install", at the package tab in the lower right pane;
+                          #(2) search for "readr" at prompt that appears.
+
+#you can also just type install.packages("name of the package") on your console (1st tab of lower right pane).
+
+#once packages are installed, they need to be loaded in every script you intend to use them:
+
+library("readr")    #(1) find "readr" at the system library list at the package tab in the lower right pane.
+                    #(2) check the box at the end of the line, see text on the console.
+
+
+## Finally, let's learn how to load and view data.
+
+#Our data is in comma-separated values format (.csv), we will use a function from the "readr" package to import it:
+
+io_dat <- read_csv(file="io_income_rs.csv", col_names = TRUE) #(1) click on the files tab in the lower right pane,
+                                            #(2) click on the dataset you want to import, and then click on import dataset
+                                            #(3) if you click import, the dataset will be imported. But you can also copy the code, cancel the prompt, and paste in the script.
+
+#let's dissect the code above.
+
+read_csv()# is a function from the "readr" package that imports .csv files
+          # since we set our directory, you can just type in the name of the document you want as in the folder file="io_income_rs.csv"
+          # functions in r can take many arguments
+          # arguments specify things about the function
+          # for example, we can use read_csv(file="io_income_rs.csv", col_names = TRUE), to tell R that the first line of the csv file contain the columns' name
+          # the arguments here are (1) file="io_income_rs.csv", and (2) col_names = TRUE
+          # at the lower right pane, you can click on help and type read_csv to check all arguments
+          # alternatively, you can just use a question mark (?) in front of the code to open the help file
+          # you can also search for the package name, "readr", on the help tab
+  
+# the arrow (<-) is called "assign" operator, and it means assign the value of the result from the operation on the right to the object on the left hand side.
+# our object is io_dat, which contains the result of read_csv(file="io_income_rs.csv", col_names = TRUE)
+# you can see all objects at the environment tab, at the top right pane.
+
+#let's view the dataset
+
+View(io_dat) # you can either click on it in the environment tab, or run the code View("name of the object")
+  
+  ## Okay, so what can we do ##
