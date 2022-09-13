@@ -130,6 +130,99 @@ class: split two
 ]
 
 ---
+class: split two
+
+# Is this course for you?
+
+.pull-left[
+## This course is not...
+
+- an statistics course, but...
+
+- a programming course, but...
+]
+
+.pull-right[
+## This course is...
+
+- for beginners...
+
+- for research ...
+]
+
+---
+# Course objectives
+
+By the end of this course you should be able to:
+
+- import data
+
+- clean and wrangle
+
+- visualize variation
+
+- produce reproducible reports
+
+***Above all:***
+
+- *How to ask/find help online*
+
+.pull-right[
+![:scale 80%](assets/Images/rhelp.png)
+]
+
+---
+# Polices and assignements
+
+- Attendance (just come to class and be respectful)
+
+- Weekly assignments (try your best and remember to ask for help)
+
+- Final assignment (the one that really counts)
+
+---
+# How to... google
+
+- R is collaborative
+
+- Google, google, google (and stack overflow) until you make it!
+
+- "How to (...) in R?"
+
+- But if none of that works, ask in the Moodle and we will help
+
+---
+class: split two
+
+# The R Studio panes
+
+.pull-left[
+- Console
+
+- Source Editor
+
+- Environment
+
+- Plots (and files)
+]
+
+.pull-right[
+![:scale 200%](assets/Images/panes.png)
+]
+
+---
+# Thinking clearly (with data)
+
+- No statistical software is a substitute for clear conceptual thinking, they are just tools (specially R)...
+
+---
+# Rstallation
+
+- If not, stay and we will try together...
+
+- If yes, 5 minutes brake...
+
+---
 class: center with-logo
 
 # References
