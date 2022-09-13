@@ -63,13 +63,21 @@ io_dat <- read_csv(file="io_income_rs.csv", col_names = TRUE) #(1) click on the 
 
 # you can see all objects at the environment tab, at the top right pane.
 
-# (3) the arrow (<-) is called "assign" operator, and it means assign the value of the result the right to the object on the left
+# (3) the arrow (<-) is called "assign" operator, and it means assign the result of the operation on the right to the object on the left
 
 Result <- 3 + 3
 Lecturers <- c("Henrique", "Livio") #run both lines and check the environment
 
-#let's view the dataset
+## Let's view our objects!
 
 View(io_dat) # you can either click on it in the environment tab, or run the code View("name of the object")
+View(lecturers) # R is CaSe SeNsItIvE -> Lecturers is different than lecturers
+View (Lecturers)
+
+#You can also just type View(io_dat) directly in the console to avoid unnecessary code in the script.
+
+#Before we move on, let's clean up R studio!
+# First, at the environment tab, mark all objects you wish do delete and click the broom.
+# Next, click on the console and hit control+L
   
 ## Okay, so what can we do with R? ##
