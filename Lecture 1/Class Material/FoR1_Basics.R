@@ -14,7 +14,8 @@
 
 ## Let's tell R where it should read and save files by default.
 
-setwd("~/Desktop/L1_Class Material")#(1) find your working directory on the files tab in the lower right pane; 
+setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 1/Class Material")
+                                    #(1) find your working directory on the files tab in the lower right pane; 
                                     #(2) click on the "more file command", and click " Set as Working Directory"
                                     #(3) copy the code line from console pane in the lower left pane, paste it on the script.
 
@@ -45,9 +46,9 @@ io_dat <- read_csv(file="io_income_rs.csv", col_names = TRUE) #(1) click on the 
                                             #(2) click on the dataset you want to import, and then click on import dataset
                                             #(3) if you click import, the dataset will be imported. But you can also copy the code, cancel the prompt, and paste in the script.
 
-#let's dissect the code above.
+#let's dissect the code above, which is composed by three parts:
 
-read_csv()# is a function from the "readr" package that imports .csv files
+# (1) read_csv() is a function from the "readr" package that imports .csv files
           # since we set our directory, you can just type in the name of the document you want as in the folder file="io_income_rs.csv"
           # functions in r can take many arguments
           # arguments specify things about the function
@@ -57,12 +58,18 @@ read_csv()# is a function from the "readr" package that imports .csv files
           # alternatively, you can just use a question mark (?) in front of the code to open the help file
           # you can also search for the package name, "readr", on the help tab
   
-# the arrow (<-) is called "assign" operator, and it means assign the value of the result from the operation on the right to the object on the left hand side.
-# our object is io_dat, which contains the result of read_csv(file="io_income_rs.csv", col_names = TRUE)
+
+# (2) our object is io_dat, which contains the result of read_csv(file="io_income_rs.csv", col_names = TRUE)
+
 # you can see all objects at the environment tab, at the top right pane.
+
+# (3) the arrow (<-) is called "assign" operator, and it means assign the value of the result the right to the object on the left
+
+Result <- 3 + 3
+Lecturers <- c("Henrique", "Livio") #run both lines and check the environment
 
 #let's view the dataset
 
 View(io_dat) # you can either click on it in the environment tab, or run the code View("name of the object")
   
-  ## Okay, so what can we do ##
+## Okay, so what can we do with R? ##

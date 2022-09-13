@@ -1,5 +1,6 @@
 # Title: Who makes international regimes possible?
 # Purpose: showcase a conceptually sound programming workflow.
+# Author: Henrique Sposito & Livio Silva-Muller
 # Date: September 2022
 
 setwd("~/Desktop/L1_Case Study")
