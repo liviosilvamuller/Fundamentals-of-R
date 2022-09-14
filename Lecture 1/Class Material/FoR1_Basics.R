@@ -12,20 +12,22 @@
 # Date: September 2022
 
 
-## Let's tell R where it should read and save files by default.
+## Let's tell R where it should read and save files by default.----------------------------------------------------------------------------------------------------------
 
 setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 1/Class Material")
                                     #(1) find your working directory on the files tab in the lower right pane; 
                                     #(2) click on the "more file command", and click " Set as Working Directory"
                                     #(3) copy the code line from console pane in the lower left pane, paste it on the script.
 
-#alternatively, type setwd("~/") and hit tab to find the folder.
+#alternatively, type setwd ("~/") and hit tab to find the folder.
 
-#to run the code, select the lines and hit run on the top right corner of the top left pane.
+#to run the code, click the lines and hit run on the top right corner of the top left pane.
 #alternatively, place your cursor on the line you want to run, and hit command+enter.
 
 
-## Now we need to install and load a few packages we intend to work with, for this class we will do some basic data cleaning and visualizing.
+## Now we need to install and load a few packages we intend to work with.----------------------------------------------------------------------------------------------------
+
+# Packages contain various functions that perform specific tasks.
 
 install.packages("readr") #(1) click on "Install", at the package tab in the lower right pane;
                           #(2) search for "readr" at prompt that appears.
@@ -36,22 +38,23 @@ install.packages("readr") #(1) click on "Install", at the package tab in the low
 
 library("readr")    #(1) find "readr" at the system library list at the package tab in the lower right pane.
                     #(2) check the box at the end of the line, see text on the console.
+#or just type in library("nameofthepackage")
 
 
-## Finally, let's learn how to load and view data.
+##  Let's learn how to import data.---------------------------------------------------------------------------------------------------------------------------------------
 
-#Our data is in comma-separated values format (.csv), we will use a function from the "readr" package to import it:
+#Our data is in comma-separated values format (.csv), we will use a function from the "readr" package we just installed to import it:
 
 io_dat <- read_csv(file="io_income_rs.csv", col_names = TRUE) #(1) click on the files tab in the lower right pane,
                                             #(2) click on the dataset you want to import, and then click on import dataset
-                                            #(3) if you click import, the dataset will be imported. But you can also copy the code, cancel the prompt, and paste in the script.
+                                            #(3) if you click import, the dataset will be imported. 
+                                            # but you can also copy the code, cancel the prompt, and paste in the script.
 
 #let's dissect the code above, which is composed by three parts:
 
 # (1) read_csv() is a function from the "readr" package that imports .csv files
           # since we set our directory, you can just type in the name of the document you want as in the folder file="io_income_rs.csv"
-          # functions in r can take many arguments
-          # arguments specify things about the function
+          # functions in r can take many arguments; arguments specify things about the function.
           # for example, we can use read_csv(file="io_income_rs.csv", col_names = TRUE), to tell R that the first line of the csv file contain the columns' name
           # the arguments here are (1) file="io_income_rs.csv", and (2) col_names = TRUE
           # at the lower right pane, you can click on help and type read_csv to check all arguments
@@ -68,7 +71,7 @@ io_dat <- read_csv(file="io_income_rs.csv", col_names = TRUE) #(1) click on the 
 Result <- 3 + 3
 Lecturers <- c("Henrique", "Livio") #run both lines and check the environment
 
-## Let's view our objects!
+## Let's view our objects and data!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 View(io_dat) # you can either click on it in the environment tab, or run the code View("name of the object")
 View(lecturers) # R is CaSe SeNsItIvE -> Lecturers is different than lecturers
