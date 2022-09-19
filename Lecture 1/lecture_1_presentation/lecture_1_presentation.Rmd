@@ -1,7 +1,7 @@
 ---
 title: "Fundamentals of R"
 author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
-date: "<small>`r format(Sys.Date(), '%A, %e %B, %Y')`<small>"
+date: "<small>September 23, 2022<small>"
 output:
   xaringan::moon_reader:
     css: 
@@ -46,17 +46,6 @@ myBib <- ReadBib("assets/myBib.bib", check = FALSE)
 # bibliography.
 ```
 
-![:scale 60%](assets/Images/roadmap.png)
-
-- What is R?
-
-- Course outline
-
-- Instillation and first Rsteps
-
-- Case study
-
----
 class: split two center
 
 # Who are we?
@@ -67,7 +56,7 @@ class: split two center
 
 ![:scale 70%](assets/Images/hs.jpeg)
 
-***Henrique***
+[***Henrique***](https://github.com/henriquesposito)
 
 ]
 --
@@ -78,6 +67,18 @@ class: split two center
 ***Livio***
 
 ]
+
+---
+
+![:scale 60%](assets/Images/roadmap.png)
+
+- What is R?
+
+- Course outline
+
+- Instillation and first Rsteps
+
+- Case study
 
 ---
 class: center
@@ -95,7 +96,7 @@ class: center
 
 - But much more than an statistics software, from text analysis to presentations (like this one), interactive Shinny applications, and much more!
 
-**Thank you RStudio (and Hadley)!**
+**Thank you RStudio (and [Hadley](https://hadley.nz/))!**
 .pull-right[
 ![:scale 60%](assets/Images/RS.png)
 ]
@@ -165,6 +166,8 @@ By the end of this course you should be able to:
 
 ***Above all:***
 
+- *How to continue to learn R on your own*
+
 - *How to ask/find help online*
 
 .pull-right[
@@ -213,14 +216,16 @@ class: split two
 ---
 # Thinking clearly (with data)
 
-- No statistical software is a substitute for clear conceptual thinking, they are just tools (specially R)...
+- No statistical software is a substitute for clear conceptual thinking, they are just tools (specially in R)...
+
+- 
 
 ---
 # Rstallation
 
-- If not, stay and we will try together...
+- If you do not have R installed, stay and we will try together...
 
-- If yes, 5 minutes brake...
+- If yes, you have a 5 minutes brake...
 
 ---
 class: center with-logo
