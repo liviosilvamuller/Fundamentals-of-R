@@ -11,8 +11,9 @@ library(scales)
 library(RColorBrewer)
 library(gt)
 
-Sys.setlocale("LC_ALL", "C")
-options(stringsAsFactors = FALSE, scipen = 999)
+options(stringsAsFactors = FALSE, scipen = 999) #define a few global options for how things are computed and displayed.
+# the first argument stops strings to be imported as factors (no worries, we will cover this next week).
+# the second argument stops R from using scientific notation (7245 instead of 7.245E+3).
 
 ## First, how would you design the data collection?
 # Think about (1) the sample frame.
