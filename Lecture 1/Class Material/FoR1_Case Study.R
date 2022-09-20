@@ -11,7 +11,8 @@ library(scales)
 library(RColorBrewer)
 library(gt)
 
-options(stringsAsFactors = FALSE, scipen = 999) #define a few global options for how things are computed and displayed.
+options(stringsAsFactors = FALSE, scipen = 999) 
+#define a few global o ptions for how things are computed and displayed.
 # the first argument stops strings to be imported as factors (no worries, we will cover this next week).
 # the second argument stops R from using scientific notation (7245 instead of 7.245E+3).
 
@@ -27,17 +28,27 @@ dat <- read_csv("io_income_rs.csv")
 skim(dat) # quick way to skim your data, from the "skimr" package we loaded at line nine
 View(dat)
 
+## Let's start by checking the top 10 donors overall
+
+dat %>% # %>% is the pipe operator, it means pipe "dat" through whatever comes next;
+  drop_na(donor) %>% # this line removes all observation that contain a missing value in the column "donor"
+  group_by(donor) %>% # you can just keep piping and it will use the result; this line groups obs by "donor"
+  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% # the argument na.rm=TRUE makes the function skip missing values.
+  arrange(desc(amount_nominal)) %>% 
+  slice_head(n=10)
+  
 ## How are donations distributed?
 
 # We will use the ggplot2 package, which is part of the tidyverse, loaded in line eight.
 
-dat %>% # %>% is the pipe operator, which basically means pipe "dat" through whatever comes next; it comes from the "tidyverse" we loaded on line eight
-  drop_na(type_donor)%>% # this line removes all observation that contain a missing value in the column "type_donor"
+dat %>% 
+  drop_na(type_donor)%>% 
   ggplot(., aes(x = amount_nominal, fill=type_donor))+ # this initiates the plotting system, and defines our x variable, and our "fill" variable.
   geom_density (alpha=.5, position="identity", aes(y=..count..)) + # as y variable, we want the count of observation per value, which is not in the dataset, but ggplot computes it for us.
   scale_x_log10() # because of the range of our variables, we are using a logarithmic function.
 
-# kind of ugly numbers in the x-axis, the labels argument in the scales_x_log10 function can sort that (labels come from the "scales" package in line 10)
+# kind of ugly numbers in the x-axis, 
+#the labels argument in the scales_x_log10 function can sort that (labels come from the "scales" package in line 10)
 
 dat %>%  
   drop_na(type_donor)%>%
@@ -51,13 +62,16 @@ dat %>%
   drop_na(type_donor)%>%
   ggplot(., aes(x = amount_nominal, fill=type_donor))+
   geom_density (alpha=.5, position="identity", aes(y=..count..))+
-  scale_x_log10(labels=dollar)+
-  geom_vline(aes(xintercept = mean(dat$amount_nominal, na.rm=TRUE), colour="mean"), linetype = "longdash")+ # we can get summary stats within the code itself.
-  geom_vline(aes(xintercept = median(dat$amount_nominal, na.rm=TRUE), colour="median"), linetype = "longdash") # showing mean and median, reveals how skewed the data is.
+  scale_x_log10(labels=dollar)+ # we can get summary stats within the code itself (next two lines)
+  geom_vline(aes(xintercept = mean(dat$amount_nominal, na.rm=TRUE), colour="mean"), linetype = "longdash")+ 
+  geom_vline(aes(xintercept = median(dat$amount_nominal, na.rm=TRUE), colour="median"), linetype = "longdash")
 
-#what's the interpretation, given the relationship between mean and median?
 
-# colors still kind of ugly, let's get some palettes from the "RColorBrewer" we loaded in line 11
+# showing mean and median, reveals how skewed the data is.
+# what's the interpretation, given the relationship between mean and median?
+
+# colors still kind of ugly... 
+#let's get some palettes from the "RColorBrewer" we loaded in line 11
 # we can ask for help: ??RColorBrewer
 
 dat %>%
