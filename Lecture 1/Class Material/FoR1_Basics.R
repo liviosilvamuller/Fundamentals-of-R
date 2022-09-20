@@ -7,7 +7,7 @@
 # We also start scripts with at least four lines:
 
 # Title: Fundamentals of R (Basics)
-# Purpose: to showcase core R tasks (setwd, install.packages, load packages, import data, view data) for students of MINT338.
+# Purpose: to showcase core R tasks in detail for MINT338 students.
 # Authors: Henrique Sposito & Livio Silva-Muller
 # Date: September 2022
 
