@@ -1,5 +1,5 @@
 # Title: Who makes international regimes possible?
-# Purpose: showcase a conceptually sound approach to answering a research question.
+# Purpose: showcase a conceptually sound approach to answering a question.
 # Author: Henrique Sposito & Livio Silva-Muller
 # Date: September 2022
 
@@ -31,7 +31,7 @@ View(dat)
 
 # We will use the ggplot2 package, which is part of the tidyverse, loaded in line eight.
 
-dat %>%  # %>% is the pipe operator, which basically means pipe "dat" through whatever comes next; it comes from the "tidyverse" we loaded on line eight
+dat %>% # %>% is the pipe operator, which basically means pipe "dat" through whatever comes next; it comes from the "tidyverse" we loaded on line eight
   drop_na(type_donor)%>% # this line removes all observation that contain a missing value in the column "type_donor"
   ggplot(., aes(x = amount_nominal, fill=type_donor))+ # this initiates the plotting system, and defines our x variable, and our "fill" variable.
   geom_density (alpha=.5, position="identity", aes(y=..count..)) + # as y variable, we want the count of observation per value, which is not in the dataset, but ggplot computes it for us.
