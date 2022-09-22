@@ -78,18 +78,18 @@ io_dat <- read_csv(file="io_income_rs.csv", col_names = TRUE)
 
 3 + 3 # if you run this line, the result will appear at the console
 Result <- 3+3 # if you run this line, the result will also be stored in the object Result
-Lecturers <- c("Henrique", "Livio") 
+Names <- c("Henrique", "Livio") 
 Departments <- c("IRPS", "ANSO")
 # run both lines (81 and 82) and check the environment
 
-Profile <- data.frame(Lecturers, Departments)
+Lecturers <- data.frame(Lecturers, Departments)
 # here, we are using two objects to create a dataframe
 
 ## Let's view our objects and data!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 View(io_dat) # you can either click on it in the environment tab, or run the code View("name of the object")
-View(profile) # R is CaSe SeNsItIvE -> profile is different from Profile
-View (Profile)
+View(lecturers) # R is CaSe SeNsItIvE -> lecturers is different from Lecturers
+View (Lecturers)
 
 #You can also type io_dat in the console and see a preview.
 
