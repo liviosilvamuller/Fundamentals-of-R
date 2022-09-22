@@ -89,8 +89,11 @@ class: split two center
 
 ---
 
+class: split two
+
 # What is R?
 
+.pull-left[
 - Programming language and software develop in 1990s by Ihaka and Gentleman [(see Ihaka and Gentleman 1996)](https://www.jstor.org/stable/1390807#metadata_info_tab_contents), but really only released in 2000...
 
 - Open source with extensive and coherent set of tools for statistical analysis and programming
@@ -102,10 +105,13 @@ class: split two center
   - interactive applications
   - presentations (like this one)
   - and much more!
+]
 
-**Thank you RStudio (and [Hadley](https://hadley.nz/))!**
 .pull-right[
-![:scale 60%](assets/Images/RS.png)
+
+![:scale 100%](assets/Images/RS.png)
+
+*Thank you RStudio (and [Hadley](https://hadley.nz/))!*
 ]
 
 ---
@@ -114,7 +120,6 @@ class: split two
 
 # Why R?
 
---
 .pull-left[
 
 - [R growth has been impressive, specially within academia and governments](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)
