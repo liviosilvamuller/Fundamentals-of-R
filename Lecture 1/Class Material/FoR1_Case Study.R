@@ -4,6 +4,7 @@
 # Date: September 2022
 
 setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 1/Class Material/")
+#remember to set your own directory here
 
 library(tidyverse)
 library(skimr)
@@ -12,7 +13,7 @@ library(RColorBrewer)
 library(gt)
 
 options(stringsAsFactors = FALSE, scipen = 999) 
-#define a few global o ptions for how things are computed and displayed.
+#define a few global options for how things are computed and displayed.
 # the first argument stops strings to be imported as factors (no worries, we will cover this next week).
 # the second argument stops R from using scientific notation (7245 instead of 7.245E+3).
 
@@ -54,21 +55,7 @@ dat %>%
   drop_na(type_donor)%>%
   ggplot(., aes(x = amount_nominal, fill=type_donor))+
   geom_density (alpha=.5, position="identity", aes(y=..count..)) +
-  scale_x_log10(labels=dollar) # this is the where we specify the label, notice how we simply "added" (+) this line of code.
-
-# It would be nice to get some summary statistics for this.
-
-dat %>%
-  drop_na(type_donor)%>%
-  ggplot(., aes(x = amount_nominal, fill=type_donor))+
-  geom_density (alpha=.5, position="identity", aes(y=..count..))+
-  scale_x_log10(labels=dollar)+ # we can get summary stats within the code itself (next two lines)
-  geom_vline(aes(xintercept = mean(dat$amount_nominal, na.rm=TRUE), colour="mean"), linetype = "longdash")+ 
-  geom_vline(aes(xintercept = median(dat$amount_nominal, na.rm=TRUE), colour="median"), linetype = "longdash")
-
-
-# showing mean and median, reveals how skewed the data is.
-# what's the interpretation, given the relationship between mean and median?
+  scale_x_log10(labels=dollar) # this is where we specify the label, notice how we simply "added" (+) this line of code.
 
 # colors still kind of ugly... 
 #let's get some palettes from the "RColorBrewer" we loaded in line 11
@@ -79,9 +66,20 @@ dat %>%
   ggplot(., aes(x = amount_nominal, fill=type_donor))+
   geom_density (alpha=.5, position="identity", aes(y=..count..))+
   scale_x_log10(labels=dollar)+
-  geom_vline(aes(xintercept = mean(dat$amount_nominal, na.rm=TRUE), colour="mean"), linetype = "longdash")+
-  geom_vline(aes(xintercept = median(dat$amount_nominal, na.rm=TRUE), colour="median"), linetype = "longdash")+
   scale_fill_brewer(type="qual", palette= "Accent", direction=1)  #here we specify what we just selected
+
+# It would be nice to get some summary statistics for this.
+
+dat %>%
+  drop_na(type_donor)%>%
+  ggplot(., aes(x = amount_nominal, fill=type_donor))+
+  geom_density (alpha=.5, position="identity", aes(y=..count..))+
+  scale_x_log10(labels=dollar)+ 
+  scale_fill_brewer(type="qual", palette= "Accent", direction=1)+ # we can get summary stats within the code itself (next two lines)
+  geom_vline(aes(xintercept = mean(dat$amount_nominal, na.rm=TRUE), colour="mean"), linetype = "longdash")+ 
+  geom_vline(aes(xintercept = median(dat$amount_nominal, na.rm=TRUE), colour="median"), linetype = "longdash")
+
+# what's the interpretation, given the relationship between mean and median?
 
 # polishing up with some titles
 
@@ -103,6 +101,7 @@ dat %>%
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
     legend.position = "bottom") # theme() changes the color of the background, size, color, and face of texts...
+  
 
 # Finally, we can use the assign operator to create an object with the plot.
 # We can also export manually, by clicking on export at the lower-right panel.
