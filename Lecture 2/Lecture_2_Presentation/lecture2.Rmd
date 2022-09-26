@@ -1,0 +1,142 @@
+---
+title: "Fundamentals of R"
+author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
+date: "<small>September 23, 2022<small>"
+output:
+  xaringan::moon_reader:
+    css: 
+      - "default"
+      - "assets/iheid-xaringan-style.css"
+      - "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      - "ninjutsu"
+    chakra: "https://remarkjs.com/downloads/remark-latest.min.js"
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      beforeInit: "assets/macros.js"
+      countIncrementalSlides: false
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>`
+---
+```{r setup, include=FALSE}
+# don't mind this code chunk, it just sets up a few things for the rest
+# it doesn't appear, because the include argument above is FALSE...
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE)
+knitr::opts_chunk$set(cache=TRUE, autodep = TRUE, fig.retina = 3, message = FALSE, warning = FALSE)
+old <- ggplot2::theme_set(iheiddown::theme_iheid())
+```
+
+```{r, load_refs, include=FALSE, cache=FALSE}
+# Initializes the bibliography
+library(RefManageR)
+BibOptions(check.entries = FALSE,
+           bib.style = "authoryear", # Bibliography style
+           max.names = 3, # Max author names displayed in bibliography
+           sorting = "nyt", #Name, year, title sorting
+           cite.style = "authoryear", # citation style
+           style = "markdown",
+           hyperlink = FALSE,
+           dashed = FALSE)
+myBib <- ReadBib("assets/myBib.bib", check = FALSE)
+# Note: don't forget to clear the knitr cache to account for changes in the
+# bibliography.
+```
+
+class: split two
+
+# What did we learn last week?
+
+--
+
+.pull-left[
+
+Conceptually:
+
+- What is R?
+
+- Why R?
+
+- The R panes
+
+- How to get help online
+
+- Remember: Clear conceptual thinking with data is important in R!
+
+]
+
+--
+
+.pull-right[
+
+Practically:
+
+- How to set the working directory
+
+- How to download and load r packages
+
+- How to save objects in the environment
+
+- How to find help within R
+
+- Remember: R messages, warnings, and error are informative, read them!
+
+]
+
+---
+
+class: split two
+
+# Failure is another stepping stone to greatness (in R)
+
+.pull-left[
+
+*Let's quickly review some of the package related, and other coding errors we saw in R from last class!*
+
+- Any other general questions?
+
+]
+
+.pull.right[
+
+![](https://media.giphy.com/media/11kEuHSQAXXiGQ/giphy.gif)
+
+]
+
+---
+
+![:scale 60%](assets/images/roadmap.png)
+
+- Lecture:
+
+  - R basics (objects, classes, and functions)
+  - Data types (from vector to data frames)
+  - First wrangling steps (with base R)
+
+- Practical:
+
+  - How to import text (.csv) and excel (.xlsx) files to R?
+  - How explore newly imported data in R?
+  - How to perform some arithmetic operations?
+
+- Case study: *Correlates of War*
+
+---
+
+# R Basics:
+
+- What are objects?
+
+---
+
+# References
+
+Made with `{iheiddown}`, the R-package for IHEID publications
+`r Cite(myBib, "iheiddown")`.
+
+```{r refs, echo=FALSE, results="asis"}
+RefManageR::PrintBibliography(myBib)
+```
