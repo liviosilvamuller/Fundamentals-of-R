@@ -77,20 +77,9 @@ summary(animal_longevity)
  
  #2.4
  
- #2.5
- 
- #2.6
- 
- 
- ## Q4
- 
- turn$year
- ## 1980, '84, '88, '92, '96, '00, '04, '08: presidential election
- ## 1982, '86, '90, '94, '98, '02,         : midterm election
- 
- pe <- turn[seq(1, 14, 2), ] # create presidential election
- pe[8, ] <- turn[14, ]       # add year 2008
- me <- turn[seq(2, 12, 2), ] # create midterm election
+
+pe <- subset(turnout, election_type =="presidential") 
+me <- subset(turnout, election_type =="midterm") 
  
  vepP <- (pe$total / pe$VEP) * 100 # voter turnout of VEP predident
  vepM <- (me$total / me$VEP) * 100 # voter turnout of VEP midterm
@@ -109,12 +98,11 @@ summary(animal_longevity)
  ## Estimation of (ANES - VEP) is 2.46% higher in presidential election. 
  ## Voter turnout is higher in presidential election. 
  
+ #2.5
  
- ## Q5
+ old <- turnout[c(1:7), ]  # Extract first half of data (up to 1992).
  
- old <- turn[c(1:7), ]  # Extract first hald of data (up to 1992).
- ## old <- turn[seq(1, 7), ] # Do same thing as shown above. 
- new <- turn[c(8:14), ] # Extract second hald of data (from '94 to the end). 
+ new <- turnout[c(8:14), ] # Extract second half of data (from '94 to the end). 
  
  VEPo <- (old$total / old$VEP) * 100
  VEPn <- (new$total / new$VEP) * 100
@@ -126,25 +114,5 @@ summary(animal_longevity)
  
  ## In terms of the mean of two periods, the ANES bias increased. 
  
- 
- ## Q6
- 
- ## Subtract felons & noncitisen from VAP.
- VAP1 <- turn$VAP - turn$felons - turn$noncit
- 
- ## Extract the year 2008
- turn08 <- turn[turn$year==2008, ] 
- ## turn08 <- turn[14, ] ## same as above 
- 
- ## Subtract osvoters from total in 2008.
- turn$total[14] <- turn08$total - turn08$osvoters
- 
- ## adjusted voter turnout VAP
- adjVAP <- turn$total / VAP1
- 
- mean(adjVAP)
- mean(vap)
- mean(vep)
- mean(turn$ANES)
- 
- 
+
+
