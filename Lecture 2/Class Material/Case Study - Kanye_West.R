@@ -1,5 +1,5 @@
-# Title: Fundamentals of R
-# Purpose: Block 1 - Case Study 2: Kanye West
+# Title: Fundamentals of R, Block 1, Case Study 2
+# Purpose: to illustrate 
 # Authors: Henrique Sposito & Livio Silva-Muller
 # Date: September 2022
 
@@ -15,6 +15,10 @@ library(tidyr)
 
 
 # Get URL and setup song nodes for scrapping ----------------------------------
+
+#EVERYTHING UNTIL LINE 59 IS THE SETUP AND SCRAPPING CODE
+# WE ALREADY RUN IT AND SAVED THE DATA, SO YOU CAN JUMP TO LINE 60
+
 artist_url <- 'https://www.azlyrics.com/w/west.html'
 song_nodes <- read_html(artist_url) %>% # load the html
   html_nodes("#listAlbum a")
@@ -29,24 +33,24 @@ for(i in 1:length(song_links)) {
   message(str_c('scraping ', i, ' of ', length(song_links) ))
   # scrape the text of a song
   lyrics <- paste0("https://www.azlyrics.com", song_links[i]) %>%
-    read_html() %>% 
+    read_html() %>%
     html_nodes("br+ div") %>%
     html_text()
   lyrics <- lyrics[1]
   title <-paste0("https://www.azlyrics.com", song_links[i]) %>%
-    read_html() %>% 
+    read_html() %>%
     html_nodes(".ringtone+ b") %>%
     html_text()
   title <- title[1]
   album <-paste0("https://www.azlyrics.com", song_links[i]) %>%
-    read_html() %>% 
+    read_html() %>%
     html_nodes(".breadcrumb+ .noprint .songinalbum_title , .breadcrumb+ .noprint b") %>%
     html_text()
   album <- album[1]
   Kanye_West <- rbind(Kanye_West, tibble(title = title,
                                          lyrics = lyrics,
                                          album = album))
-  Sys.sleep(10) 
+  Sys.sleep(10)
 }
 
 # save the data to your working directory
@@ -58,11 +62,11 @@ for(i in 1:length(song_links)) {
 setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 2/Class Material")
 Kanye_West <- readRDS("Kanye_West.RDS")
 
-# Clean variables and text cleaning
+# Checkout the dataset manually
+# There are songs in the dataset that do not come from Wests' albums, but from somewhere else
+# Let's mark only Wests' songs that are in his albums:
 
-# Keep only songs where album is known
-
-Kanye_West$album <- ifelse(startsWith(Kanye_West$album, "album"), Kanye_West$album, NA_character_) 
+Kanye_West$album <- ifelse(startsWith(Kanye_West$album, "album"), Kanye_West$album, NA_character_)
 
 # Tip: ifelse is cool BTW!
 # remember the structure ifelse (LOGICALTEST , VALUE IF TRUE, VALUE IF FALSE)
@@ -178,7 +182,7 @@ Kanye_West %>%
 # Can we use religious vocabulary to "predict" 2019s Sunday Service?------------
 # how can we best visualize such an effect?
 
-  Kanye_West %>%
+Kanye_West %>%
   gather("topic", "word_count", 5:6) %>%
   group_by(year) %>%
   mutate(songs_per_year = n()) %>%
@@ -212,6 +216,7 @@ Kanye_West <- Kanye_West %>%
 
 Kanye_West$kim_kardashian <- factor(Kanye_West$kim_kardashian,                                    
                    levels = c("Before Kim", "With Kim", "After Kim"))
+
 # Change ordering manually
 
 Kanye_West %>%
@@ -224,7 +229,7 @@ Kanye_West %>%
   ggplot(., aes(x=kim_kardashian, y=normalized_word_count, fill=topic)) +
   geom_bar(stat="identity", position="dodge") +
   labs(x = "", y = "Normalized Count",
-       title = " The Kardashian Effect",
+       title = " The Kardashian Effect?",
        subtitle= "214 songs in 13 albums since 2004.")+
   theme(
     panel.background = element_rect("white", "black", .5, "solid"),
