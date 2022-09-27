@@ -1,7 +1,7 @@
 ---
 title: "Fundamentals of R"
 author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
-date: "<small>September 23, 2022<small>"
+date: "<small>September 30, 2022<small>"
 output:
   xaringan::moon_reader:
     css: 
@@ -126,9 +126,48 @@ class: split two
 
 ---
 
-# R Basics:
+# R Basics: Objects
 
-- What are objects?
+- What are objects in R?
+
+*Can be almost anything, as long as it is assigned...*
+
+```{r}
+# Which one is an object?
+"Am I an object?"
+# versus
+object <- "Or I am an object?"
+```
+
+---
+
+# R Basics: Class
+
+Objects can have multiple classes.
+
+*Class in R refers
+
+```{r}
+# What can we do with character objects?
+object1 <- "Or I am an object?"
+class(object1)
+paste(object1, object1, sep = " - ")
+# Can we operate on numeric objects?
+object2 <- 1
+class(object2)
+object2 + object2
+object2 * object2
+object2 / object2
+object2 - object2
+```
+
+---
+
+# R Basics: Data structures
+
+One object with multiple possible classes
+
+
 
 ---
 
