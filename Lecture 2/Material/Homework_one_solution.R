@@ -3,7 +3,6 @@
 # Authors: Henrique Sposito & Livio Silva-Muller
 # Date: September 2022
 
-
 setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 2/Material")
 
 #Exercise 1: Animal longevity dataset-------------------------------------------
@@ -50,13 +49,10 @@ mean(longevity$Maximum_Longevity_Years, na.rm=TRUE)
 median(longevity$Maximum_Longevity_Years, na.rm=TRUE)
 
 #1.10
-
-
-
 outliving_humans <-  longevity[longevity$Maximum_Longevity_Years > 122.5]
 
  
- #Exercise 2: Self-reported Turnout--------------------------------------------
+#Exercise 2: Self-reported Turnout--------------------------------------------
  
  #2.1
  
