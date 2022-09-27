@@ -16,30 +16,45 @@ dim(animal_longevity)
 length(animal_longevity)
 summary(animal_longevity)
 
-#1.4 
+#1.2 
  View(animal_longevity)
  giraffe_lifespan <- 29.5
  penguin_lifespan <- 26
  elephant_lifespan <- 65
  
- #1.5
+ #1.3
  giraffe_lifespan == penguin_lifespan
  elephant_lifespan != penguin_lifespan
  giraffe_lifespan > penguin_lifespan 
  
- #1.6
+ #1.4
  theanimals <- c("giraffe", "penguin", "elephant")
  lifespans <- c(giraffe_lifespan, penguin_lifespan, elephant_lifespan)
  
- #1.7
+ #1.5
  mean(lifespans)
  median(lifespans)
  
- #1.8
+ #1.6
  theanimals[2]
  
- #1.9
+ #1.7
  theanimals[lifespans > 27]
+ 
+ #1.8
+longevity <- animal_longevity[, c(5, 8)]
+longevity <- longevity[order(longevity$Maximum_Longevity_Years),]
+
+#1.9
+mean(longevity$Maximum_Longevity_Years, na.rm=TRUE)
+median(longevity$Maximum_Longevity_Years, na.rm=TRUE)
+
+#1.10
+
+
+
+outliving_humans <-  longevity[longevity$Maximum_Longevity_Years > 122.5]
+
  
  #Exercise 2: Self-reported Turnout--------------------------------------------
  
@@ -113,6 +128,3 @@ me <- subset(turnout, election_type =="midterm")
  mean(ANESn) - mean(VEPn)
  
  ## In terms of the mean of two periods, the ANES bias increased. 
- 
-
-
