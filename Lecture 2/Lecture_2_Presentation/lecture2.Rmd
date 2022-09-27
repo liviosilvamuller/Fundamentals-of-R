@@ -90,7 +90,7 @@ Practically:
 
 class: split two
 
-# Failure is another stepping stone to greatness (in R)
+# Failure is another stepping stone to greatness, in R at least...
 
 .pull-left[
 
@@ -108,66 +108,321 @@ class: split two
 
 ---
 
-![:scale 60%](assets/images/roadmap.png)
+class: split two
 
-- Lecture:
+![:scale 40%](assets/images/roadmap.png)
+
+.pull-left[
+## Lecture:
 
   - R basics (objects, classes, and functions)
   - Data types (from vector to data frames)
   - First wrangling steps (with base R)
+]
 
-- Practical:
+.pull-right[
+## Practical:
 
   - How to import text (.csv) and excel (.xlsx) files to R?
   - How explore newly imported data in R?
   - How to perform some arithmetic operations?
+]
 
-- Case study: *Correlates of War*
+- Case study: **Mind the Gap with GAPMINDER**
 
 ---
 
-# R Basics: Objects
+# R Basics
+
+*"All I know is what I have words for” - Ludwig Wittgenstein*
+
+--
+
+## Objects
 
 - What are objects in R?
 
 *Can be almost anything, as long as it is assigned...*
 
 ```{r}
-# Which one is an object?
 "Am I an object?"
-# versus
 object <- "Or I am an object?"
 ```
 
 ---
+class: split two
 
-# R Basics: Class
+# Class 1 - The Rules of the Game
 
 Objects can have multiple classes.
 
-*Class in R refers
+*Object class is the grouping of objects that can be described in terms of the attributes its members have in common.*
+
+--
+
+## Character (or string)
+
+--
 
 ```{r}
 # What can we do with character objects?
 object1 <- "Or I am an object?"
 class(object1)
 paste(object1, object1, sep = " - ")
-# Can we operate on numeric objects?
-object2 <- 1
-class(object2)
-object2 + object2
-object2 * object2
-object2 / object2
-object2 - object2
 ```
 
 ---
 
-# R Basics: Data structures
+# Class 2 - Operations
 
-One object with multiple possible classes
+Some classes allow for arithmetic operations.
 
+## Numeric (or integer)
 
+```{r}
+# Can we operate on numeric objects?
+object2 <- 1
+class(object2)
+(object2+object2)*(object2*object2)/(object2/object2)-(object2-object2)
+# Remember, brackets are important for order of operations!
+```
+
+---
+
+# Class 3 - Can anything be a class?
+
+--
+
+*Yes (as long as the rules of the game are set as methods and are coherent)!*
+
+--
+
+## Factors
+
+--
+
+*Factor in R refers to a categorical variable that stores strings or integers as levels*
+
+```{r}
+lectures <- as.factor(c("Lecture 1", "Lecture 1", "Block 1")) 
+class(lectures)
+levels(lectures)
+```
+
+---
+
+# Class 4 - Dates
+
+Dates in R can be annoying, specially if you are using base R...
+
+Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)
+
+```{r}
+Sys.Date() # get the current date
+dates <- as.Date(c("2022-09-23", "2022-09-30"))
+class(dates)
+# What can we do with data?
+dates[2] - dates[1]
+```
+
+---
+class: split two
+
+# (Object) class matters...
+
+.pull-left[
+<img src = "https://imgs.xkcd.com/comics/historical_dates.png" />
+]
+
+.pull-right[
+```{r}
+as.numeric(as.Date("1970-01-01"))
+```
+]
+
+---
+
+# Data structures 1 - Vectors
+
+*Vector*: a one-dimensional vector with one type of data (double, integers, character, logical)
+
+```{r}
+lecturers <- c("Henrique", "Livio") # character
+age <- c(81, 18) # numeric
+speaks_portuguese <- c(TRUE, TRUE) # logical
+is.vector(c(lecturers, age, speaks_portuguese)) # logical test
+```
+
+---
+
+class: split two
+
+# Data structures 2 - Matrixes and Arrays
+
+.pull-left[
+
+*Matrix*: two dimensional objects with one class and a fixed number of rows/columns
+
+```{r}
+matrix <- matrix(ncol = 2, nrow = 2)
+matrix
+dim(matrix) # get dimensions
+# Names are vector attributes
+# row.names(matrix) <- c("Henrique", "Livio")
+# dimnames(matrix) # get dimension names
+```
+
+]
+
+.pull-left[
+
+*Array*: multi-dimensional, one class, and not contrained by rows/columns, but not as flexible as a matrix...
+
+```{r, eval=FALSE}
+array(c(1:2, 3:4, 5:7), dim = c(2, 2, 3))
+```
+
+]
+
+---
+
+# Data structures 3 - Lists
+
+*lists*: group together R objects of diverse classes or dimensions
+
+```{r}
+list <- list(lecturers, age, speaks_portuguese)
+list
+```
+
+---
+
+# Data structures 4 - Data Frames
+
+- As lists, data frames objects can have multiple possible classes.
+
+```{r}
+# Does data have a class?
+course <- data.frame(cbind(lecturers, age))
+course
+# cbind() binds columns, rbind() binds rows
+class(course) # Pop Quiz: How come "data.frame" is a class?
+```
+
+---
+class: center middle
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">How to add many data frame columns efficiently in R <a href="https://t.co/ONnvhAewk3">https://t.co/ONnvhAewk3</a> <a href="https://twitter.com/hashtag/parallelprocessing?src=hash&amp;ref_src=twsrc%5Etfw">#parallelprocessing</a> <a href="https://twitter.com/hashtag/r?src=hash&amp;ref_src=twsrc%5Etfw">#r</a> <a href="https://twitter.com/hashtag/mutate?src=hash&amp;ref_src=twsrc%5Etfw">#mutate</a> <a href="https://twitter.com/hashtag/forloop?src=hash&amp;ref_src=twsrc%5Etfw">#forloop</a> <a href="https://t.co/r7tiAdSNMv">pic.twitter.com/r7tiAdSNMv</a></p>&mdash; Meme Overflow (@overflow_meme) <a href="https://twitter.com/overflow_meme/status/1370272994791206913?ref_src=twsrc%5Etfw">March 12, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+---
+
+# Navigate Data
+
+Is the "$" operator a function in R (see ´ ?"$"´)?
+
+```{r}
+# $ operators extracts or replace parts of an object
+course$lecturers
+course$age <- factor(as.character(course$age), levels = c("18", "81"))
+# Can you tell what the code above is doing?
+levels(course$age)
+```
+
+But brackets :[] also make great friends
+
+```{r, eval=FALSE}
+course[1] # first column
+course[1, ] # first row in all columns
+course[1,1] # value in first row of the first column
+course[1:2, 2] # the two first values in column 2
+```
+
+---
+
+# Logical operators
+
+- "=="/"!=" are values equal/different?
+- is bigger/smaller ">"/"<"  than?
+- for multiple conditions, use and/or "&"/"|"
+
+```{r, eval=FALSE}
+course$lecturers[1] == course$lecturers[2]
+nchar(course$lecturers[1]) > nchar(course$lecturers[2])
+course$lecturers[1] != course$lecturers[2] & nchar(course$lecturers[1]) >= nchar(course$lecturers[2])
+```
+
+The vectorized "ifelse()" function for coditional element selection... (wait what?)
+
+```{r}
+course$'Is ifelse() awesome?' = ifelse(course$lecturers == "Henrique", "Awesome", "It is okay...")
+course
+```
+
+---
+
+# GREP (Grammar of Regular Expressions)
+
+Functions to find, match and replace strings!
+
+```{r}
+# Can we find if there is an "okay()" in a variable?
+grepl("okay", course$`Is ifelse() awesome?`, ignore.case = TRUE)
+# What if we want to replace it?
+course$`Is ifelse() awesome?` <- gsub("okay", "awesome", course$`Is ifelse() awesome?`, ignore.case = TRUE)
+course$`Is ifelse() awesome?`
+```
+
+---
+
+class: split two
+
+# Other useful base R functions we forgot?
+
+--
+
+.pull-left[
+
+*Henrique*
+
+```{r}
+summary(course)
+```
+
+]
+
+.pull-right[
+
+*Livio*
+
+```{r}
+course$nationality <- c("BR", "BR")
+unique(course$nationality)
+```
+
+]
+
+--
+
+```{r}
+mean(c(18, 81, 28))
+median(c(18, 81, 28))
+```
+
+---
+
+# Base vs. Tidy (again)
+
+- All operators we cover today here and in the practice exercises are base R.
+
+- In reality, most users should use both, whatever is easier and more intuitive to you!
+
+- [Above all, teaching base R facilitates comprehension of how R, as a software and programming language, works for beginners](https://github.com/matloff/TidyverseSkeptic/)
+
+---
+
+class: center middle
+
+![100%](https://media.giphy.com/media/XHVmD4RyXgSjd8aUMb/giphy-downsized-large.gif)
 
 ---
 
