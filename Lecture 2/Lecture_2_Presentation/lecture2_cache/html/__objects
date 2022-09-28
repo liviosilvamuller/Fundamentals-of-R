@@ -2,19 +2,21 @@ refs
 unnamed-chunk-1	object
 unnamed-chunk-2	object1
 unnamed-chunk-3	object2
-unnamed-chunk-4	lectures
-unnamed-chunk-5	dates
+unnamed-chunk-4	object3
+unnamed-chunk-5	object4
 unnamed-chunk-6	
 unnamed-chunk-7	age	lecturers	speaks_portuguese
 unnamed-chunk-8	matrix
-unnamed-chunk-9	
-unnamed-chunk-10	list
+unnamed-chunk-9	list
+unnamed-chunk-10	course
 unnamed-chunk-11	course
-unnamed-chunk-12	course
-unnamed-chunk-13	
+unnamed-chunk-12	
+unnamed-chunk-13	course
 unnamed-chunk-14	
-unnamed-chunk-15	course
-unnamed-chunk-16	course
-unnamed-chunk-17	
+unnamed-chunk-15	
+unnamed-chunk-16	
+unnamed-chunk-17	course
 unnamed-chunk-18	course
 unnamed-chunk-19	
+unnamed-chunk-20	course
+unnamed-chunk-21	

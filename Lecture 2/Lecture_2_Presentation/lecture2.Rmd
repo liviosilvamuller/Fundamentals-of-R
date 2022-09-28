@@ -1,5 +1,6 @@
 ---
 title: "Fundamentals of R"
+subtitle: "Block 1: Objects, Class and Data Structures"
 author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
 date: "<small>September 30, 2022<small>"
 output:
@@ -116,16 +117,16 @@ class: split two
 ## Lecture:
 
   - R basics (objects, classes, and functions)
-  - Data types (from vector to data frames)
+  - Data (from vector to data frames)
   - First wrangling steps (with base R)
 ]
 
 .pull-right[
 ## Practical:
 
-  - How to import text (.csv) and excel (.xlsx) files to R?
-  - How explore newly imported data in R?
-  - How to perform some arithmetic operations?
+  - Download and load data
+  - Exploring data
+  - Arithmetic and logical operations
 ]
 
 - Case study: **Mind the Gap with GAPMINDER**
@@ -142,7 +143,9 @@ class: split two
 
 - What are objects in R?
 
-*Can be almost anything, as long as it is assigned...*
+--
+
+*Can be anything, as long as it is assigned...*
 
 ```{r}
 "Am I an object?"
@@ -150,85 +153,77 @@ object <- "Or I am an object?"
 ```
 
 ---
-class: split two
 
-# Class 1 - The Rules of the Game
-
-Objects can have multiple classes.
+# The Rules of the Game (class 1/6)
 
 *Object class is the grouping of objects that can be described in terms of the attributes its members have in common.*
 
---
-
-## Character (or string)
-
---
-
-```{r}
-# What can we do with character objects?
-object1 <- "Or I am an object?"
-class(object1)
-paste(object1, object1, sep = " - ")
-```
-
----
-
-# Class 2 - Operations
-
-Some classes allow for arithmetic operations.
-
-## Numeric (or integer)
-
-```{r}
-# Can we operate on numeric objects?
-object2 <- 1
-class(object2)
-(object2+object2)*(object2*object2)/(object2/object2)-(object2-object2)
-# Remember, brackets are important for order of operations!
-```
-
----
-
-# Class 3 - Can anything be a class?
+## Can anything be a class?
 
 --
 
 *Yes (as long as the rules of the game are set as methods and are coherent)!*
 
---
+But we are only talking about a few basic ones today...
 
-## Factors
+---
 
---
+# Character (class 2/6)
 
-*Factor in R refers to a categorical variable that stores strings or integers as levels*
+Just text
 
 ```{r}
-lectures <- as.factor(c("Lecture 1", "Lecture 1", "Block 1")) 
-class(lectures)
-levels(lectures)
+object1 <- "Or I am an object?"
+class(object1)
+# What can we do with character objects?
+paste(object1, object1, sep = " - ")
 ```
 
 ---
 
-# Class 4 - Dates
+# Numeric (class 3/6)
+
+Some classes allow for arithmetic operations
+
+```{r}
+object2 <- 3
+class(object2)
+# Can we operate on numeric objects?
+(object2*object2)/(object2+object2)
+# Remember, brackets are important for order of operations!
+```
+
+---
+
+# Logical (class 4/6)
+
+Either TRUE or FALSE
+
+```{r}
+object3 <- c(TRUE, FALSE)
+class(object3)
+isTRUE(object3[2]) # Logical check
+```
+
+---
+
+# Dates (class 5/6)
 
 Dates in R can be annoying, specially if you are using base R...
 
-Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)
-
 ```{r}
 Sys.Date() # get the current date
-dates <- as.Date(c("2022-09-23", "2022-09-30"))
-class(dates)
-# What can we do with data?
-dates[2] - dates[1]
+object4 <- as.Date(c("2022-09-23", "2022-09-30"))
+class(object4) # What can we do with data?
+object4[2] - object4[1]
 ```
+
+Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)
 
 ---
 class: split two
 
-# (Object) class matters...
+# Class matters... (class 6/6)
 
 .pull-left[
 <img src = "https://imgs.xkcd.com/comics/historical_dates.png" />
@@ -242,29 +237,37 @@ as.numeric(as.Date("1970-01-01"))
 
 ---
 
-# Data structures 1 - Vectors
+class: split two 
 
-*Vector*: a one-dimensional vector with one type of data (double, integers, character, logical)
+# Vectors (data structures 1/4)
+
+*Vector*: one-dimensional with one type of data
+
+.pull-left[
 
 ```{r}
 lecturers <- c("Henrique", "Livio") # character
 age <- c(81, 18) # numeric
 speaks_portuguese <- c(TRUE, TRUE) # logical
-is.vector(c(lecturers, age, speaks_portuguese)) # logical test
 ```
 
----
+]
 
+.pull-right[
+![:scale 40%](assets/images/vector.png)
+]
+
+---
 class: split two
 
-# Data structures 2 - Matrixes and Arrays
-
-.pull-left[
+# Matrixes (data structures 2/4)
 
 *Matrix*: two dimensional objects with one class and a fixed number of rows/columns
 
+.pull-left[
+
 ```{r}
-matrix <- matrix(ncol = 2, nrow = 2)
+matrix <- matrix(0, ncol = 2, nrow = 2)
 matrix
 dim(matrix) # get dimensions
 # Names are vector attributes
@@ -272,42 +275,49 @@ dim(matrix) # get dimensions
 # dimnames(matrix) # get dimension names
 ```
 
+There is also *Arrays* but...
+
 ]
 
-.pull-left[
-
-*Array*: multi-dimensional, one class, and not contrained by rows/columns, but not as flexible as a matrix...
-
-```{r, eval=FALSE}
-array(c(1:2, 3:4, 5:7), dim = c(2, 2, 3))
-```
-
+.pull-right[
+![:scale 100%](assets/images/matrix.png)
 ]
 
 ---
+class: split two
 
-# Data structures 3 - Lists
+# Lists (data structures 3/4)
 
 *lists*: group together R objects of diverse classes or dimensions
 
+.pull-left[
 ```{r}
 list <- list(lecturers, age, speaks_portuguese)
 list
 ```
+]
+
+.pull-right[
+![:scale 100%](assets/images/list.png)
+]
 
 ---
+class: split two
 
-# Data structures 4 - Data Frames
+# Data Frames (data structures 4/4)
 
-- As lists, data frames objects can have multiple possible classes.
+As lists, *data frames* objects can have multiple possible classes but a fixed number of rows and columns
 
+.pull-left[
 ```{r}
-# Does data have a class?
-course <- data.frame(cbind(lecturers, age))
-course
-# cbind() binds columns, rbind() binds rows
-class(course) # Pop Quiz: How come "data.frame" is a class?
+course <- data.frame(cbind(lecturers, age, speaks_portuguese))
+course # cbind() binds columns, rbind() binds rows
 ```
+]
+
+.pull-right[
+![:scale 100%](assets/images/df.png)
+]
 
 ---
 class: center middle
@@ -316,21 +326,28 @@ class: center middle
 
 ---
 
-# Navigate Data
+# You can navigate (through data) if you have $
 
-Is the "$" operator a function in R (see ´ ?"$"´)?
+--
+
+Is the "$" operator a function in R (see ´?"$"´)?
 
 ```{r}
-# $ operators extracts or replace parts of an object
+# The $ operators can be used to extract part from an object:
 course$lecturers
-course$age <- factor(as.character(course$age), levels = c("18", "81"))
-# Can you tell what the code above is doing?
-levels(course$age)
+# Or replace parts of an object:
+course$lecturers <- c("Sposito", "Silva-Muller")
 ```
 
-But brackets :[] also make great friends
+---
 
-```{r, eval=FALSE}
+# If you do not have $, friends can help!
+
+--
+
+Indeed brackets :[] make some great friends
+
+```{r}
 course[1] # first column
 course[1, ] # first row in all columns
 course[1,1] # value in first row of the first column
@@ -339,22 +356,49 @@ course[1:2, 2] # the two first values in column 2
 
 ---
 
+# Factors
+
+*Factor* in R refers to categories in variables
+
+```{r}
+course$lecturers <- factor(course$lecturers, levels = c("Silva-Muller", "Sposito"))
+course$lecturers
+```
+
+---
+
 # Logical operators
 
 - "=="/"!=" are values equal/different?
-- is bigger/smaller ">"/"<"  than?
-- for multiple conditions, use and/or "&"/"|"
-
-```{r, eval=FALSE}
-course$lecturers[1] == course$lecturers[2]
-nchar(course$lecturers[1]) > nchar(course$lecturers[2])
-course$lecturers[1] != course$lecturers[2] & nchar(course$lecturers[1]) >= nchar(course$lecturers[2])
-```
-
-The vectorized "ifelse()" function for coditional element selection... (wait what?)
+- is bigger/bigger or equal ">"/">="  than?
+- is smaller/smaller or equal "<"/"<=" than?
 
 ```{r}
-course$'Is ifelse() awesome?' = ifelse(course$lecturers == "Henrique", "Awesome", "It is okay...")
+course$lecturers[1] == course$lecturers[2]
+course$age[2] < course$age[1]
+```
+
+**For multiple conditions, use "&"/"|" (and/or)**
+
+```{r}
+course$lecturers[1] != course$lecturers[2] & course$age[2] < course$age[1]
+```
+
+---
+# If it is true, then yes!
+
+We function ´ifelse()´ works with coditional element selection... (wait what?)
+
+--
+
+```{r, eval=FALSE}
+ifelse(test, yes, no)
+```
+
+--
+
+```{r}
+course$old = ifelse(course$age > 30, "old", "young")
 course
 ```
 
@@ -365,11 +409,11 @@ course
 Functions to find, match and replace strings!
 
 ```{r}
-# Can we find if there is an "okay()" in a variable?
-grepl("okay", course$`Is ifelse() awesome?`, ignore.case = TRUE)
+# Can we find if there is an "silva" in a variable?
+grepl("silva", course$lecturers, ignore.case = TRUE)
 # What if we want to replace it?
-course$`Is ifelse() awesome?` <- gsub("okay", "awesome", course$`Is ifelse() awesome?`, ignore.case = TRUE)
-course$`Is ifelse() awesome?`
+course$lecturers <- gsub("Silva", "Awesome", course$lecturers)
+course
 ```
 
 ---
@@ -428,8 +472,12 @@ class: center middle
 
 # References
 
-Made with `{iheiddown}`, the R-package for IHEID publications
-`r Cite(myBib, "iheiddown")`.
+For more cool and informative slides about R stuff, see [favstats](https://favstats.github.io/ds3_r_intro/#1)
+
+Douglas, A., Ross, D., Mancini, F., Couto, A. & Lusseau, D. (2022). An Introduction to R
+
+Mesquita, E. B., & Fowler, A. (2021). Thinking clearly with data: A guide to quantitative reasoning and
+analysis. Princeton University Press.
 
 ```{r refs, echo=FALSE, results="asis"}
 RefManageR::PrintBibliography(myBib)

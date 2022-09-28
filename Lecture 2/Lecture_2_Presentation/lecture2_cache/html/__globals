@@ -2,19 +2,21 @@ refs	::	myBib
 unnamed-chunk-1	
 unnamed-chunk-2	class	paste
 unnamed-chunk-3	class
-unnamed-chunk-4	as.factor	c	class	levels
+unnamed-chunk-4	c	class	isTRUE
 unnamed-chunk-5	as.Date	c	class	Sys.Date
 unnamed-chunk-6	as.Date	as.numeric
-unnamed-chunk-7	c	is.vector
+unnamed-chunk-7	c
 unnamed-chunk-8	dim
-unnamed-chunk-9	array	c
-unnamed-chunk-10	age	lecturers	speaks_portuguese
-unnamed-chunk-11	age	cbind	class	data.frame	lecturers
-unnamed-chunk-12	$	$<-	as.character	c	factor	levels
-unnamed-chunk-13	course
-unnamed-chunk-14	!=	&	==	>	>=	$	course	nchar
-unnamed-chunk-15	==	$	$<-	ifelse
-unnamed-chunk-16	$	$<-	grepl	gsub
-unnamed-chunk-17	course	summary
-unnamed-chunk-18	$	$<-	c	unique
-unnamed-chunk-19	c	mean	median
+unnamed-chunk-9	age	lecturers	speaks_portuguese
+unnamed-chunk-10	age	cbind	data.frame	lecturers	speaks_portuguese
+unnamed-chunk-11	$	$<-	c
+unnamed-chunk-12	course
+unnamed-chunk-13	$	$<-	c	factor
+unnamed-chunk-14	<	==	$	course
+unnamed-chunk-15	!=	&	<	$	course
+unnamed-chunk-16	ifelse	no	test	yes
+unnamed-chunk-17	>	$	$<-	ifelse
+unnamed-chunk-18	$	$<-	grepl	gsub
+unnamed-chunk-19	course	summary
+unnamed-chunk-20	$	$<-	c	unique
+unnamed-chunk-21	c	mean	median
