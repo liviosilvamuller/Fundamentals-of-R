@@ -97,8 +97,8 @@ Kanye_West$album <- substring(Kanye_West$album,1, nchar(Kanye_West$album)-8) #re
 
 # Create a dictionary for religion and swearing: can you help?-----------------------------------------------------------------------------------------------
 
-swear_words <- "fuck"
-religious_words <- "god"
+swear_words <- "fuck|bitch|pussy|shit|dick"
+religious_words <- "god|bible|jesus|hell|heaven"
 
 # Count appearances in songs and add as variable in data.
 Kanye_West$swear_words <- stringr::str_count(Kanye_West$lyrics, swear_words)
@@ -234,7 +234,7 @@ Kanye_West %>%
     title = element_text(color = "black", size = 10, face = "bold"),
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
-    legend.position = "bottom") #weird roder, can we change it?
+    legend.position = "bottom") #weird reorder, can we change it?
 
 Kanye_West$kim_kardashian <- factor(Kanye_West$kim_kardashian,                                    
                                     levels = c("Before Kim", "With Kim", "After Kim")) #Changes ordering manually, rerun the plot!

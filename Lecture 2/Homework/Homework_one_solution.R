@@ -84,7 +84,6 @@ outliving_humans <-  longevity[longevity$Maximum_Longevity_Years > 122.5]
  d2 <- turnout$ANES - vep
  
  mean(d1); mean(d2) 
- range(d1); range(d2) 
  
  #2.4
  
@@ -124,3 +123,4 @@ me <- subset(turnout, election_type =="midterm")
  mean(ANESn) - mean(VEPn)
  
  ## In terms of the mean of two periods, the ANES bias increased. 
+ 

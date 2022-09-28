@@ -108,7 +108,7 @@ summary(as.factor(USArrests$mostly_urban))
 # Well, we can use GREP!!!
 
 USArrests$state <- rownames(USArrests) # rownames to a column
-USArrests$region <- NA_character_ # crete a new variable with NAs
+USArrests$region <- "NA" # create a new variable with NAs
 
 USArrests$region <- ifelse(grepl("Maine|New Hampshire|Vermont|Massachusetts|
 |Rhode Island|Connecticut|New York|New Jersey|
@@ -151,7 +151,7 @@ summary(as.factor(USArrests$region))
 # How does crime averages differ by region?------------------------------------------------------------------------------------------------------------------
 
 # FROM HERE ONWARDS, WE SHOWCASE A FEW OTHER BASE FUNCTIONS OF R
-# NEVETHELESS, WE WILL NOT BE USING THEM IN THIS COURSE
+# NEVERTHELESS, WE WILL NOT BE USING THEM IN THIS COURSE
 
 # Let's check the average urban population by region.
 aggregate(USArrests$UrbanPop, list(Region = USArrests$region), mean)
