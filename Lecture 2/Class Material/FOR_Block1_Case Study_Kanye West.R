@@ -5,7 +5,7 @@
 
 # Let's explore Kanye West's repertoire.
 
-# Load packages-----------------------------------------------------------------
+# Load packages----------------------------------------------------------------------------------------------------------------------------------------------
 library(rvest)
 library(dplyr)
 library(stringr)
@@ -14,10 +14,10 @@ library(ggplot2)
 library(tidyr)
 
 
-# Get URL and setup song nodes for scrapping ----------------------------------
+# Get URL and setup song nodes for scrapping ---------------------------------------------------------------------------------------------------------------
 
 #EVERYTHING UNTIL LINE 59 IS THE SETUP AND SCRAPPING CODE
-# WE ALREADY RUN IT AND SAVED THE DATA, SO YOU CAN JUMP TO LINE 60
+#WE ALREADY RUN IT AND SAVED THE DATA, SO YOU CAN JUMP TO LINE 60
 
 artist_url <- 'https://www.azlyrics.com/w/west.html'
 song_nodes <- read_html(artist_url) %>% # load the html
@@ -26,8 +26,10 @@ song_links <-  html_attr(song_nodes, name='href')
 song_links <- na.omit(ifelse(startsWith(song_links, "/lyrics/"),
                              song_links, NA_character_))
 
-# Scrape lyrics and albums-----------------------------------------------------
+# Scrape lyrics and albums----------------------------------------------------------------------------------------------------------------------------------
+
 Kanye_West <- data.frame()
+
 for(i in 1:length(song_links)) {
   # always nice to know where a long program is
   message(str_c('scraping ', i, ' of ', length(song_links) ))
@@ -57,14 +59,14 @@ for(i in 1:length(song_links)) {
 # saveRDS(Kanye_West, file = "Kanye_West.RDS")
 
 
-# Let's start by loading and cleaning the dataset -------------------------------
+# Let's start by loading and cleaning the dataset ------------------------------------------------------------------------------------------------------------
 
 setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 2/Class Material")
 Kanye_West <- readRDS("Kanye_West.RDS")
 
 # Checkout the dataset manually
-# There are songs in the dataset that do not come from Wests' albums, but from somewhere else
-# Let's mark only Wests' songs that are in his albums:
+# There are songs in the dataset that do not come from Wests' albums, but from somewhere else.
+# Let's mark only Wests' songs that are in West's albums:
 
 Kanye_West$album <- ifelse(startsWith(Kanye_West$album, "album"), Kanye_West$album, NA_character_)
 
@@ -83,18 +85,17 @@ Kanye_West <- na.omit(Kanye_West)
 
 # We can remove punctuation, change all to lower case, and remove signs.
 
-Kanye_West$lyrics <- tm::removePunctuation(Kanye_West$lyrics)
-Kanye_West$lyrics <- tolower(Kanye_West$lyrics)
+Kanye_West$lyrics <- tm::removePunctuation(Kanye_West$lyrics) #removing punctuation
+Kanye_West$lyrics <- tolower(Kanye_West$lyrics) #making all lowercase
 Kanye_West$lyrics <- gsub("\r|\n", " ", Kanye_West$lyrics) # sub markers
-Kanye_West$lyrics <- tm::removePunctuation(Kanye_West$lyrics)
 Kanye_West$title <- tm::removePunctuation(Kanye_West$title)
 
 # We can also clean the album titles
 
-Kanye_West$album <- substring(Kanye_West$album,9)
-Kanye_West$album <- substring(Kanye_West$album,1, nchar(Kanye_West$album)-8)
+Kanye_West$album <- substring(Kanye_West$album,9) #removing the up to the 9th character (album: )
+Kanye_West$album <- substring(Kanye_West$album,1, nchar(Kanye_West$album)-8) #removing the last eight characters (" (year))
 
-# Create a dictionary for religion and swearing: can you help?------------------
+# Create a dictionary for religion and swearing: can you help?-----------------------------------------------------------------------------------------------
 
 swear_words <- "fuck"
 religious_words <- "god"
@@ -103,7 +104,7 @@ religious_words <- "god"
 Kanye_West$swear_words <- stringr::str_count(Kanye_West$lyrics, swear_words)
 Kanye_West$religious_words <- stringr::str_count(Kanye_West$lyrics, religious_words)
 
-# Plot in by song and Album--------------------------------------------------------------
+# Plot in by song and Album-----------------------------------------------------------------------------------------------------------------------------------
 
 ggplot(Kanye_West, aes(year, swear_words)) +
   geom_point(aes(size = swear_words), color="gold") +
@@ -136,7 +137,7 @@ Kanye_West %>% group_by (album) %>%
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
     legend.position = "none")
 
-# But really, how has this changed in time?-------------------------------------
+# But really, how has this changed in time?------------------------------------------------------------------------------------------------------------------
 
 Kanye_West %>% group_by (year) %>%
   summarise(swear_words = sum(swear_words, na.rm = TRUE))%>%
@@ -179,7 +180,7 @@ Kanye_West %>%
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
     legend.position = "none")
 
-# Can we use religious vocabulary to "predict" 2019s Sunday Service?------------
+# Can we use religious vocabulary to "predict" 2019s Sunday Service?-----------------------------------------------------------------------------------------
 # how can we best visualize such an effect?
 
 Kanye_West %>%
@@ -203,7 +204,7 @@ Kanye_West %>%
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
     legend.position = "bottom")
 
-# Is there a Kim Kardashian effect?---------------------------------------------
+# Is there a Kim Kardashian effect?--------------------------------------------------------------------------------------------------------------------------
 # Kanye and Kim were a couple from 2011 to 2020
 
 # let's create a Kim variable
@@ -213,11 +214,6 @@ Kanye_West <- Kanye_West %>%
   mutate(kim_kardashian= case_when(year > 2010 & year <= 2020  ~ "With Kim",
                                    year < 2011  ~ "Before Kim",
                                    year >2019  ~ "After Kim"))
-
-Kanye_West$kim_kardashian <- factor(Kanye_West$kim_kardashian,                                    
-                   levels = c("Before Kim", "With Kim", "After Kim"))
-
-# Change ordering manually
 
 Kanye_West %>%
   gather("topic", "word_count", 5:6) %>%
@@ -238,4 +234,7 @@ Kanye_West %>%
     title = element_text(color = "black", size = 10, face = "bold"),
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
-    legend.position = "bottom")
+    legend.position = "bottom") #weird roder, can we change it?
+
+Kanye_West$kim_kardashian <- factor(Kanye_West$kim_kardashian,                                    
+                                    levels = c("Before Kim", "With Kim", "After Kim")) #Changes ordering manually, rerun the plot!
