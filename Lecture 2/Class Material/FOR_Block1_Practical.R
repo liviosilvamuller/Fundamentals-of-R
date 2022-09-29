@@ -39,6 +39,8 @@ View(USArrests)
 
 # What if we want a simple data summary?
 summary(USArrests)
+dim(USArrests)
+length(USArrests)
 
 # What if we want to see a row, or a column in the data?
 # We can use brackets []. 
@@ -54,6 +56,24 @@ USArrests[50,] # for values the last row but all columns
 
 # Ok, so the data is from 1973.
 # And some variables in numeric form, per 100000, and others in percent...
+
+#let's create two objects that store murder, and check their relationship
+
+florida_murder <- 14.5
+maine_murder <- 2.1
+arkansas_murder<- 8.8
+
+florida_murder == maine_murder #this is a logical test
+
+# let's create a vectors
+
+murder <- c(florida_murder, maine_murder, arkansas_murder)
+
+mean(murder)
+median(murder)
+
+mean(USArrests$Murder)
+median(USArrests$Murder)
 
 # Complementing the Data------------------------------------------------------------------------------------------------------------------------------------
 

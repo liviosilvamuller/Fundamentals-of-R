@@ -3,7 +3,7 @@
 # Authors: Henrique Sposito & Livio Silva-Muller
 # Date: September 2022
 
-setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 2/Material")
+setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 2/Homework")
 
 #Exercise 1: Animal longevity dataset-------------------------------------------
 
