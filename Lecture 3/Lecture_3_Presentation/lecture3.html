@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Fundamentals of R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Henrique Sposito and Livio Silva-Muller" />
+    <meta name="date" content="2022-10-07" />
+    <script src="lecture3_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture3_files/remark-css/default.css" rel="stylesheet" />
+    <link href="lecture3_files/remark-css/ninjutsu.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/iheid-xaringan-style.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Fundamentals of R
+]
+.subtitle[
+## Block 2: Cleaning and Wrangling Data
+]
+.author[
+### <large>Henrique Sposito and Livio Silva-Muller</large>
+]
+.date[
+### <small>October 7, 2022<small>
+]
+
+---
+
+
+
+
+
+class: split two
+
+# What did we learn last week?
+
+--
+
+.pull-left[
+
+Conceptually:
+
+- What are objects?
+
+- What are classes?
+
+- What are data structures?
+
+
+
+]
+
+--
+
+.pull-right[
+
+Practically:
+
+- How to use base R
+  - Assign operator (&lt;-)
+  - Extract operator ($)
+  - Logic operators (==, !=, &gt;=...)
+  - Conditions (&amp;, /,|)
+  - brackets [1,3] 
+  - class() 
+  - dim(), length(), summary()
+  - data.frame()
+  - ifelse()
+  - grepl()
+
+]
+
+---
+
+class: split two
+
+# Homework for today
+
+.pull-left[
+
+*Let's start by going through the homework together!*
+
+- Common issues
+
+
+
+- Any other general questions?
+
+]
+
+.pull.right[
+
+![:scale 40%](assets/images/dog.png)
+
+
+
+]
+
+---
+
+class: split two
+
+![:scale 40%](assets/images/roadmap.png)
+.pull-left[
+## Lecture:
+
+  - Tidyverse, tidy-thinking, tidy-data
+  - From untidy to tidy
+  - From tidy to findings
+]
+
+.pull-right[
+## Practical:
+
+  - tidyr: cleaning
+  - dplyr: wrangling
+]
+
+
+- Case study: **How has the Brazilian Amazon been constructed as a problem?**
+
+---
+
+# What is the tidyverse? (1/2)
+
+
+Universe of tidiness? From the [´{tidyverse}´](https://www.tidyverse.org/) website:
+
+
+&gt; The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+
+
+![:scale 40%](assets/images/tidyverse.png)
+
+---
+
+# What is the tidyverse? (2/2)
+
+## Installing and loading the tidyverse:
+
+
+```r
+install.packages("tidyverse")
+```
+
+
+```r
+library(tidyverse)
+```
+
+## What is in the tidyverse?
+
+![:scale 50%](assets/images/core_tidy.png)
+
+---
+
+# Tidy data (1/4)
+
+  - What is tidy data?
+    - Each column is one variable.
+    - Each row is one case/observation.
+    - Each cell stores one value.
+ 
+![:scale 100%](assets/images/tidy_exam.png)
+
+---
+
+# Tidy data (2/4)
+
+
+##Is this tidy?
+
+| Animal | Conversion  |
+| --- | --- | 
+| Domestic dog | 24.0 / 5.10 |
+| Domestic cat | 30.0 / 4.08 |
+| American alligator | 77.0 / 1.59 | 
+| Golden hamster | 3.9 / 31.41 |
+| King penguin | 26.0 /  4.71 |
+
+--
+
+No!  Cells in the second column contain two values.
+
+.fifty[Author: [Fabio Votta](https://github.com/favstats)]
+
+---
+
+# Tidy data (3/4)
+
+
+##Is this tidy?
+
+| Animal | Type | Value  |
+| --- | --- | --- | 
+| Domestic dog | lifespan | 24.0 |
+| Domestic dog | ratio | 5.10 |
+| Domestic cat | lifespan | 30.0 |
+| Domestic cat | ratio | 4.08 |
+| American alligator | lifespan | 77.0 | 
+| American alligator | ratio | 1.59 |
+
+--
+
+No!  The second column contains two variables.
+
+.fifty[Author: [Fabio Votta](https://github.com/favstats)]
+
+---
+
+# Tidy data:one last example (4/4)
+
+
+## from untidy...
+
+
+| country | 1999 | 2000  |
+| --- | --- | --- | 
+| Afghanistan | 19987071 | 20595360 |
+| Brazil | 172006362 | 174504898 |
+
+--
+
+##...to tidy!
+
+| country | year | population  |
+| --- | --- | --- | 
+| Afghanistan | 1999 | 19987071 |
+| Afghanistan | 2000 | 20595360 |
+| Brazil | 1999 | 172006362 |
+| Brazil | 2000 | 174504898 |
+---
+
+# So, how we get to tidy data?
+
+## We use [´{tidyr}´](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
+
+- `pivot_wider()` extends data by tidying data with more than one variable per column.
+- `pivot_longer()` extends data by tidying rows that contain variables.
+  
+  
+- `separate()` separates data by tidying columns with two variables or values.
+  - `unite()` does the opposite
+  
+## Let's test this in the following slides.
+---
+
+# Here is some untidy data from earlier
+
+
+
+
+
+```r
+untidy_population_dat
+```
+
+```
+## # A tibble: 3 × 3
+##   country                     `1999`     `2000`
+##   &lt;chr&gt;                        &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Afghanistan-middle east   19987071   20595360
+## 2 Brazil-south america     172006362  174504898
+## 3 China-eastern asia      1272915272 1280428583
+```
+
+---
+
+# `separate()` and `unite()`
+
+
+```r
+untidy_population_dat
+```
+
+```
+## # A tibble: 3 × 3
+##   country                     `1999`     `2000`
+##   &lt;chr&gt;                        &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Afghanistan-middle east   19987071   20595360
+## 2 Brazil-south america     172006362  174504898
+## 3 China-eastern asia      1272915272 1280428583
+```
+
+
+```r
+tidy_population &lt;- separate (untidy_population_dat, country, sep="-", into=c("country", "region"))
+```
+
+--
+
+
+```r
+tidy_population
+```
+
+```
+## # A tibble: 3 × 4
+##   country     region            `1999`     `2000`
+##   &lt;chr&gt;       &lt;chr&gt;              &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Afghanistan middle east     19987071   20595360
+## 2 Brazil      south america  172006362  174504898
+## 3 China       eastern asia  1272915272 1280428583
+```
+---
+
+# `pivot_longer()`
+
+- `pivot_longer()` extends  data by tidying rows that contain variables.
+ - this means more observations, i.e. *longer* dataset.
+
+
+```r
+tidy_population &lt;- pivot_longer(tidy_population,cols=c("1999","2000"), names_to="year", values_to = "population")
+```
+
+
+```r
+tidy_population
+```
+
+```
+## # A tibble: 6 × 4
+##   country     region        year  population
+##   &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt;
+## 1 Afghanistan middle east   1999    19987071
+## 2 Afghanistan middle east   2000    20595360
+## 3 Brazil      south america 1999   172006362
+## 4 Brazil      south america 2000   174504898
+## 5 China       eastern asia  1999  1272915272
+## 6 China       eastern asia  2000  1280428583
+```
+---
+
+# `pivot_wider()`
+
+- `pivot_wider()` extends (horizontally) data by tidying data with more than one variable per column.
+ - this means more variables, i.e. *wider*.
+
+.pull-left[
+
+```r
+untidy_food
+```
+
+```
+## # A tibble: 6 × 3
+##   lecturer food     grade
+##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
+## 1 henrique brocolli     2
+## 2 livio    brocolli     8
+## 3 henrique hot dogs     9
+## 4 livio    hot dogs     5
+## 5 henrique beer        10
+## 6 livio    beer        10
+```
+]
+
+--
+
+.pull-right[
+
+```r
+tidy_food &lt;- pivot_wider(untidy_food,names_from=food, values_from=grade)
+tidy_food
+```
+
+```
+## # A tibble: 2 × 4
+##   lecturer brocolli `hot dogs`  beer
+##   &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+## 1 henrique        2          9    10
+## 2 livio           8          5    10
+```
+
+
+]
+
+
+
+
+---
+# Tidy, tidy, tidy...
+
+![:scale 80%](assets/images/tidy.png)
+
+.fifty[Artist: [Allison Horst](https://github.com/allisonhorst)].
+
+---
+class: split two
+
+# ...but, a note of caution:
+
+.pull-left[
+&lt;img src = "https://c.tenor.com/cnIm8CdVodgAAAAC/shark-smile.gif" /&gt;
+]
+
+.pull-right[
+
+-Tidy data is great for working with tidy packages.
+
+-Nevertheless, tidying data might take sometime.
+
+-Do you really need to separate first and last name in two columns?
+
+]
+--
+
+##Think about it conceptually before tidying everything!
+
+---
+
+# Now that things are tidy (or tidier), it's time to wrangle
+
+--
+
+By wrangling, we mean manipulating, and for this we use [´{dplyr}´](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
+--
+
+&gt; The dplyr package is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges: creating,adding, picking, reducing, and changing variables.
+
+
+---
+
+# Select (dplyr verbs 1/7)
+
+`select ()` selects variables in the dataframe.
+
+
+```r
+lecturers &lt;- c("Henrique", "Livio") # character
+age &lt;- c(81, 18) # numeric
+speaks_portuguese &lt;- c(TRUE, TRUE) # logical
+```
+
+---
+# Filter (dplyr verbs 2/7)
+
+`filter ()` subsets data frame by a condition in the observations.
+
+
+```r
+lecturers &lt;- c("Henrique", "Livio") # character
+age &lt;- c(81, 18) # numeric
+speaks_portuguese &lt;- c(TRUE, TRUE) # logical
+```
+
+---
+# Mutate (dplyr verbs 3/7)
+
+`mutate ()` creates new variables.
+
+
+
+```r
+lecturers &lt;- c("Henrique", "Livio") # character
+age &lt;- c(81, 18) # numeric
+speaks_portuguese &lt;- c(TRUE, TRUE) # logical
+```
+
+
+---
+# Group_by and Summarise (dplyr verbs 4/7)
+
+`group_by()` groups data based on a characteristic to subsequently perform certain operations.
+`summarise()` creates a new dataframe by combining grouped variables.
+
+
+
+```r
+lecturers &lt;- c("Henrique", "Livio") # character
+age &lt;- c(81, 18) # numeric
+speaks_portuguese &lt;- c(TRUE, TRUE) # logical
+```
+
+---
+# The Pipe Operator `%&gt;%` (6/7)
+
+---
+# Joining things (dplyr verbs 7/7)
+
+---
+# and many others that we cannot cover here....
+
+
+---
+
+# Base vs. Tidy (re-visited)
+
+- All operators we cover today here and in the practice exercises are base R.
+
+- In reality, most users should use both, whatever is easier and more intuitive to you!
+
+- [Above all, teaching base R facilitates comprehension of how R, as a software and programming language, works for beginners](https://github.com/matloff/TidyverseSkeptic/)
+
+---
+
+class: center middle
+
+![100%](https://media.giphy.com/media/XHVmD4RyXgSjd8aUMb/giphy-downsized-large.gif)
+
+---
+
+# References
+
+For more cool and informative slides about R stuff, see [favstats](https://favstats.github.io/ds3_r_intro/#1)
+
+Douglas, A., Ross, D., Mancini, F., Couto, A. &amp; Lusseau, D. (2022). An Introduction to R
+
+Mesquita, E. B., &amp; Fowler, A. (2021). Thinking clearly with data: A guide to quantitative reasoning and
+analysis. Princeton University Press.
+
+NULL
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="assets/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>`"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

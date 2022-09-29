@@ -1,0 +1,26 @@
+refs	::	myBib
+unnamed-chunk-1	install.packages
+unnamed-chunk-2	library
+unnamed-chunk-3	library	read_excel
+unnamed-chunk-4	untidy_population_dat
+unnamed-chunk-5	untidy_population_dat
+unnamed-chunk-6	c	country	separate	untidy_population_dat
+unnamed-chunk-7	tidy_population
+unnamed-chunk-8	c	pivot_longer
+unnamed-chunk-9	tidy_population
+unnamed-chunk-10	untidy_food
+unnamed-chunk-11	food	grade	pivot_wider	untidy_food
+unnamed-chunk-12	c
+unnamed-chunk-13	c
+unnamed-chunk-14	c
+unnamed-chunk-15	c
+unnamed-chunk-16	c
+unnamed-chunk-17	!=	&	<	$	course
+unnamed-chunk-18	ifelse	no	test	yes
+unnamed-chunk-19	>	$	$<-	ifelse
+unnamed-chunk-20	$	$<-	grepl	gsub
+unnamed-chunk-21	course	summary
+unnamed-chunk-22	$	$<-	c	unique
+unnamed-chunk-23	c	mean	median
+unnamed-chunk-24	c	mean	median
+unnamed-chunk-25	c	mean	median
