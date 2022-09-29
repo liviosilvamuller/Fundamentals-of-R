@@ -1,17 +1,18 @@
 # Title: Fundamentals of R
 # Purpose: Block 1 - Case Study: GAPMINDER
 # Authors: Henrique Sposito & Livio Silva-Muller
-# Date: September 2022
+# Date: 30 September 2022
 
-# Why some continents and countries have a higher life expectancy than others? 
-# And how has this changed in time across countries?
+# Mind the GAP, with GAPMINDER
+# Do you know them?
+# https://www.gapminder.org/
 
 # Investigate the DATA ---------------------------------------------------------
 
 # Several other R packages have datasets included.
 # One of these is gapminder, let's download, load, and see the data
 # available in the package.
-install.packages("gapminder")
+# install.packages("gapminder")
 library(gapminder)
 # But we are not sure what the package really is, are we?
 # We can use the "?" here or, better, find the package manual!
@@ -210,9 +211,9 @@ country1957_2007[132:142, c(1,11)]
 # but it is not so good for plotting... (as you can see)
 # Let's just try ploting life expectancy by continent
 # with ggplot2!
-# Remember to doanload and load the ggplot2 R package.
+# Remember to doanload and load the ggplot2 R package!
 library(ggplot2)
-ggplot(gapminder, aes(x = year, y = lifeExp, color = continent)) +
+ggplot(gapminder::gapminder, aes(x = year, y = lifeExp, color = continent)) +
   geom_smooth(se=FALSE) + 
   labs(title = "Life expectancy by continent from 1957 to 2007",
        x = "Year",
@@ -230,11 +231,13 @@ ggplot(gapminder, aes(x = year, y = lifeExp, color = continent)) +
 # Let's bring all together here!
 # The dslabs package contains a bigger sample of the GAPMINDER
 # foundation data! Let's work with it here!
-# Remember to download and load the package below!
+# Remember to download the package below!
+# install.packages("gapminder")
 # Notice, I do not work with base R here for the visuals.
 # Why do you think that is?
-library(dslabs)
 gapminder_ext <- dslabs::gapminder
+# using the "::" we can access parts of the package instead of
+# loading the whole package!
 # Calculate dollars per day per capita for all observations (rows)
 gapminder_ext$dollars_day <- gapminder_ext$gdp/gapminder_ext$population/365
 # Make sure ggplot2 is installed and loaded!
@@ -269,8 +272,11 @@ ggplot(dollars_per_day_ev, aes(dollars_day, reorder(country, dollars_day),
 # How can we make this plot better?
 
 # Let's see for one continent only
-ggplot(filter(dollars_per_day_ev, region == "South America" |
-                region == "Central America" | region == "Northern America"),
+dollars_per_day_ev_la <- subset(dollars_per_day_ev,
+                                region == "South America" |
+                                  region == "Central America" |
+                                  region == "Northern America")
+ggplot(dollars_per_day_ev_la,
        aes(dollars_day, reorder(country, dollars_day), Fill = country)) +
   geom_point(aes(color = country)) +
   geom_line(aes(color = country)) +
