@@ -60,17 +60,22 @@ Conceptually:
 
 Practically:
 
-- How to use base R
-  - Assign operator (&lt;-)
-  - Extract operator ($)
-  - Logic operators (==, !=, &gt;=...)
-  - Conditions (&amp;, /,|)
-  - brackets [1,3] 
-  - class() 
-  - dim(), length(), summary()
-  - data.frame()
-  - ifelse()
-  - grepl()
+
+```r
+# &lt;- the assing operator
+# $  the extract operator
+# == , !=, =&lt;, &gt;=  logical operators
+# &amp;, /, | conditions
+# [1,3] #brackets  
+class()
+dim() 
+length() 
+summary()
+data.frame()
+ifelse()
+grepl()
+```
+
 
 ]
 
@@ -166,6 +171,7 @@ library(tidyverse)
     - Each cell stores one value.
  
 ![:scale 100%](assets/images/tidy_exam.png)
+.fifty[Check: [Garrett Grolemund's post for a great explanation of tidy data](https://garrettgman.github.io/tidying/)]
 
 ---
 
@@ -184,7 +190,7 @@ library(tidyverse)
 
 --
 
-No!  Cells in the second column contain two values.
+No! Cells in the second column contain two values.
 
 .fifty[Author: [Fabio Votta](https://github.com/favstats)]
 
@@ -206,7 +212,7 @@ No!  Cells in the second column contain two values.
 
 --
 
-No!  The second column contains two variables.
+No! The second column contains two variables.
 
 .fifty[Author: [Fabio Votta](https://github.com/favstats)]
 
@@ -239,7 +245,7 @@ No!  The second column contains two variables.
 
 ## We use [´{tidyr}´](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
 
-- `pivot_wider()` extends data by tidying data with more than one variable per column.
+- `pivot_wider()` extends data by tidying columns with more than one variable.
 - `pivot_longer()` extends data by tidying rows that contain variables.
   
   
@@ -338,7 +344,7 @@ tidy_population
 
 # `pivot_wider()`
 
-- `pivot_wider()` extends (horizontally) data by tidying data with more than one variable per column.
+- `pivot_wider()` extends data by tidying columns with more than one variable.
  - this means more variables, i.e. *wider*.
 
 .pull-left[
@@ -421,22 +427,59 @@ class: split two
 By wrangling, we mean manipulating, and for this we use [´{dplyr}´](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
 --
 
-&gt; The dplyr package is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges: creating,adding, picking, reducing, and changing variables.
+&gt; The dplyr package is a **grammar of data manipulation**, providing a consistent set of verbs that help you solve the most common data manipulation challenges: creating,adding, picking, reducing, and changing variables.
+
+
 
 
 ---
+##Let's work with dataset on the income of international organizations!
 
+
+```r
+head(io_income)
+```
+
+```
+## # A tibble: 6 × 5
+##    year donor      type_donor amount_nominal issue_area                       
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                            
+## 1  2007 Italy      public          19074876  Humanitarian Law and Action      
+## 2  2015 Denmark    public          14863463. Health                           
+## 3  2011 Spain      public           4779105. Labour, Economic Affairs, Science
+## 4  2020 Italy      public          32570000  Health                           
+## 5  2018 Madagascar public             11667. Labour, Economic Affairs, Science
+## 6  2011 India      public             50000  Humanitarian Law and Action
+```
+
+---
 # Select (dplyr verbs 1/7)
 
 `select ()` selects variables in the dataframe.
 
 
+
+
 ```r
-lecturers &lt;- c("Henrique", "Livio") # character
-age &lt;- c(81, 18) # numeric
-speaks_portuguese &lt;- c(TRUE, TRUE) # logical
+io_income_select &lt;- select(io_income, donor, type_donor)
 ```
 
+
+```r
+head (io_income_select)
+```
+
+```
+## # A tibble: 6 × 2
+##   donor      type_donor
+##   &lt;chr&gt;      &lt;chr&gt;     
+## 1 Italy      public    
+## 2 Denmark    public    
+## 3 Spain      public    
+## 4 Italy      public    
+## 5 Madagascar public    
+## 6 India      public
+```
 ---
 # Filter (dplyr verbs 2/7)
 

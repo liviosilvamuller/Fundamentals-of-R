@@ -75,13 +75,17 @@ Conceptually:
 
 Practically:
 
-- How to set the working directory
+```{r echo=TRUE, eval=FALSE}
+setwd()
+install.packages()
+library()
+read_csv()
+View()
+# +, -, *, / arithmetic operations.
+# ? asking for help.
+# <- the assign operator.
 
-- How to download and load r packages
-
-- How to save objects in the environment
-
-- How to find help within R
+```
 
 - Remember: R messages, warnings, and error are informative, read them!
 
