@@ -292,7 +292,7 @@ class: split two
 
 # Lists (data structures 3/4)
 
-*lists*: group together R objects of diverse classes or dimensions
+*Lists*: group together R objects of diverse classes or dimensions
 
 .pull-left[
 ```{r}
