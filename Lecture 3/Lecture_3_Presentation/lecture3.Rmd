@@ -74,7 +74,7 @@ Conceptually:
 Practically:
 
 ```{r echo=TRUE, eval=FALSE}
-# <- the assing operator
+# <- the assign operator
 # $  the extract operator
 # == , !=, =<, >=  logical operators
 # &, /, | conditions
@@ -84,6 +84,9 @@ dim()
 length() 
 summary()
 data.frame()
+median()
+mean()
+subset()
 ifelse()
 grepl()
 ```
@@ -286,7 +289,7 @@ untidy_population_dat
 
 # `separate()` and `unite()`
 
-```{r}
+```{r echo=FALSE}
 
 untidy_population_dat
 
@@ -300,7 +303,7 @@ tidy_population <- separate (untidy_population_dat, country, sep="-", into=c("co
 
 --
 
-```{r}
+```{r echo=FALSE}
 
 tidy_population
 
@@ -317,8 +320,8 @@ tidy_population
 tidy_population <- pivot_longer(tidy_population,cols=c("1999","2000"), names_to="year", values_to = "population")
 
 ```
-
-```{r}
+--
+```{r echo=FALSE}
 
 tidy_population
 
@@ -344,15 +347,18 @@ untidy_food
 ```{r}
 
 tidy_food <- pivot_wider(untidy_food,names_from=food, values_from=grade)
+
+```
+
+--
+
+```{r echo=FALSE}
+
 tidy_food
 
 ```
 
-
 ]
-
-
-
 
 ---
 # Tidy, tidy, tidy...
@@ -400,6 +406,8 @@ By wrangling, we mean manipulating, and for this we use [´{dplyr}´](https://gi
 library(readr)
 
 io_income <- read_csv("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/io_income_rs.csv")
+
+
 library(tidyverse)
 ```
 
@@ -422,11 +430,17 @@ head(io_income)
 io_income_select <- select(io_income, donor, type_donor)
 
 ```
-
+--
 ```{r}
 
 head (io_income_select)
 
+```
+---
+##...glimpse the dataset
+
+```{r echo=FALSE}
+head(io_income)
 ```
 ---
 # Filter (dplyr verbs 2/7)
@@ -434,11 +448,19 @@ head (io_income_select)
 `filter ()` subsets data frame by a condition in the observations.
 
 ```{r}
-lecturers <- c("Henrique", "Livio") # character
-age <- c(81, 18) # numeric
-speaks_portuguese <- c(TRUE, TRUE) # logical
+io_income_filter <- filter(io_income, donor=="Switzerland")
+```
+--
+```{r echo=FALSE}
+io_income_filter
 ```
 
+---
+##...glimpse the dataset
+
+```{r echo=FALSE}
+head(io_income)
+```
 ---
 # Mutate (dplyr verbs 3/7)
 
@@ -446,12 +468,19 @@ speaks_portuguese <- c(TRUE, TRUE) # logical
 
 
 ```{r}
-lecturers <- c("Henrique", "Livio") # character
-age <- c(81, 18) # numeric
-speaks_portuguese <- c(TRUE, TRUE) # logical
+io_income_mutate <- mutate(io_income,thousands_USD=amount_nominal/1000)
+```
+-- 
+```{r echo=FALSE}
+io_income_mutate
 ```
 
+---
+##...glimpse the dataset
 
+```{r}
+head(io_income)
+```
 ---
 # Group_by and Summarise (dplyr verbs 4/7)
 
@@ -460,11 +489,15 @@ speaks_portuguese <- c(TRUE, TRUE) # logical
 
 
 ```{r}
-lecturers <- c("Henrique", "Livio") # character
-age <- c(81, 18) # numeric
-speaks_portuguese <- c(TRUE, TRUE) # logical
-```
 
+io_income_grouped<- group_by(io_income, issue_area)
+io_income_summarised <- summarise(io_income_grouped, amount_nominal = sum(amount_nominal, na.rm = TRUE))
+```
+--
+```{r echo=FALSE}
+
+io_income_summarised
+```
 ---
 # The Pipe Operator `%>%` (6/7)
 

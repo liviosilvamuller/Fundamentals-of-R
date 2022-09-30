@@ -11,16 +11,17 @@ unnamed-chunk-9	tidy_population
 unnamed-chunk-10	
 unnamed-chunk-11	
 unnamed-chunk-12	tidy_food
-unnamed-chunk-13	io_income
-unnamed-chunk-14	
-unnamed-chunk-15	io_income_select
-unnamed-chunk-16	
-unnamed-chunk-17	age	lecturers	speaks_portuguese
-unnamed-chunk-18	age	lecturers	speaks_portuguese
-unnamed-chunk-19	age	lecturers	speaks_portuguese
-unnamed-chunk-20	course
+unnamed-chunk-13	
+unnamed-chunk-14	io_income
+unnamed-chunk-15	
+unnamed-chunk-16	io_income_select
+unnamed-chunk-17	
+unnamed-chunk-18	
+unnamed-chunk-19	io_income_filter
+unnamed-chunk-20	
 unnamed-chunk-21	
-unnamed-chunk-22	course
+unnamed-chunk-22	io_income_mutate
 unnamed-chunk-23	
 unnamed-chunk-24	
-unnamed-chunk-25	
+unnamed-chunk-25	io_income_grouped	io_income_summarised
+unnamed-chunk-26	
