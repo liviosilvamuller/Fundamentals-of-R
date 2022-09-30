@@ -97,8 +97,8 @@ Kanye_West$album <- substring(Kanye_West$album,1, nchar(Kanye_West$album)-8) #re
 
 # Create a dictionary for religion and swearing: can you help?-----------------------------------------------------------------------------------------------
 
-swear_words <- "fuck|bitch|pussy|shit|dick"
-religious_words <- "god|bible|jesus|hell|heaven"
+swear_words <- "fuck|bitch|pussy|shit|dick|ass"
+religious_words <- "god|bible|jesus|hell|heaven|lord"
 
 # Count appearances in songs and add as variable in data.
 Kanye_West$swear_words <- stringr::str_count(Kanye_West$lyrics, swear_words)
