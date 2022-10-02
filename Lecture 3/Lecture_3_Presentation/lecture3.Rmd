@@ -78,7 +78,7 @@ Practically:
 # $  the extract operator
 # == , !=, =<, >=  logical operators
 # &, /, | conditions
-# [1,3] #brackets  
+# [1,3] brackets  
 class()
 dim() 
 length() 
@@ -160,7 +160,7 @@ Universe of tidiness? From the [´{tidyverse}´](https://www.tidyverse.org/) web
 
 # What is the tidyverse? (2/2)
 
-## Installing and loading the tidyverse:
+## Installing and loading the tidyverse: *be careful!*
 
 ```{r, eval = F}
 install.packages("tidyverse")
@@ -170,7 +170,7 @@ install.packages("tidyverse")
 library(tidyverse)
 ```
 
-## What is in the tidyverse?
+## What is in the tidyverse? *Eight different packages!*
 
 ![:scale 50%](assets/images/core_tidy.png)
 
@@ -182,9 +182,9 @@ library(tidyverse)
     - Each column is one variable.
     - Each row is one case/observation.
     - Each cell stores one value.
- 
-![:scale 100%](assets/images/tidy_exam.png)
-.fifty[Check: [Garrett Grolemund's post for a great explanation of tidy data](https://garrettgman.github.io/tidying/)]
+![:scale 80%](assets/images/tidy_exam.png)
+
+.fifty[Check: [Hadley Wickham’s dissertation paper that introduced tidy data.]( https://www.jstatsoft.org/article/view/v059i10)]
 
 ---
 
@@ -407,8 +407,8 @@ library(readr)
 
 io_income <- read_csv("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/io_income_rs.csv")
 
+library(dplyr)
 
-library(tidyverse)
 ```
 
 ---
@@ -419,7 +419,7 @@ head(io_income)
 ```
 
 ---
-# Select (dplyr verbs 1/7)
+# Select (dplyr verbs 1/5)
 
 `select ()` selects variables in the dataframe.
 
@@ -443,7 +443,7 @@ head (io_income_select)
 head(io_income)
 ```
 ---
-# Filter (dplyr verbs 2/7)
+# Filter (dplyr verbs 2/5)
 
 `filter ()` subsets data frame by a condition in the observations.
 
@@ -462,7 +462,7 @@ io_income_filter
 head(io_income)
 ```
 ---
-# Mutate (dplyr verbs 3/7)
+# Mutate (dplyr verbs 3/5)
 
 `mutate ()` creates new variables.
 
@@ -482,7 +482,7 @@ io_income_mutate
 head(io_income)
 ```
 ---
-# Group_by and Summarise (dplyr verbs 4/7)
+# Group_by and Summarise (dplyr verbs 4/5)
 
 `group_by()` groups data based on a characteristic to subsequently perform certain operations.
 `summarise()` creates a new dataframe by combining grouped variables.
@@ -490,33 +490,131 @@ head(io_income)
 
 ```{r}
 
-io_income_grouped<- group_by(io_income, issue_area)
+io_income_grouped<- group_by(io_income, type_donor)
+
 io_income_summarised <- summarise(io_income_grouped, amount_nominal = sum(amount_nominal, na.rm = TRUE))
 ```
 --
 ```{r echo=FALSE}
-
 io_income_summarised
 ```
 ---
-# The Pipe Operator `%>%` (6/7)
+# Joining things (dplyr verbs 5/5)
 
 ---
-# Joining things (dplyr verbs 7/7)
+
+# and many others dplyr verbs that we cannot cover here....
+
+```{r echo=TRUE, eval=FALSE}
+
+arrange() #orders row by values
+rename() #renames variables
+distinct() #removes duplicates
+sample_n() #draws a random sample
+slice() #selects rows by position
+top_n() #selects a order head of variable
+count() #counts number of rows with unique values
+...
+
+```
 
 ---
-# and many others that we cannot cover here....
+# The Pipe Operator `%>%` (1/3)
 
+- So far, we have been doing *object-oriented programming*.
+
+- This means we assign (<-) the result of an operation to an object.
+
+- We then operate on the newly created object.
+
+```{r}
+io_income_filtered<- filter(io_income, year > "2018")
+
+io_income_grouped2 <- group_by(io_income_filtered, year)
+
+io_income_summarised2 <- summarise(io_income_grouped2, amount_nominal = sum(amount_nominal, na.rm = TRUE))
+```
+--
+```{r echo=FALSE}
+io_income_summarised2
+```
 
 ---
+# The Pipe Operator `%>%` (2/3)
+
+- The pipe operator (%>%) changes this logic.
+
+- It takes the output of one function and passes it into another function as an argument.
+
+- This is why we call it *functional-programming*.
+
+```{r}
+
+io_income %>%
+filter(year > "2018") %>%
+group_by(year) %>%
+summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
+
+```
+
+.fifty[Check: [Plumbers, chains, and famous painters: The (updated) history of the pipe operator in R]( http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/)].
+
+---
+class: split two
+
+# The Pipe Operator `%>%` (3/3)
+
+.pull-left[
+
+```{r}
+
+io_income_filtered<- filter(io_income, year > "2018")
+io_income_grouped2 <- group_by(io_income_filtered, year)
+io_income_summarised2 <- summarise(io_income_grouped2, amount_nominal = sum(amount_nominal, na.rm = TRUE))
+io_income_summarised2
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+
+io_income %>%
+filter(year > "2018") %>%
+group_by(year) %>%
+summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
+
+```
+
+]
+
+---
+
+class: split two
 
 # Base vs. Tidy (re-visited)
 
-- All operators we cover today here and in the practice exercises are base R.
+.pull-left[
 
-- In reality, most users should use both, whatever is easier and more intuitive to you!
+- Tidy data and piping are both *intuitive* and *powerful*.
 
-- [Above all, teaching base R facilitates comprehension of how R, as a software and programming language, works for beginners](https://github.com/matloff/TidyverseSkeptic/)
+- All packages in the tidyverse are optimized for tidy data and piping.
+
+- Some packages outside the tidyverse were also developed within the tidy paradigm.
+
+- Nevertheless, many *important* packages and other programming softwares operate outside the logic of tidy.
+
+- [While we like tidy, a better programmer knows both. ](https://github.com/matloff/TidyverseSkeptic/)
+
+]
+
+.pull.right[
+
+![:scale 50%](assets/images/problems.png)
+
+]
 
 ---
 

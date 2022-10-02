@@ -66,7 +66,7 @@ Practically:
 # $  the extract operator
 # == , !=, =&lt;, &gt;=  logical operators
 # &amp;, /, | conditions
-# [1,3] #brackets  
+# [1,3] brackets  
 class()
 dim() 
 length() 
@@ -148,7 +148,7 @@ Universe of tidiness? From the [´{tidyverse}´](https://www.tidyverse.org/) web
 
 # What is the tidyverse? (2/2)
 
-## Installing and loading the tidyverse:
+## Installing and loading the tidyverse: *be careful!*
 
 
 ```r
@@ -160,7 +160,7 @@ install.packages("tidyverse")
 library(tidyverse)
 ```
 
-## What is in the tidyverse?
+## What is in the tidyverse? *Eight different packages!*
 
 ![:scale 50%](assets/images/core_tidy.png)
 
@@ -172,9 +172,9 @@ library(tidyverse)
     - Each column is one variable.
     - Each row is one case/observation.
     - Each cell stores one value.
- 
-![:scale 100%](assets/images/tidy_exam.png)
-.fifty[Check: [Garrett Grolemund's post for a great explanation of tidy data](https://garrettgman.github.io/tidying/)]
+![:scale 80%](assets/images/tidy_exam.png)
+
+.fifty[Check: [Hadley Wickham’s dissertation paper that introduced tidy data.]( https://www.jstatsoft.org/article/view/v059i10)]
 
 ---
 
@@ -430,19 +430,19 @@ head(io_income)
 ```
 
 ```
-## # A tibble: 6 × 5
-##    year donor      type_donor amount_nominal issue_area                       
-##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                            
-## 1  2007 Italy      public          19074876  Humanitarian Law and Action      
-## 2  2015 Denmark    public          14863463. Health                           
-## 3  2011 Spain      public           4779105. Labour, Economic Affairs, Science
-## 4  2020 Italy      public          32570000  Health                           
-## 5  2018 Madagascar public             11667. Labour, Economic Affairs, Science
-## 6  2011 India      public             50000  Humanitarian Law and Action
+## # A tibble: 6 × 4
+##    year donor      type_donor amount_nominal
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
+## 1  2007 Italy      public          19074876 
+## 2  2015 Denmark    public          14863463.
+## 3  2011 Spain      public           4779105.
+## 4  2020 Italy      public          32570000 
+## 5  2018 Madagascar public             11667.
+## 6  2011 India      public             50000
 ```
 
 ---
-# Select (dplyr verbs 1/7)
+# Select (dplyr verbs 1/5)
 
 `select ()` selects variables in the dataframe.
 
@@ -474,18 +474,18 @@ head (io_income_select)
 
 
 ```
-## # A tibble: 6 × 5
-##    year donor      type_donor amount_nominal issue_area                       
-##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                            
-## 1  2007 Italy      public          19074876  Humanitarian Law and Action      
-## 2  2015 Denmark    public          14863463. Health                           
-## 3  2011 Spain      public           4779105. Labour, Economic Affairs, Science
-## 4  2020 Italy      public          32570000  Health                           
-## 5  2018 Madagascar public             11667. Labour, Economic Affairs, Science
-## 6  2011 India      public             50000  Humanitarian Law and Action
+## # A tibble: 6 × 4
+##    year donor      type_donor amount_nominal
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
+## 1  2007 Italy      public          19074876 
+## 2  2015 Denmark    public          14863463.
+## 3  2011 Spain      public           4779105.
+## 4  2020 Italy      public          32570000 
+## 5  2018 Madagascar public             11667.
+## 6  2011 India      public             50000
 ```
 ---
-# Filter (dplyr verbs 2/7)
+# Filter (dplyr verbs 2/5)
 
 `filter ()` subsets data frame by a condition in the observations.
 
@@ -496,19 +496,19 @@ io_income_filter &lt;- filter(io_income, donor=="Switzerland")
 --
 
 ```
-## # A tibble: 91 × 5
-##     year donor       type_donor amount_nominal issue_area                       
-##    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                            
-##  1  2016 Switzerland public            372314. Humanitarian Law and Action      
-##  2  2013 Switzerland public           4415632. Labour, Economic Affairs, Science
-##  3  2020 Switzerland public          22579000  Health                           
-##  4  2020 Switzerland public              5858. Humanitarian Law and Action      
-##  5  2013 Switzerland public           2751917. Peace                            
-##  6  2017 Switzerland public            370569. Humanitarian Law and Action      
-##  7  2018 Switzerland public           2819624. Peace                            
-##  8  2016 Switzerland public              5074. Humanitarian Law and Action      
-##  9  2005 Switzerland public          74569884. Humanitarian Law and Action      
-## 10  2018 Switzerland public          42837379  Humanitarian Law and Action      
+## # A tibble: 91 × 4
+##     year donor       type_donor amount_nominal
+##    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt;
+##  1  2016 Switzerland public            372314.
+##  2  2013 Switzerland public           4415632.
+##  3  2020 Switzerland public          22579000 
+##  4  2020 Switzerland public              5858.
+##  5  2013 Switzerland public           2751917.
+##  6  2017 Switzerland public            370569.
+##  7  2018 Switzerland public           2819624.
+##  8  2016 Switzerland public              5074.
+##  9  2005 Switzerland public          74569884.
+## 10  2018 Switzerland public          42837379 
 ## # … with 81 more rows
 ```
 
@@ -517,18 +517,18 @@ io_income_filter &lt;- filter(io_income, donor=="Switzerland")
 
 
 ```
-## # A tibble: 6 × 5
-##    year donor      type_donor amount_nominal issue_area                       
-##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                            
-## 1  2007 Italy      public          19074876  Humanitarian Law and Action      
-## 2  2015 Denmark    public          14863463. Health                           
-## 3  2011 Spain      public           4779105. Labour, Economic Affairs, Science
-## 4  2020 Italy      public          32570000  Health                           
-## 5  2018 Madagascar public             11667. Labour, Economic Affairs, Science
-## 6  2011 India      public             50000  Humanitarian Law and Action
+## # A tibble: 6 × 4
+##    year donor      type_donor amount_nominal
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
+## 1  2007 Italy      public          19074876 
+## 2  2015 Denmark    public          14863463.
+## 3  2011 Spain      public           4779105.
+## 4  2020 Italy      public          32570000 
+## 5  2018 Madagascar public             11667.
+## 6  2011 India      public             50000
 ```
 ---
-# Mutate (dplyr verbs 3/7)
+# Mutate (dplyr verbs 3/5)
 
 `mutate ()` creates new variables.
 
@@ -540,20 +540,20 @@ io_income_mutate &lt;- mutate(io_income,thousands_USD=amount_nominal/1000)
 -- 
 
 ```
-## # A tibble: 4,500 × 6
-##     year donor      type_donor amount_nominal issue_area                 thous…¹
-##    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                        &lt;dbl&gt;
-##  1  2007 Italy      public          19074876  Humanitarian Law and Acti…  1.91e4
-##  2  2015 Denmark    public          14863463. Health                      1.49e4
-##  3  2011 Spain      public           4779105. Labour, Economic Affairs,…  4.78e3
-##  4  2020 Italy      public          32570000  Health                      3.26e4
-##  5  2018 Madagascar public             11667. Labour, Economic Affairs,…  1.17e1
-##  6  2011 India      public             50000  Humanitarian Law and Acti…  5   e1
-##  7  2021 Japan      public          17300000  Health                      1.73e4
-##  8  2011 Maldives   public              1604. Labour, Economic Affairs,…  1.60e0
-##  9  2003 Thailand   public            304592. Humanitarian Law and Acti…  3.05e2
-## 10  2005 Kiribati   public              2163. Peace                       2.16e0
-## # … with 4,490 more rows, and abbreviated variable name ¹​thousands_USD
+## # A tibble: 4,500 × 5
+##     year donor      type_donor amount_nominal thousands_USD
+##    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;         &lt;dbl&gt;
+##  1  2007 Italy      public          19074876       19075.  
+##  2  2015 Denmark    public          14863463.      14863.  
+##  3  2011 Spain      public           4779105.       4779.  
+##  4  2020 Italy      public          32570000       32570   
+##  5  2018 Madagascar public             11667.         11.7 
+##  6  2011 India      public             50000          50   
+##  7  2021 Japan      public          17300000       17300   
+##  8  2011 Maldives   public              1604.          1.60
+##  9  2003 Thailand   public            304592.        305.  
+## 10  2005 Kiribati   public              2163.          2.16
+## # … with 4,490 more rows
 ```
 
 ---
@@ -565,18 +565,18 @@ head(io_income)
 ```
 
 ```
-## # A tibble: 6 × 5
-##    year donor      type_donor amount_nominal issue_area                       
-##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                            
-## 1  2007 Italy      public          19074876  Humanitarian Law and Action      
-## 2  2015 Denmark    public          14863463. Health                           
-## 3  2011 Spain      public           4779105. Labour, Economic Affairs, Science
-## 4  2020 Italy      public          32570000  Health                           
-## 5  2018 Madagascar public             11667. Labour, Economic Affairs, Science
-## 6  2011 India      public             50000  Humanitarian Law and Action
+## # A tibble: 6 × 4
+##    year donor      type_donor amount_nominal
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
+## 1  2007 Italy      public          19074876 
+## 2  2015 Denmark    public          14863463.
+## 3  2011 Spain      public           4779105.
+## 4  2020 Italy      public          32570000 
+## 5  2018 Madagascar public             11667.
+## 6  2011 India      public             50000
 ```
 ---
-# Group_by and Summarise (dplyr verbs 4/7)
+# Group_by and Summarise (dplyr verbs 4/5)
 
 `group_by()` groups data based on a characteristic to subsequently perform certain operations.
 `summarise()` creates a new dataframe by combining grouped variables.
@@ -584,39 +584,167 @@ head(io_income)
 
 
 ```r
-io_income_grouped&lt;- group_by(io_income, issue_area)
+io_income_grouped&lt;- group_by(io_income, type_donor)
+
 io_income_summarised &lt;- summarise(io_income_grouped, amount_nominal = sum(amount_nominal, na.rm = TRUE))
 ```
 --
 
 ```
-## # A tibble: 4 × 2
-##   issue_area                        amount_nominal
-##   &lt;chr&gt;                                      &lt;dbl&gt;
-## 1 Health                              20395212541.
-## 2 Humanitarian Law and Action         15133511911.
-## 3 Labour, Economic Affairs, Science    4683106052.
-## 4 Peace                                 573592152.
+## # A tibble: 3 × 2
+##   type_donor amount_nominal
+##   &lt;chr&gt;               &lt;dbl&gt;
+## 1 private       4528228485.
+## 2 public       35915819521.
+## 3 &lt;NA&gt;           341374650.
 ```
 ---
-# The Pipe Operator `%&gt;%` (6/7)
+# Joining things (dplyr verbs 5/5)
 
 ---
-# Joining things (dplyr verbs 7/7)
+
+# and many others dplyr verbs that we cannot cover here....
+
+
+```r
+arrange() #orders row by values
+rename() #renames variables
+distinct() #removes duplicates
+sample_n() #draws a random sample
+slice() #selects rows by position
+top_n() #selects a order head of variable
+count() #counts number of rows with unique values
+...
+```
 
 ---
-# and many others that we cannot cover here....
+# The Pipe Operator `%&gt;%` (1/3)
 
+- So far, we have been doing *object-oriented programming*.
+
+- This means we assign (&lt;-) the result of an operation to an object.
+
+- We then operate on the newly created object.
+
+
+```r
+io_income_filtered&lt;- filter(io_income, year &gt; "2018")
+
+io_income_grouped2 &lt;- group_by(io_income_filtered, year)
+
+io_income_summarised2 &lt;- summarise(io_income_grouped2, amount_nominal = sum(amount_nominal, na.rm = TRUE))
+```
+--
+
+```
+## # A tibble: 3 × 2
+##    year amount_nominal
+##   &lt;dbl&gt;          &lt;dbl&gt;
+## 1  2019    4332215887.
+## 2  2020    2921693184.
+## 3  2021     417218446.
+```
 
 ---
+# The Pipe Operator `%&gt;%` (2/3)
+
+- The pipe operator (%&gt;%) changes this logic.
+
+- It takes the output of one function and passes it into another function as an argument.
+
+- This is why we call it *functional-programming*.
+
+
+```r
+io_income %&gt;%
+filter(year &gt; "2018") %&gt;%
+group_by(year) %&gt;%
+summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
+```
+
+```
+## # A tibble: 3 × 2
+##    year amount_nominal
+##   &lt;dbl&gt;          &lt;dbl&gt;
+## 1  2019    4332215887.
+## 2  2020    2921693184.
+## 3  2021     417218446.
+```
+
+.fifty[Check: [Plumbers, chains, and famous painters: The (updated) history of the pipe operator in R]( http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/)].
+
+---
+class: split two
+
+# The Pipe Operator `%&gt;%` (3/3)
+
+.pull-left[
+
+
+```r
+io_income_filtered&lt;- filter(io_income, year &gt; "2018")
+io_income_grouped2 &lt;- group_by(io_income_filtered, year)
+io_income_summarised2 &lt;- summarise(io_income_grouped2, amount_nominal = sum(amount_nominal, na.rm = TRUE))
+io_income_summarised2
+```
+
+```
+## # A tibble: 3 × 2
+##    year amount_nominal
+##   &lt;dbl&gt;          &lt;dbl&gt;
+## 1  2019    4332215887.
+## 2  2020    2921693184.
+## 3  2021     417218446.
+```
+
+]
+
+.pull-right[
+
+
+```r
+io_income %&gt;%
+filter(year &gt; "2018") %&gt;%
+group_by(year) %&gt;%
+summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
+```
+
+```
+## # A tibble: 3 × 2
+##    year amount_nominal
+##   &lt;dbl&gt;          &lt;dbl&gt;
+## 1  2019    4332215887.
+## 2  2020    2921693184.
+## 3  2021     417218446.
+```
+
+]
+
+---
+
+class: split two
 
 # Base vs. Tidy (re-visited)
 
-- All operators we cover today here and in the practice exercises are base R.
+.pull-left[
 
-- In reality, most users should use both, whatever is easier and more intuitive to you!
+- Tidy data and piping are both *intuitive* and *powerful*.
 
-- [Above all, teaching base R facilitates comprehension of how R, as a software and programming language, works for beginners](https://github.com/matloff/TidyverseSkeptic/)
+- All packages in the tidyverse are optimized for tidy data and piping.
+
+- Some packages outside the tidyverse were also developed within the tidy paradigm.
+
+- Nevertheless, many *important* packages and other programming softwares operate outside the logic of tidy.
+
+- [While we like tidy, a better programmer knows both. ](https://github.com/matloff/TidyverseSkeptic/)
+
+]
+
+.pull.right[
+
+![:scale 50%](assets/images/problems.png)
+
+]
 
 ---
 
