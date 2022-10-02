@@ -25,9 +25,13 @@ unnamed-chunk-23	io_income_mutate
 unnamed-chunk-24	head	io_income
 unnamed-chunk-25	amount_nominal	group_by	io_income	sum	summarise	type_donor
 unnamed-chunk-26	io_income_summarised
-unnamed-chunk-27	arrange	count	distinct	rename	sample_n	slice	top_n
-unnamed-chunk-28	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
-unnamed-chunk-29	io_income_summarised2
-unnamed-chunk-30	%>%	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
-unnamed-chunk-31	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
-unnamed-chunk-32	%>%	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
+unnamed-chunk-27	country_region	sample_n
+unnamed-chunk-28	io_income	sample_n
+unnamed-chunk-29	country_region	io_income	left_join
+unnamed-chunk-30	io_income_regions	tail
+unnamed-chunk-31	arrange	count	distinct	rename	sample_n	slice	top_n
+unnamed-chunk-32	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
+unnamed-chunk-33	io_income_summarised2
+unnamed-chunk-34	%>%	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
+unnamed-chunk-35	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
+unnamed-chunk-36	%>%	>	amount_nominal	filter	group_by	io_income	sum	summarise	year

@@ -407,6 +407,8 @@ library(readr)
 
 io_income <- read_csv("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/io_income_rs.csv")
 
+country_region <- read_csv("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/country_region.csv")
+
 library(dplyr)
 
 ```
@@ -501,6 +503,31 @@ io_income_summarised
 ---
 # Joining things (dplyr verbs 5/5)
 
+dplyr has a family of functions that help you join multiple datasets: `left_join(), right_join(), inner_join(), full_join() ` ...
+- let's check a random sample of a new dataset (country_region), which contains regions for each country.
+
+```{r}
+sample_n(country_region, 5)
+```
+
+- We can join this to our io_income dataset, and get regions for each country.
+---
+# Joining things (dplyr verbs 5/5)
+```{r echo=FALSE}
+sample_n(io_income, 3)
+```
+
+```{r}
+io_income_regions <- left_join(io_income, country_region)
+```
+
+```{r echo=FALSE}
+
+tail(io_income_regions)
+
+```
+
+.fifty[Check: [This great post on all merging possibilities and details with dplyr.]( https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti)].
 ---
 
 # and many others dplyr verbs that we cannot cover here....

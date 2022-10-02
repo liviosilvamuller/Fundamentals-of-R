@@ -12,7 +12,7 @@ unnamed-chunk-10
 unnamed-chunk-11	
 unnamed-chunk-12	tidy_food
 unnamed-chunk-13	
-unnamed-chunk-14	io_income
+unnamed-chunk-14	country_region	io_income
 unnamed-chunk-15	
 unnamed-chunk-16	io_income_select
 unnamed-chunk-17	
@@ -26,8 +26,12 @@ unnamed-chunk-24
 unnamed-chunk-25	io_income_grouped	io_income_summarised
 unnamed-chunk-26	
 unnamed-chunk-27	
-unnamed-chunk-28	io_income_filtered	io_income_grouped2	io_income_summarised2
-unnamed-chunk-29	
+unnamed-chunk-28	
+unnamed-chunk-29	io_income_regions
 unnamed-chunk-30	
-unnamed-chunk-31	io_income_filtered	io_income_grouped2	io_income_summarised2
-unnamed-chunk-32	
+unnamed-chunk-31	
+unnamed-chunk-32	io_income_filtered	io_income_grouped2	io_income_summarised2
+unnamed-chunk-33	
+unnamed-chunk-34	
+unnamed-chunk-35	io_income_filtered	io_income_grouped2	io_income_summarised2
+unnamed-chunk-36	

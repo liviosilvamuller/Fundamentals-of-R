@@ -433,12 +433,12 @@ head(io_income)
 ## # A tibble: 6 × 4
 ##    year donor      type_donor amount_nominal
 ##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
-## 1  2007 Italy      public          19074876 
-## 2  2015 Denmark    public          14863463.
-## 3  2011 Spain      public           4779105.
-## 4  2020 Italy      public          32570000 
-## 5  2018 Madagascar public             11667.
-## 6  2011 India      public             50000
+## 1  2000 Maldives   public              1057.
+## 2  2000 Estonia    public             18192.
+## 3  2000 Burundi    public              2082.
+## 4  2000 Mozambique public              1057.
+## 5  2000 Morocco    public             43350.
+## 6  2000 Mozambique public              3580
 ```
 
 ---
@@ -462,12 +462,12 @@ head (io_income_select)
 ## # A tibble: 6 × 2
 ##   donor      type_donor
 ##   &lt;chr&gt;      &lt;chr&gt;     
-## 1 Italy      public    
-## 2 Denmark    public    
-## 3 Spain      public    
-## 4 Italy      public    
-## 5 Madagascar public    
-## 6 India      public
+## 1 Maldives   public    
+## 2 Estonia    public    
+## 3 Burundi    public    
+## 4 Mozambique public    
+## 5 Morocco    public    
+## 6 Mozambique public
 ```
 ---
 ##...glimpse the dataset
@@ -477,12 +477,12 @@ head (io_income_select)
 ## # A tibble: 6 × 4
 ##    year donor      type_donor amount_nominal
 ##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
-## 1  2007 Italy      public          19074876 
-## 2  2015 Denmark    public          14863463.
-## 3  2011 Spain      public           4779105.
-## 4  2020 Italy      public          32570000 
-## 5  2018 Madagascar public             11667.
-## 6  2011 India      public             50000
+## 1  2000 Maldives   public              1057.
+## 2  2000 Estonia    public             18192.
+## 3  2000 Burundi    public              2082.
+## 4  2000 Mozambique public              1057.
+## 5  2000 Morocco    public             43350.
+## 6  2000 Mozambique public              3580
 ```
 ---
 # Filter (dplyr verbs 2/5)
@@ -496,20 +496,20 @@ io_income_filter &lt;- filter(io_income, donor=="Switzerland")
 --
 
 ```
-## # A tibble: 91 × 4
+## # A tibble: 89 × 4
 ##     year donor       type_donor amount_nominal
 ##    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt;
-##  1  2016 Switzerland public            372314.
-##  2  2013 Switzerland public           4415632.
-##  3  2020 Switzerland public          22579000 
-##  4  2020 Switzerland public              5858.
-##  5  2013 Switzerland public           2751917.
-##  6  2017 Switzerland public            370569.
-##  7  2018 Switzerland public           2819624.
-##  8  2016 Switzerland public              5074.
-##  9  2005 Switzerland public          74569884.
-## 10  2018 Switzerland public          42837379 
-## # … with 81 more rows
+##  1  2000 Switzerland public           320345. 
+##  2  2000 Switzerland public         58976921. 
+##  3  2001 Switzerland public          1276541. 
+##  4  2001 Switzerland public            11933  
+##  5  2001 Switzerland public           231191  
+##  6  2002 Switzerland public          1400389. 
+##  7  2002 Switzerland public               64.2
+##  8  2002 Switzerland public           599408  
+##  9  2002 Switzerland public              128. 
+## 10  2002 Switzerland public         57295239. 
+## # … with 79 more rows
 ```
 
 ---
@@ -520,12 +520,12 @@ io_income_filter &lt;- filter(io_income, donor=="Switzerland")
 ## # A tibble: 6 × 4
 ##    year donor      type_donor amount_nominal
 ##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
-## 1  2007 Italy      public          19074876 
-## 2  2015 Denmark    public          14863463.
-## 3  2011 Spain      public           4779105.
-## 4  2020 Italy      public          32570000 
-## 5  2018 Madagascar public             11667.
-## 6  2011 India      public             50000
+## 1  2000 Maldives   public              1057.
+## 2  2000 Estonia    public             18192.
+## 3  2000 Burundi    public              2082.
+## 4  2000 Mozambique public              1057.
+## 5  2000 Morocco    public             43350.
+## 6  2000 Mozambique public              3580
 ```
 ---
 # Mutate (dplyr verbs 3/5)
@@ -540,20 +540,21 @@ io_income_mutate &lt;- mutate(io_income,thousands_USD=amount_nominal/1000)
 -- 
 
 ```
-## # A tibble: 4,500 × 5
-##     year donor      type_donor amount_nominal thousands_USD
-##    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;         &lt;dbl&gt;
-##  1  2007 Italy      public          19074876       19075.  
-##  2  2015 Denmark    public          14863463.      14863.  
-##  3  2011 Spain      public           4779105.       4779.  
-##  4  2020 Italy      public          32570000       32570   
-##  5  2018 Madagascar public             11667.         11.7 
-##  6  2011 India      public             50000          50   
-##  7  2021 Japan      public          17300000       17300   
-##  8  2011 Maldives   public              1604.          1.60
-##  9  2003 Thailand   public            304592.        305.  
-## 10  2005 Kiribati   public              2163.          2.16
-## # … with 4,490 more rows
+## # A tibble: 4,386 × 5
+##     year donor                                  type_donor amount_nomi…¹ thous…²
+##    &lt;dbl&gt; &lt;chr&gt;                                  &lt;chr&gt;              &lt;dbl&gt;   &lt;dbl&gt;
+##  1  2000 Maldives                               public             1057.    1.06
+##  2  2000 Estonia                                public            18192.   18.2 
+##  3  2000 Burundi                                public             2082.    2.08
+##  4  2000 Mozambique                             public             1057.    1.06
+##  5  2000 Morocco                                public            43350.   43.3 
+##  6  2000 Mozambique                             public             3580     3.58
+##  7  2000 Sasakawa Endowment Fund Interest (JPN) private          105000   105   
+##  8  2000 China                                  public          1052019. 1052.  
+##  9  2000 New Zealand                            public            70848    70.8 
+## 10  2000 Mc Henry Tichenor (USA)                private           25000    25   
+## # … with 4,376 more rows, and abbreviated variable names ¹​amount_nominal,
+## #   ²​thousands_USD
 ```
 
 ---
@@ -568,12 +569,12 @@ head(io_income)
 ## # A tibble: 6 × 4
 ##    year donor      type_donor amount_nominal
 ##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
-## 1  2007 Italy      public          19074876 
-## 2  2015 Denmark    public          14863463.
-## 3  2011 Spain      public           4779105.
-## 4  2020 Italy      public          32570000 
-## 5  2018 Madagascar public             11667.
-## 6  2011 India      public             50000
+## 1  2000 Maldives   public              1057.
+## 2  2000 Estonia    public             18192.
+## 3  2000 Burundi    public              2082.
+## 4  2000 Mozambique public              1057.
+## 5  2000 Morocco    public             43350.
+## 6  2000 Mozambique public              3580
 ```
 ---
 # Group_by and Summarise (dplyr verbs 4/5)
@@ -594,13 +595,64 @@ io_income_summarised &lt;- summarise(io_income_grouped, amount_nominal = sum(amo
 ## # A tibble: 3 × 2
 ##   type_donor amount_nominal
 ##   &lt;chr&gt;               &lt;dbl&gt;
-## 1 private       4528228485.
-## 2 public       35915819521.
-## 3 &lt;NA&gt;           341374650.
+## 1 private       4503067539.
+## 2 public       35524020021.
+## 3 &lt;NA&gt;           341116650.
 ```
 ---
 # Joining things (dplyr verbs 5/5)
 
+dplyr has a family of functions that help you join multiple datasets: `left_join(), right_join(), inner_join(), full_join() ` ...
+- let's check a random sample of a new dataset (country_region), which contains regions for each country.
+
+
+```r
+sample_n(country_region, 5)
+```
+
+```
+## # A tibble: 5 × 2
+##   donor       region       
+##   &lt;chr&gt;       &lt;chr&gt;        
+## 1 Saint Lucia Latin America
+## 2 Ireland     Europe       
+## 3 Suriname    Latin America
+## 4 Nigeria     Africa       
+## 5 Belize      Latin America
+```
+
+- We can join this to our io_income dataset, and get regions for each country.
+---
+# Joining things (dplyr verbs 5/5)
+
+```
+## # A tibble: 3 × 4
+##    year donor                                 type_donor amount_nominal
+##   &lt;dbl&gt; &lt;chr&gt;                                 &lt;chr&gt;               &lt;dbl&gt;
+## 1  2009 Switzerland                           public            184765.
+## 2  2010 France                                public           1358596.
+## 3  2010 Democratic People's Republic of Korea public              2732.
+```
+
+
+```r
+io_income_regions &lt;- left_join(io_income, country_region)
+```
+
+
+```
+## # A tibble: 6 × 5
+##    year donor            type_donor amount_nominal region
+##   &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt; 
+## 1  2020 Maldives         public              3034. Asia  
+## 2  2020 Gates Foundation private         66250000  &lt;NA&gt;  
+## 3  2020 Slovenia         public            216946. Europe
+## 4  2020 UN               public            277500  &lt;NA&gt;  
+## 5  2020 Estonia          public             23203. Europe
+## 6  2020 Luxembourg       public            900000  Europe
+```
+
+.fifty[Check: [This great post on all merging possibilities and details with dplyr.]( https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti)].
 ---
 
 # and many others dplyr verbs that we cannot cover here....
@@ -637,12 +689,11 @@ io_income_summarised2 &lt;- summarise(io_income_grouped2, amount_nominal = sum(a
 --
 
 ```
-## # A tibble: 3 × 2
+## # A tibble: 2 × 2
 ##    year amount_nominal
 ##   &lt;dbl&gt;          &lt;dbl&gt;
 ## 1  2019    4332215887.
 ## 2  2020    2921693184.
-## 3  2021     417218446.
 ```
 
 ---
@@ -663,12 +714,11 @@ summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
 ```
 
 ```
-## # A tibble: 3 × 2
+## # A tibble: 2 × 2
 ##    year amount_nominal
 ##   &lt;dbl&gt;          &lt;dbl&gt;
 ## 1  2019    4332215887.
 ## 2  2020    2921693184.
-## 3  2021     417218446.
 ```
 
 .fifty[Check: [Plumbers, chains, and famous painters: The (updated) history of the pipe operator in R]( http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/)].
@@ -689,12 +739,11 @@ io_income_summarised2
 ```
 
 ```
-## # A tibble: 3 × 2
+## # A tibble: 2 × 2
 ##    year amount_nominal
 ##   &lt;dbl&gt;          &lt;dbl&gt;
 ## 1  2019    4332215887.
 ## 2  2020    2921693184.
-## 3  2021     417218446.
 ```
 
 ]
@@ -710,12 +759,11 @@ summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
 ```
 
 ```
-## # A tibble: 3 × 2
+## # A tibble: 2 × 2
 ##    year amount_nominal
 ##   &lt;dbl&gt;          &lt;dbl&gt;
 ## 1  2019    4332215887.
 ## 2  2020    2921693184.
-## 3  2021     417218446.
 ```
 
 ]
