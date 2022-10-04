@@ -228,11 +228,12 @@ vdem_mids %>%
 # what does it even mean to be a democracy?
 
 # Let's plot and see how wars have evolved over the years:
-plot <- vdem_mids %>% 
-  group_by(status, year) %>% 
-  dplyr::count()
+
 library(ggplot2)
-ggplot(plot, aes(x = year, y = n)) +
+vdem_mids %>% 
+  group_by(status, year) %>% 
+  dplyr::count() %>% 
+  ggplot(aes(x = year, y = n)) +
   geom_smooth(se = FALSE) +
   facet_wrap(~status, ncol=2, scales = "free")
 
