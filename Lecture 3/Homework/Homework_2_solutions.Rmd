@@ -1,7 +1,9 @@
 ---
 title: "Success of Leader Assassination as a Natural Experiment"
 date: "17 January 2017"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 This version of the QSS instructor key uses tidyverse functions to 
@@ -212,7 +214,7 @@ engaged in war prior to the assassination attempt than those with
 unsuccessful attempts.  This finding is consistent with the assumption
 that the success of assassination attempts is random.
 
-## Question 5
+## Bonus Question 5: Proceed only if you wish!
 
 Does successful leader assassination cause democratization?
   Does successful leader assassination lead countries to war?  Answer

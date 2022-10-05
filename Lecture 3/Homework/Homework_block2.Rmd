@@ -2,14 +2,14 @@
 title: 'Homework: cleaning and wrangling data'
 date: "October 2022"
 output:
-  pdf_document: default
+  word_document: default
   html_document:
     df_print: paged
-  word_document: default
+  pdf_document: default
 ---
 # Courses at the Graduate Institute
 
-The Graduate Institute offers courses in spring and autumn. The datasets autumn_21.csv and spring_22.csv
+The Graduate Institute offers courses in spring and autumn. The datasets `autumn_21.csv` and `spring_22.csv`
 contain information on all courses offered by the Graduate Institute in the academic year 2021-2022. 
 
 ## Question 1
@@ -29,8 +29,6 @@ This dataset should contain the following variables:
  `ECTS`               How many ECTS you can get for the course.
  
  `semester`           Takes the categories autumn or spring.
- 
-  `topic`             Takes the categories "about sustainability" or "others"
 -----------------------------------------------------------------------------------
 
 ## Question 2
@@ -43,8 +41,14 @@ Rank the departments by number of courses offered in each semester.
 
 ## Question 4
 
-Which department has more courses related to sustainability in their curriculum?
+Which department offers a higher share of courses in spring?
 Remember: different departments offer a different quantity of courses.
+
+## Question 5
+
+The `faculty_n.xlsx` dataset contains the number of faculty per department.
+In which department faculty teaches more courses on average? 
+Before proceeding, remove observations from DE and IA.
 
 # Leaders Assassination
 
@@ -134,7 +138,7 @@ Repeat the same analysis as in the previous question, but this
   prior to an assassination attempt.  Provide a brief interpretation
   of the result.
 
-## Question 5
+## Bonus Question 5: Proceed only if you wish!
 
 Does successful leader assassination cause democratization?
   Does successful leader assassination lead countries to war?  Answer
