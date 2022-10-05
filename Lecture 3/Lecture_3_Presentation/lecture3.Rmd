@@ -136,12 +136,13 @@ class: split two
 .pull-right[
 ## Practical:
 
-  - tidyr: cleaning
-  - dplyr: wrangling
+  - Cleaning data
+  - Wrangling data
+  - Joining data
 ]
 
 
-- Case study: **How has the Brazilian Amazon been constructed as a problem?**
+- Case study: **American Rappers in the 21st Century (if we have time)**
 
 ---
 
@@ -176,9 +177,9 @@ library(tidyverse)
 
 ---
 
-# Tidy data (1/4)
+# Tidy datasets (1/4)
 
-  - What is tidy data?
+  - What is a tidy dataset?
     - Each column is one variable.
     - Each row is one case/observation.
     - Each cell stores one value.
@@ -188,7 +189,7 @@ library(tidyverse)
 
 ---
 
-# Tidy data (2/4)
+# Tidy datasets (2/4)
 
 
 ##Is this tidy?
@@ -209,7 +210,7 @@ No! Cells in the second column contain two values.
 
 ---
 
-# Tidy data (3/4)
+# Tidy datasets (3/4)
 
 
 ##Is this tidy?
@@ -231,7 +232,7 @@ No! The second column contains two variables.
 
 ---
 
-# Tidy data:one last example (4/4)
+# Tidy datasets:one last example (4/4)
 
 
 ## from untidy...
@@ -254,16 +255,18 @@ No! The second column contains two variables.
 | Brazil | 2000 | 174504898 |
 ---
 
-# So, how we get to tidy data?
+# So, how we get to a tidy datasets?
 
 ## We use [´{tidyr}´](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
+
+- `separate()` separates data by tidying columns with two variables or values.
+  - `unite()` does the opposite.
 
 - `pivot_wider()` extends data by tidying columns with more than one variable.
 - `pivot_longer()` extends data by tidying rows that contain variables.
   
   
-- `separate()` separates data by tidying columns with two variables or values.
-  - `unite()` does the opposite
+
   
 ## Let's test this in the following slides.
 ---
@@ -536,10 +539,8 @@ tail(io_income_regions)
 
 arrange() #orders row by values
 rename() #renames variables
-distinct() #removes duplicates
-sample_n() #draws a random sample
+distinct() #keep only distinct rows
 slice() #selects rows by position
-top_n() #selects a order head of variable
 count() #counts number of rows with unique values
 ...
 
@@ -648,18 +649,3 @@ class: split two
 class: center middle
 
 ![100%](https://media.giphy.com/media/XHVmD4RyXgSjd8aUMb/giphy-downsized-large.gif)
-
----
-
-# References
-
-For more cool and informative slides about R stuff, see [favstats](https://favstats.github.io/ds3_r_intro/#1)
-
-Douglas, A., Ross, D., Mancini, F., Couto, A. & Lusseau, D. (2022). An Introduction to R
-
-Mesquita, E. B., & Fowler, A. (2021). Thinking clearly with data: A guide to quantitative reasoning and
-analysis. Princeton University Press.
-
-```{r refs, echo=FALSE, results="asis"}
-RefManageR::PrintBibliography(myBib)
-```

@@ -36,12 +36,14 @@ summary(animal_longevity)
  
  #1.6
  theanimals[2]
+ lifespans[2]
  
  #1.7
+ 
  theanimals[lifespans > 27]
  
  #1.8
-longevity <- animal_longevity[, c(5, 8)]
+longevity <- animal_longevity[,c(5, 8)]
 longevity <- longevity[order(longevity$Maximum_Longevity_Years),]
 
 #1.9
@@ -49,7 +51,12 @@ mean(longevity$Maximum_Longevity_Years, na.rm=TRUE)
 median(longevity$Maximum_Longevity_Years, na.rm=TRUE)
 
 #1.10
-outliving_humans <-  longevity[longevity$Maximum_Longevity_Years > 122.5]
+
+longevity<- as.data.frame(longevity)
+
+outliving_humans <- longevity[longevity$Maximum_Longevity_Years > 122.5,]
+
+#r does not understand which column to subset because the brackets has no comma.
 
  
 #Exercise 2: Self-reported Turnout--------------------------------------------
@@ -68,16 +75,18 @@ outliving_humans <-  longevity[longevity$Maximum_Longevity_Years > 122.5]
  
 #2.2
  
- turnout$electorate <- turnout$VAP + turnout$overseas  # Add overseas electorate to VAP.
+turnout$electorate <- turnout$VEP + turnout$overseas  # Add overseas electorate to VEP.
 
- vap <- (turnout$total / turnout$electorate) * 100  # Calculate voter turnout of VAP. 
+vep <- (turnout$total / turnout$electorate) * 100  # Calculate voter turnout of VEP. 
 
- vep <- (turnout$total / turnout$VEP) * 100  # Calculate voter turnout of VEP. 
+vap <- (turnout$total / turnout$VAP) * 100  # Calculate voter turnout of VAP 
  
- vap; vep
- mean(vap); mean(vep) # The diff. b/w the two seems to be trivial. 
+vap; vep
+mean(vap); mean(vep) # The diff. b/w the two seems to be trivial. 
  
  
+turnout$osvoters <- as.numeric(ifelse(turnout$osvoters=="NA", "0", turnout$osvoters))
+
 #2.3
  
  d1 <- turnout$ANES - vap
@@ -109,6 +118,12 @@ me <- subset(turnout, election_type =="midterm")
  ## Voter turnout is higher in presidential election. 
  
  #2.5
+ 
+
+old <- subset(turnout, year< 1993) 
+new <- subset(turnout, year> 1993) 
+
+
  
  old <- turnout[c(1:7), ]  # Extract first half of data (up to 1992).
  

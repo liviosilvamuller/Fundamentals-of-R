@@ -29,7 +29,7 @@ unnamed-chunk-27	country_region	sample_n
 unnamed-chunk-28	io_income	sample_n
 unnamed-chunk-29	country_region	io_income	left_join
 unnamed-chunk-30	io_income_regions	tail
-unnamed-chunk-31	arrange	count	distinct	rename	sample_n	slice	top_n
+unnamed-chunk-31	arrange	count	distinct	rename	slice
 unnamed-chunk-32	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
 unnamed-chunk-33	io_income_summarised2
 unnamed-chunk-34	%>%	>	amount_nominal	filter	group_by	io_income	sum	summarise	year
