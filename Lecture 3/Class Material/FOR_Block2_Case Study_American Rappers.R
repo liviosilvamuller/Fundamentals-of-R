@@ -38,9 +38,8 @@ american_rappers <- full_join(Eminem,
 # We are joining this way, because there are only four datasets and we said only with dplyr, 
 # a more elegant solution would entail lists and the purrr package.This solution could work for multiple datasets:
 
-library(purrr)
-american_rappers <- list(Eminem, Kanye_West, Jay_Z, Kendrick_Lamar) %>% 
-  reduce(full_join)
+#library(purrr)
+#american_rappers <- list(Eminem, Kanye_West, Jay_Z, Kendrick_Lamar) %>%  reduce(full_join)
 
 # Now that we merged the data, let's clean it----------------------------------------------------------------------------------------------
 
@@ -63,11 +62,7 @@ american_rappers$year <- as.numeric(stringr::str_extract_all(american_rappers$al
                                                        "[:digit:]{4}"))
 
 # Remove obs that are missing for an album or year
-
 american_rappers <- na.omit(american_rappers)
-
-#dplyr alternative
-american_rappers <- american_rappers %>% drop_na()
 
 # Should we clean the text or not?
 
@@ -168,7 +163,7 @@ american_rappers %>% group_by (year, rapper) %>%
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
     legend.position = "none")+
-    facet_wrap(~rapper)
+  facet_wrap(~rapper)
 
 # Can you tell us what the issue is with this analysis?
 
@@ -235,8 +230,28 @@ american_rappers %>%
     title = element_text(color = "black", size = 10, face = "bold"),
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
+    legend.position = "bottom")
+
+# what can we interpret here? There appears to be a wider trend in American Rappers. Let's inspect further!
+
+american_rappers %>%
+  gather("topic", "normalized_count2", 9:10) %>%
+  ggplot(., aes(x=year, y=normalized_count2, color=topic)) +
+  geom_smooth(se=FALSE) +
+  labs(x = "", y = "Normalized Count",
+       title = " Religion and Swearing in American Rappers' Repertoire",
+       subtitle= "782 songs since 1996")+
+  theme(
+    panel.background = element_rect("white", "black", .5, "solid"),
+    panel.grid.major = element_line(color = "grey", size = 0.3, linetype = "solid"),
+    axis.text = element_text(color = "black", size = 10),
+    title = element_text(color = "black", size = 10, face = "bold"),
+    legend.title = element_blank(),
+    plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
     legend.position = "bottom")+
-    facet_wrap(~rapper)
+  facet_wrap(~rapper)
+
+# how does this changes our interpretation?
 
 # Is there a Kim Kardashian effect?--------------------------------------------------------------------------------------------------------------------------
 
@@ -285,15 +300,14 @@ cleanCorpus<-function(corpus, customStopwords){
   corpus <- tm_map(corpus, removeNumbers)
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, stripWhitespace)
-  corpus <- tm_map(corpus, content_transformer(tryTolower))
   corpus <- tm_map(corpus, removeWords, customStopwords)
   return(corpus)
-} #the function "function" creates a function.
+} #the function "function" creates a function; in this case, our function cleans the text in multiple ways.
 
 stops <- c(stopwords('SMART'), "dont", "youre") # stopwords ('SMART') is a vector with common words (a, the, about...) that we want to remove from the songs
 
 Kendrick_Lamar <- american_rappers %>%
-  filter(rapper=="Eminem") # creating a dataset only for Kendrick
+  filter(rapper=="Kendrick Lamar") # creating a dataset only for Kendrick
   
 # the next few lines perform a few operations to create a dataset counting appearances of words in all songs.
 lamarCorpus_t <- VCorpus(VectorSource(Kendrick_Lamar$lyrics))
@@ -305,11 +319,11 @@ LamarTDMm_t <- as.matrix(LamarTDM_t)
 LamarSums_t <- rowSums(LamarTDMm_t)
 LamarFreq_t <- data.frame(word=names(LamarSums_t),frequency=LamarSums_t) #LamarFreq_t is the dataset 
 rownames(LamarFreq_t) <- NULL
-topWords_t  <- subset(LamarFreq_t, LamarFreq_t$frequency >= 100) #here we are subsetting to those that appear more than 50 times.
+topWords_t  <- subset(LamarFreq_t, LamarFreq_t$frequency >= 50) #here we are subsetting to those that appear more than 50 times.
 topWords_t  <- topWords_t[order(topWords_t$frequency, decreasing=F),]
 topWords_t$word <- factor(topWords_t$word, levels=unique(as.character(topWords_t$word)))
 
-ggplot(topWords_t, aes(x=word, y=log(frequency))) +
+k <- ggplot(topWords_t, aes(x=word, y=log(frequency))) +
   geom_bar(stat="identity", fill='gold') +
   coord_flip()+
   geom_text(aes(label=frequency), colour="black",hjust=1.25, size=3.0)+
