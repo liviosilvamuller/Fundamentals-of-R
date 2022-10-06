@@ -259,8 +259,7 @@ No! The second column contains two variables.
 
 ## We use [´{tidyr}´](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
 
-- `separate()` separates data by tidying columns with two variables or values.
-  - `unite()` does the opposite.
+- `separate()` separates data by tidying columns with two variables or values (`unite()` does the opposite.)
 
 - `pivot_wider()` extends data by tidying columns with more than one variable.
 - `pivot_longer()` extends data by tidying rows that contain variables.
@@ -278,8 +277,8 @@ No! The second column contains two variables.
 
 library(readxl)
 untidy_population_dat <- read_excel("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/untidy_dat.xlsx")
-untidy_food <- read_excel("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/untidy_dat2.xlsx")
-
+untidy_burgers <- read_excel("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/untidy_dat2.xlsx", 
+    col_types = c("text", "text", "numeric"))
 ```
 
 ```{r}
@@ -339,7 +338,7 @@ tidy_population
 .pull-left[
 ```{r}
 
-untidy_food
+untidy_burgers
 
 ```
 ]
@@ -347,17 +346,16 @@ untidy_food
 --
 
 .pull-right[
+
 ```{r}
 
-tidy_food <- pivot_wider(untidy_food,names_from=food, values_from=grade)
+tidy_burgers <- pivot_wider(untidy_burgers,names_from=joint, values_from=grade)
 
 ```
 
---
-
 ```{r echo=FALSE}
 
-tidy_food
+tidy_burgers
 
 ```
 
@@ -424,12 +422,10 @@ head(io_income)
 ```
 
 ---
+
 # Select (dplyr verbs 1/5)
 
 `select ()` selects variables in the dataframe.
-
-
-
 ```{r}
 
 io_income_select <- select(io_income, donor, type_donor)
@@ -471,11 +467,10 @@ head(io_income)
 
 `mutate ()` creates new variables.
 
-
 ```{r}
 io_income_mutate <- mutate(io_income,thousands_USD=amount_nominal/1000)
 ```
--- 
+--
 ```{r echo=FALSE}
 io_income_mutate
 ```

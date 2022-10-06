@@ -249,8 +249,7 @@ No! The second column contains two variables.
 
 ## We use [´{tidyr}´](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
 
-- `separate()` separates data by tidying columns with two variables or values.
-  - `unite()` does the opposite.
+- `separate()` separates data by tidying columns with two variables or values (`unite()` does the opposite.)
 
 - `pivot_wider()` extends data by tidying columns with more than one variable.
 - `pivot_longer()` extends data by tidying rows that contain variables.
@@ -344,19 +343,19 @@ tidy_population &lt;- pivot_longer(tidy_population,cols=c("1999","2000"), names_
 .pull-left[
 
 ```r
-untidy_food
+untidy_burgers
 ```
 
 ```
 ## # A tibble: 6 × 3
-##   lecturer food     grade
-##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
-## 1 henrique brocolli     2
-## 2 livio    brocolli     8
-## 3 henrique hot dogs     9
-## 4 livio    hot dogs     5
-## 5 henrique beer        10
-## 6 livio    beer        10
+##   lecturer joint      grade
+##   &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+## 1 henrique inglewoods     7
+## 2 livio    inglewoods    10
+## 3 henrique foundation     5
+## 4 livio    foundation     5
+## 5 henrique holycow        9
+## 6 livio    holycow        7
 ```
 ]
 
@@ -364,19 +363,18 @@ untidy_food
 
 .pull-right[
 
-```r
-tidy_food &lt;- pivot_wider(untidy_food,names_from=food, values_from=grade)
-```
 
---
+```r
+tidy_burgers &lt;- pivot_wider(untidy_burgers,names_from=joint, values_from=grade)
+```
 
 
 ```
 ## # A tibble: 2 × 4
-##   lecturer brocolli `hot dogs`  beer
-##   &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
-## 1 henrique        2          9    10
-## 2 livio           8          5    10
+##   lecturer inglewoods foundation holycow
+##   &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+## 1 henrique          7          5       9
+## 2 livio            10          5       7
 ```
 
 ]
@@ -445,12 +443,10 @@ head(io_income)
 ```
 
 ---
+
 # Select (dplyr verbs 1/5)
 
 `select ()` selects variables in the dataframe.
-
-
-
 
 ```r
 io_income_select &lt;- select(io_income, donor, type_donor)
@@ -536,11 +532,10 @@ io_income_filter &lt;- filter(io_income, donor=="Switzerland")
 `mutate ()` creates new variables.
 
 
-
 ```r
 io_income_mutate &lt;- mutate(io_income,thousands_USD=amount_nominal/1000)
 ```
--- 
+--
 
 ```
 ## # A tibble: 4,386 × 5

@@ -2,16 +2,16 @@ refs	::	myBib
 unnamed-chunk-1	class	data.frame	dim	grepl	ifelse	length	mean	median	subset	summary
 unnamed-chunk-2	install.packages
 unnamed-chunk-3	library
-unnamed-chunk-4	library	read_excel
+unnamed-chunk-4	c	library	read_excel
 unnamed-chunk-5	untidy_population_dat
 unnamed-chunk-6	untidy_population_dat
 unnamed-chunk-7	c	country	separate	untidy_population_dat
 unnamed-chunk-8	tidy_population
 unnamed-chunk-9	c	pivot_longer
 unnamed-chunk-10	tidy_population
-unnamed-chunk-11	untidy_food
-unnamed-chunk-12	food	grade	pivot_wider	untidy_food
-unnamed-chunk-13	tidy_food
+unnamed-chunk-11	untidy_burgers
+unnamed-chunk-12	grade	joint	pivot_wider	untidy_burgers
+unnamed-chunk-13	tidy_burgers
 unnamed-chunk-14	library	read_csv
 unnamed-chunk-15	head	io_income
 unnamed-chunk-16	donor	io_income	select	type_donor
