@@ -43,7 +43,7 @@ The "acadmic_year" dataset should contain the following variables:
  
   `type`              Type of course(compulsory, elective, or workshop)
   
-  `topic`            A broad category that summarizes the topic
+  `topic`             A broad category that summarizes the topic
 -----------------------------------------------------------------------------------
 
 ## Question 4
@@ -97,4 +97,4 @@ The variable should take the value of 1 if a course is compulsory and about theo
 The `faculty_n.xlsx` dataset contains the number of faculty per department.
 In which department, faculty teaches more ECTs on average?
 Notice that faculty number for departments DE and IA are missing.
-(Tip: total ects per department divided by number of faculty).
+(Tip: divide the total ects per department by the number of faculty).
