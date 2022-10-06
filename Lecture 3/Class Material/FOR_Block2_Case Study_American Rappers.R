@@ -10,7 +10,7 @@ library(tm)
 library(ggplot2)
 library(tidyr)
 
-setwd("~/Desktop/Material for week 2")
+setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Class Material")
 
 Kanye_West <- readRDS("Kanye_West.RDS")
 Jay_Z <-readRDS("Jay_Z.RDS")
@@ -83,39 +83,6 @@ american_rappers$title <- tm::removePunctuation(american_rappers$title)
 american_rappers$album <- substring(american_rappers$album,9) #removing the up to the 9th character (album: )
 american_rappers$album <- substring(american_rappers$album,1, nchar(american_rappers$album)-8) #removing the last eight characters (" (year))
 
-# Okay, time to wrangle the data a bit---------------------------------------------------------------------------------------------------
-
-#How many songs in the dataset?
-
-american_rappers %>% 
-  count()
-
-#How many songs per rapper in the dataset?
-
-american_rappers %>% 
-  group_by(rapper)%>%
-  count()
-
-#How many songs per rapper per year in the dataset?
-
-american_rappers %>% 
-  group_by(rapper, year)%>%
-  count()
-
-#How many songs per rapper per year in the dataset, ranked?
-
-american_rappers %>% 
-  group_by(rapper, year)%>%
-  count() %>%
-  arrange(desc(n)) #when you call count(), it creates a variable 'n' with the count
-
-#years with the most songs?
-
-american_rappers %>% 
-  group_by(year)%>%
-  count() %>%
-  arrange(desc(n))
-
 # Create a dictionary for religion and swearing: can you help?-----------------------------------------------------------------------------------------------
 
 swear_words <- "fuck|bitch|pussy|shit|dick|ass|cunt"
@@ -125,6 +92,7 @@ religious_words <- "god|bible|jesus|hell|heaven|lord|praise"
 
 #base for swearing
 american_rappers$swear_words <- stringr::str_count(american_rappers$lyrics, swear_words)
+
 
 #tidy for religion
 american_rappers <- american_rappers%>%
@@ -190,7 +158,7 @@ american_rappers %>% group_by (year, rapper) %>%
   ggplot(., aes(year, swear_words)) +
   geom_smooth(se=FALSE, color="black") +
   labs(x = "Year", y = "Swear Words",
-       title = " Average swearing normalized by songs per year",
+       title = " Swear words by year",
        subtitle= "782 songs since 1996")+
   theme(
     panel.background = element_rect("white", "black", .5, "solid"),
@@ -230,9 +198,9 @@ american_rappers %>%
 
 # Create a variable that counts the number of songs in an album.
 
-american_rappers$word_per_song <-str_count(american_rappers$lyrics, "\\w+")
-american_rappers$normalized_swear_words2 <- american_rappers$swear_words/american_rappers$word_per_song
-american_rappers$normalized_religious_words2 <- american_rappers$religious_words/american_rappers$word_per_song
+american_rappers$word_per_song <-str_count(american_rappers$lyrics, "\\w+") # counting words in lyrics
+american_rappers$normalized_swear_words2 <- american_rappers$swear_words/american_rappers$word_per_song # normalize
+american_rappers$normalized_religious_words2 <- american_rappers$religious_words/american_rappers$word_per_song #normalize
 
 american_rappers %>%
   ggplot(., aes(year, normalized_swear_words2)) +
@@ -250,7 +218,7 @@ american_rappers %>%
     legend.position = "none")+
     facet_wrap(~rapper)
 
-# Can we use religious vocabulary to "predict" 2019s Sunday Service?-----------------------------------------------------------------------------------------
+# What about religious vocabulary? -----------------------------------------------------------------------------------------
 # how can we best visualize such an effect?
 
 american_rappers %>%
@@ -311,13 +279,6 @@ Kanye_West$kim_kardashian <- factor(Kanye_West$kim_kardashian,
 
 # Let's take a quick dive into Lamar's Repertoire!-----------------------------
 
-tryTolower <- function(x){
-  y = NA
-  try_error = tryCatch(tolower(x), error = function(e) e)
-  if (!inherits(try_error, 'error'))
-    y = tolower(x)
-  return(y)
-} #the function "function" creates a function.
 
 cleanCorpus<-function(corpus, customStopwords){
   corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
@@ -327,12 +288,12 @@ cleanCorpus<-function(corpus, customStopwords){
   corpus <- tm_map(corpus, content_transformer(tryTolower))
   corpus <- tm_map(corpus, removeWords, customStopwords)
   return(corpus)
-} #here, the function "function" is creating a function that uses various other functions
+} #the function "function" creates a function.
 
-stops <- c(stopwords('SMART')) # stopwords ('SMART') is a vector with common words (a, the, about...) that we want to remove from the songs
+stops <- c(stopwords('SMART'), "dont", "youre") # stopwords ('SMART') is a vector with common words (a, the, about...) that we want to remove from the songs
 
 Kendrick_Lamar <- american_rappers %>%
-  filter(rapper=="Kendrick Lamar") # creating a dataset only for Kendrick
+  filter(rapper=="Eminem") # creating a dataset only for Kendrick
   
 # the next few lines perform a few operations to create a dataset counting appearances of words in all songs.
 lamarCorpus_t <- VCorpus(VectorSource(Kendrick_Lamar$lyrics))
@@ -344,7 +305,7 @@ LamarTDMm_t <- as.matrix(LamarTDM_t)
 LamarSums_t <- rowSums(LamarTDMm_t)
 LamarFreq_t <- data.frame(word=names(LamarSums_t),frequency=LamarSums_t) #LamarFreq_t is the dataset 
 rownames(LamarFreq_t) <- NULL
-topWords_t  <- subset(LamarFreq_t, LamarFreq_t$frequency >= 50) #here we are subsetting to those that appear more than 50 times.
+topWords_t  <- subset(LamarFreq_t, LamarFreq_t$frequency >= 100) #here we are subsetting to those that appear more than 50 times.
 topWords_t  <- topWords_t[order(topWords_t$frequency, decreasing=F),]
 topWords_t$word <- factor(topWords_t$word, levels=unique(as.character(topWords_t$word)))
 
@@ -361,6 +322,3 @@ ggplot(topWords_t, aes(x=word, y=log(frequency))) +
         axis.text.x=element_blank(),
         plot.subtitle = element_text(color="black", size=9, face= "plain"),
         legend.position = "bottom")
-
-
-
