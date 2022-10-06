@@ -2,10 +2,10 @@
 title: 'Homework: cleaning and wrangling data'
 date: "October 2022"
 output:
-  word_document: default
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
+  word_document: default
 ---
 # Courses at the Graduate Institute
 
@@ -24,7 +24,7 @@ This dataset should contain the following variables:
  
  `department`         Department that offers the course (MINT, EI, RISP, HPI, DI...)
  
- `language`           Language in which the course is instructed (french or english)
+ `language`           Language in which the course is instructed (French or English)
  
  `ECTS`               How many ECTS you can get for the course.
  
@@ -37,38 +37,41 @@ This dataset should contain the following variables:
 
 ## Question 2
 
-What is the share of courses offered in french during the full academic year?
-How many courses were offered in autumn? How many courses were offered in spring?
-
+- Homw many courses were offered in total?
+- How many courses were offered in French?
+- How many courses were offered in (1) in autumn in English, (2) in autumn in French, (3) in spring in English,and (3) in spring in French.
+ 
 ## Question 3
 
-How many departments are there?
-Rank the departments by number of courses offered in each semester.
+- How many departments are there?
+- Rank the departments by the number of courses offered in each semester.
 
 ## Question 4
 
-Which department offers a higher share of courses in spring?
+- Which department offers a higher share of courses on (1) autumn, and on (2) spring?
 Remember: different departments offer a different quantity of courses.
-
 
 ## Question 5
 
-The `faculty_n.xlsx` dataset contains the number of faculty per department.
-In which department faculty teaches more courses on average? 
-Before proceeding, remove observations from DE and IA.
+- List the three favorite topics overall.
+- List the three favorite topics of each department.
 
 ## Question 6
 
-List the three favorite topics overall.
-List the three favorite topics of each department.
+One of the categories of `type` is workshops. Workshops are normally about skills,
+but in the dataset, workshops are missing values for `topic`. Assign
+the category skills at the `topic` variable for all workshops.
 
 ## Question 7
 
-One of the categories of type is workshops. Workshops are normally about skills,
-but in the dataset, workshops are missing values for topic. Assign
-the category skills at the topic variable for all workshops.
+Are compulsory courses mostly about  theory and methods in all departments? 
+Now, create a new variable that that takes the value of 1 if the course is compulsory and about theories or methods. 
+The variable should take the value of 0 if it compulsory and about something else.
 
 ## Question 8
 
-Are compulsory courses mostly about  theory and methods in all departments? Now, create a new variable that that takes the value of 1 if the course is compulsory and about theories or methods. The variable should take the value of 0 if it compulsory and about something else.
+The `faculty_n.xlsx` dataset contains the number of faculty per department.
+In which department faculty teaches more ECTs on average? 
+Before proceeding, remove observations from DE and IA.
+
 
