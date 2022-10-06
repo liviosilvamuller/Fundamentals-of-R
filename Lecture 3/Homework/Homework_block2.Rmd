@@ -1,5 +1,6 @@
 ---
-title: 'Homework: cleaning and wrangling data'
+title: 'Cleaning and wrangling data'
+subtitle: 'Fundamentals of R - Homework'
 date: "October 2022"
 output:
   pdf_document: default
@@ -7,6 +8,10 @@ output:
     df_print: paged
   word_document: default
 ---
+
+- All materials for the exercises below are available in the homework folder.
+- Please submit an R script file containing the code and results.
+- You can #comment out any sentences written answers.
 
 # Courses at the Graduate Institute
 
