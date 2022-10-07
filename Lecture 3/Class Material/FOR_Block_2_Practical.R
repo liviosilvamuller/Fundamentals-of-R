@@ -443,16 +443,16 @@ ggplot(dem_ev, aes(x = Aggregated_Mean_Indicators,
 # # https://www.cambridge.org/core/journals/american-political-science-review/article/abs/flawed-logic-of-democratic-peace-theory/83A851232D297851885BC0D203E38616
 # 
 # # According to Rosato (2003), there are 6 theorized mechanisms (causal logics)
-# # to why democracies should fight one another less. Those are:
-# # trust and respect, public constrain, group constrain, slow mobilization,
-# # no surprises, and information.
+# # to why democracies should fight (mostly one another) less.
+# # Those are: trust and respect, public constrain, group constrain,
+# # slow mobilization, no surprises, and information.
 # 
 # # How would you go about studying democratic peace?
 # # What types of data do you think we need?
 # # From the top of your head, what would be some issues with
 # # accessing the theory?
 # # Tip: Think about definitions (what is a democracy?),
-# # time (from 1945 to 2006, where most countries a democracy?),
+# # time (from 1945 to 2006 where most countries a democracy?),
 # # and counterfactuals (i.e. are wars common events?)...
 # 
 # # We still need conflicts data though...
@@ -647,6 +647,10 @@ ggplot(dem_ev, aes(x = Aggregated_Mean_Indicators,
 #                      values=c("Number of cases" = "blue",
 #                               "Democracy indicators (scaled)" = "black")) +
 #   theme(legend.position = "bottom")
+#
+# # There is an issue with the legend here, black line indicates
+# # the indicators of democracy.
+# # Could help me fix this issue somehow to make the plot more informative?
 # 
 # # What does all of this tells us?
 # 
