@@ -20,7 +20,7 @@ The datasets `autumn_21.csv` and `spring_22.csv`contain information on all cours
 
 ## Question 1
 
-Open the `spring_22.csv` data and create a variable called "Department" with the department acronym for each course. (Tip: you have all the information necessary in the various dummy variables for department, you just need to pivot long the data and remove the NAs.)
+Open the `spring_22.csv` data and create a variable called "Department" with the department acronym for each course. (Tip: you have all the information necessary in the various dummy variables for department, you just need to pivot the data and remove the NAs.)
 
 ## Question 2
 
@@ -31,7 +31,7 @@ Open the `autumn_21.csv` data and create a variable called "Department" with the
 Join the two datasets into one dataset called "academic_year".
 (Tip: remember to rename variables consistently across before joining data for best results).
 
-The "acadmic_year" dataset should contain the following variables:
+The "academic_year" dataset should contain the following variables:
 
 --------------------------------------------------------------------------------
  Name                 Description
@@ -61,7 +61,7 @@ In the academic year, how many courses were offered in French at IHEID?
 
 ## Question 6
 
-In the academic year, how many courses were offered the in autumn semester and in English at IHEID?
+In the academic year, how many courses were offered in the autumn semester and in English at IHEID?
  
 ## Question 7
 
@@ -70,7 +70,7 @@ Rank the departments by the number of courses offered in each semester.
 ## Question 8
 
 Which department offers a higher share of courses in the spring semester?
-(Tip: after filtering and grouping, you need to dived the courses by department by the total number of courses in the psring semester).
+(Tip: after filtering and grouping, you need to divide the number of courses in each department by the total number of courses in the spring semester).
 
 ## Question 9
 
@@ -85,7 +85,7 @@ List the three favorite topics of each department.
 
 One of the categories of `type` is "workshop".
 Workshops are normally about skills,
-but in the dataset, workshops are missing values for `topic`.
+but in the dataset, workshops miss values for `topic`.
 Assign the category "skills" at the `topic` variable for all workshops.
 
 ## Question 12
