@@ -107,7 +107,7 @@ View(dem)
 dem %>% 
   group_by(country_name, regime_type) %>% # grouping data by country and regime type 
   count() %>% # counting the number of appearances by each group
-  print(n = 144) # printing 120 rows instead of only 10
+  print(n = 144) # printing 144 rows instead of only 10
 
 # It seems we do not...
 
