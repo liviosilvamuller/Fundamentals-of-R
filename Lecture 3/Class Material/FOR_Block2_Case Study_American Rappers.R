@@ -1,5 +1,5 @@
 # Title: American Rappers in the 21st Century
-# Purpose: illustrate how one can use base R and tidy tools to optimize wrangling.
+# Purpose: briefly discuss outliers, normalization, balancing, and biases.
 # Authors: Henrique Sposito & Livio Silva-Muller
 # Date: October 2022
 
@@ -19,7 +19,7 @@ Kendrick_Lamar <-readRDS("Kendrick_Lamar.RDS")
 
 # Let's consolidate these datasets in a single one----------------------------------------------------------------------------------------------
 
-#If we simply merge them, we will lose the name of the artist
+#If we simply join them, we will lose the name of the artist
 
 Eminem$rapper <- "Eminem"
 Kanye_West$rapper <- "Kanye West"
@@ -34,14 +34,14 @@ american_rappers <- full_join(Eminem,
                                         full_join(Jay_Z, Kendrick_Lamar)))
                                         
 
-# note we can only merge them without specifying the by= argument in the dplyr::_join, because the dataset has the same variables.
+# note we can only join them without specifying the by= argument in the dplyr::_join, because the dataset has the same variables.
 # We are joining this way, because there are only four datasets and we said only with dplyr, 
 # a more elegant solution would entail lists and the purrr package.This solution could work for multiple datasets:
 
 #library(purrr)
 #american_rappers <- list(Eminem, Kanye_West, Jay_Z, Kendrick_Lamar) %>%  reduce(full_join)
 
-# Now that we merged the data, let's clean it----------------------------------------------------------------------------------------------
+# Now that we joined the data, let's clean it----------------------------------------------------------------------------------------------
 
 # There are songs in the dataset that do not come from rappers' albums, but from somewhere else.
 # Let's mark only Wests' songs that are in West's albums:
@@ -61,20 +61,17 @@ american_rappers$album <- ifelse(startsWith(american_rappers$album, "album"), am
 american_rappers$year <- as.numeric(stringr::str_extract_all(american_rappers$album,
                                                        "[:digit:]{4}"))
 
-# Remove obs that are missing for an album or year
+# Remove obs that are missing for an album or year; this means we are only interested in albums and not mixtapes.
 american_rappers <- na.omit(american_rappers)
 
 # Should we clean the text or not?
 
-# We can remove punctuation, change all to lower case, and remove signs.
+# We can remove punctuation, change all to lower case,r emove signs, and other unnecessary things.
 
 american_rappers$lyrics <- tm::removePunctuation(american_rappers$lyrics) #removing punctuation
 american_rappers$lyrics <- tolower(american_rappers$lyrics) #making all lowercase
 american_rappers$lyrics <- gsub("\r|\n", " ", american_rappers$lyrics) # sub markers
 american_rappers$title <- tm::removePunctuation(american_rappers$title)
-
-# We can also clean the album titles
-
 american_rappers$album <- substring(american_rappers$album,9) #removing the up to the 9th character (album: )
 american_rappers$album <- substring(american_rappers$album,1, nchar(american_rappers$album)-8) #removing the last eight characters (" (year))
 
@@ -85,9 +82,8 @@ religious_words <- "god|bible|jesus|hell|heaven|lord|praise"
 
 # Count appearances in songs and add as variable in data.
 
-#base for swearing
+#base for swearingn(count how many words from swear_words are in american$lyrics)
 american_rappers$swear_words <- stringr::str_count(american_rappers$lyrics, swear_words)
-
 
 #tidy for religion
 american_rappers <- american_rappers%>%
@@ -111,7 +107,10 @@ ggplot(american_rappers, aes(year, swear_words)) +
     title = element_text(color = "black", size = 10, face = "bold"),
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
-    legend.position = "none")
+    legend.position = "none") 
+
+# do you see any problems with this plot?
+# how can we deal with outliers?
 
 american_rappers %>% filter(swear_words < 100) %>%
   ggplot(., aes(year, swear_words)) +
@@ -130,21 +129,21 @@ american_rappers %>% filter(swear_words < 100) %>%
     legend.position = "bottom")
 
 
-american_rappers %>% group_by (album, rapper) %>%
-  summarise(swear_words = sum(swear_words, na.rm = TRUE))%>%
-  ggplot(., aes(x=swear_words, y=reorder(album, swear_words))) +
-  geom_bar(aes(fill=rapper), stat="identity") +
-  labs(x = "Count", y = "Album Title",
-       title = "Swearing in American Rappers' Albums",
-       subtitle= "46 Albums since 1996")+
-  theme(
-    panel.background = element_rect("white", "black", .5, "solid"),
-    panel.grid.major = element_line(color = "grey", size = 0.3, linetype = "solid"),
-    axis.text = element_text(color = "black", size = 10),
-    title = element_text(color = "black", size = 10, face = "bold"),
-    legend.title = element_blank(),
-    plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
-    legend.position = "bottom")
+# american_rappers %>% group_by (album, rapper) %>%
+#   summarise(swear_words = sum(swear_words, na.rm = TRUE))%>%
+#   ggplot(., aes(x=swear_words, y=reorder(album, swear_words))) +
+#   geom_bar(aes(fill=rapper), stat="identity") +
+#   labs(x = "Count", y = "Album Title",
+#        title = "Swearing in American Rappers' Albums",
+#        subtitle= "46 Albums since 1996")+
+#   theme(
+#     panel.background = element_rect("white", "black", .5, "solid"),
+#     panel.grid.major = element_line(color = "grey", size = 0.3, linetype = "solid"),
+#     axis.text = element_text(color = "black", size = 10),
+#     title = element_text(color = "black", size = 10, face = "bold"),
+#     legend.title = element_blank(),
+#     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
+#     legend.position = "bottom") 
 
 # But really, how has this changed in time?------------------------------------------------------------------------------------------------------------------
 
@@ -175,7 +174,7 @@ american_rappers %>%
   mutate(songs_per_year = n()) %>%
   group_by(year,songs_per_year, rapper) %>%
   summarise(swear_words = sum(swear_words, na.rm = TRUE))%>%
-  mutate(normalized_swear_words = swear_words/songs_per_year)%>%
+  mutate(normalized_swear_words = swear_words/songs_per_year)%>% #all lines until here are normalizing by songs per year.
   ggplot(., aes(year, normalized_swear_words)) +
   geom_smooth(se=FALSE, color="black") +
   labs(x = "", y = "Normalized count by songs per year",
@@ -201,7 +200,7 @@ american_rappers %>%
   ggplot(., aes(year, normalized_swear_words2)) +
   geom_smooth(se=FALSE, color="black") +
   labs(x = "", y = "Normalized Count (by song length)",
-       title = " Average swearing normalized by song length",
+       title = " Average number of swear words per song",
        subtitle= "782 songs since 1996")+
   theme(
     panel.background = element_rect("white", "black", .5, "solid"),
@@ -213,6 +212,8 @@ american_rappers %>%
     legend.position = "none")+
     facet_wrap(~rapper)
 
+#what happens with the unit of measurement? Average number of swear words per song.
+
 # What about religious vocabulary? -----------------------------------------------------------------------------------------
 # how can we best visualize such an effect?
 
@@ -220,7 +221,7 @@ american_rappers %>%
   gather("topic", "normalized_count2", 9:10) %>%
   ggplot(., aes(x=year, y=normalized_count2, color=topic)) +
   geom_smooth(se=FALSE) +
-  labs(x = "", y = "Normalized Count",
+  labs(x = "", y = "Average number of swear words per song",
        title = " Religion and Swearing in American Rappers' Repertoire",
        subtitle= "782 songs since 1996")+
   theme(
@@ -238,7 +239,7 @@ american_rappers %>%
   gather("topic", "normalized_count2", 9:10) %>%
   ggplot(., aes(x=year, y=normalized_count2, color=topic)) +
   geom_smooth(se=FALSE) +
-  labs(x = "", y = "Normalized Count",
+  labs(x = "", y = "Average number of swear words per song",
        title = " Religion and Swearing in American Rappers' Repertoire",
        subtitle= "782 songs since 1996")+
   theme(
@@ -275,7 +276,7 @@ Kanye_West %>%
   mutate(normalized_word_count = word_count/songs_per_year)%>%
   ggplot(., aes(x=kim_kardashian, y=normalized_word_count, fill=topic)) +
   geom_bar(stat="identity", position="dodge") +
-  labs(x = "", y = "Normalized Count",
+  labs(x = "", y = "Average swearing per song",
        title = " The Kardashian Effect?",
        subtitle= "214 songs in 13 albums since 2004.")+
   theme(
@@ -323,7 +324,7 @@ topWords_t  <- subset(LamarFreq_t, LamarFreq_t$frequency >= 50) #here we are sub
 topWords_t  <- topWords_t[order(topWords_t$frequency, decreasing=F),]
 topWords_t$word <- factor(topWords_t$word, levels=unique(as.character(topWords_t$word)))
 
-k <- ggplot(topWords_t, aes(x=word, y=log(frequency))) +
+ggplot(topWords_t, aes(x=word, y=log(frequency))) +
   geom_bar(stat="identity", fill='gold') +
   coord_flip()+
   geom_text(aes(label=frequency), colour="black",hjust=1.25, size=3.0)+
