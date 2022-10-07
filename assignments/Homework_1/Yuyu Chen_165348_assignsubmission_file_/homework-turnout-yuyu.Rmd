@@ -1,0 +1,175 @@
+---
+title: "homework-turnout"
+author: "Yuyu Chen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+### Required libraries
+
+```{r }
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+### Import data sets
+```{r }
+# using readxl package
+turnout_data <- read_excel("turnout.xls")
+
+```
+
+### Dimensions of the data
+
+```{r }
+dim(turnout_data)
+```
+
+### Summary of the data
+
+```{r }
+summary(turnout_data)
+```
+
+
+### How many observations are there? What is the range of years covered in this data set?
+
+```{r }
+# number of observations
+nrow(turnout_data)
+
+# range of years covered in this data set
+range(turnout_data$year)
+
+```
+
+2.2. Calculate the real turnout rate based on the voting age population (VAP) by year. This is, how many voters actually voted (VAP/TOTAL) in each year. Note that for this data set, we must add the total number of eligible overseas voters since the VAP variable does not include these individuals in the count. 
+
+### Real turnout rate based on the voting age population (VAP) by year
+```{r }
+turnout_data_cleaned <- turnout_data %>% 
+  mutate(osvoters = as.numeric(osvoters)) %>% 
+  mutate(across(is.numeric,  ~replace_na(.,0)))
+
+vap_turnout_rate_by_year <- turnout_data_cleaned %>% 
+  mutate(vap_rate=(sum(total,osvoters)/sum(vap,overseas))*100) 
+
+```
+
+Next, calculate the real turnout rate using the voting eligible population (VEP). This is VEP/TOTAL. 
+
+### Real turnout rate using the voting eligible population (VEP)
+```{r }
+
+vep_turnout_rate_by_year <-turnout_data_cleaned %>% 
+  mutate(vep_rate=(sum(total,osvoters)/sum(vep,overseas))*100)
+
+```
+
+### What difference do you observe?
+
+```{r }
+combined_vap_vep <-
+  vap_turnout_rate_by_year %>%  
+  select(year, vap_rate) %>% 
+  inner_join(vep_turnout_rate_by_year %>% 
+  select(year, vep_rate), by = "year") %>% 
+  mutate(diff_rate = vep_rate-vap_rate)
+```
+
+
+2.3 Compute the differences between the self-estimated turnout rate (ANES) and the real turnout rate you just calculated in 2.2. 
+
+```{r}
+diff_anes_vaprate <- turnout_data_cleaned$anes - vap_turnout_rate_by_year$vap_rate
+diff_anes_vaprate
+```
+
+How big is the difference on average? 
+
+```{r }
+mean(diff_anes_vaprate)
+```
+
+Conduct the same comparison for the VEP and ANES estimates of voter turnout. 
+
+```{r }
+diff_anes_veprate <- turnout_data_cleaned$anes - vep_turnout_rate_by_year$vep_rate
+diff_anes_veprate
+
+mean(diff_anes_veprate)
+```
+
+## Briefly comment on the results.
+
+Considering the average of the differences, the average mean, `r mean(diff_anes_vaprate)` of the difference between VAP and ANES is bigger than that between VEP and ANES, `r mean(diff_anes_veprate)`.
+
+
+2.4. Compare the VEP turnout rate with the ANES turnout rate separately for presidential elections and midterm elections. 
+
+### Presidential Elections:
+
+```{r }
+
+diff_presidential_election_anes_veprate <- turnout_data_cleaned$anes[which(turnout_data_cleaned$election_type=='presidential')]-vep_turnout_rate_by_year$vep_rate[which(turnout_data_cleaned$election_type=='presidential')]
+diff_presidential_election_anes_veprate
+
+mean(diff_presidential_election_anes_veprate)
+```
+
+### Midterm Elections:
+
+```{r }
+
+diff_midterm_election_anes_veprate <- turnout_data_cleaned$anes[which(turnout_data_cleaned$election_type=='midterm')]-vep_turnout_rate_by_year$vep_rate[which(turnout_data_cleaned$election_type=='midterm')]
+diff_midterm_election_anes_veprate
+
+mean(diff_midterm_election_anes_veprate)
+```
+
+Note that the data set excludes the year 2006. Does the bias of the ANES estimates vary across election types?  Yes, the bias of the ANES estimates vary across election types. The bias of the ANES, Self-estimated turnout rate seems greater in the presidential election compared to the midterm election.
+
+```{r }
+# number of observation differ
+# library(SimDesign)
+# bias(diff_presidential_election_anes_veprate, diff_midterm_election_anes_veprate, type = 'abs_relative', percent = TRUE)
+```
+
+
+2.5. Divide the data into half by election years such that you subset the data into two periods: older and newer elections. 
+
+```{r }
+election_year_old <- turnout_data_cleaned[1:7,]
+election_year_old
+election_year_new <- turnout_data_cleaned[8:14,]
+election_year_new
+```
+
+
+Calculate the difference between the VEP turnout rate and the ANES turnout rate separately for each year within each period. 
+
+### Old election year
+```{r }
+diff_election_year_old_anes_veprate <- election_year_old$anes-vep_turnout_rate_by_year$vep_rate
+diff_election_year_old_anes_veprate
+
+mean(diff_election_year_old_anes_veprate)
+
+```
+
+### New election year
+```{r }
+diff_election_year_new_anes_veprate <- election_year_new$anes-vep_turnout_rate_by_year$vep_rate
+diff_election_year_new_anes_veprate
+
+mean(diff_election_year_new_anes_veprate)
+```
+
+Has the bias of ANES increased over time? There is an average increase in the bias over time from `r mean(diff_election_year_old_anes_veprate)` to `r mean(diff_election_year_new_anes_veprate)`
