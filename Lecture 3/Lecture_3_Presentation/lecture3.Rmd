@@ -261,13 +261,12 @@ No! The second column contains two variables.
 
 - `separate()` separates data by tidying columns with two variables or values (`unite()` does the opposite.)
 
-- `pivot_wider()` extends data by tidying columns with more than one variable.
-- `pivot_longer()` extends data by tidying rows that contain variables.
-  
-  
+- `pivot_wider()` pivots data by tidying columns with more than one variable.
 
+- `pivot_longer()` pivots data by tidying rows that contain variables.
   
 ## Let's test this in the following slides.
+
 ---
 
 # Here is some untidy data from earlier
@@ -314,7 +313,7 @@ tidy_population
 
 # `pivot_longer()`
 
-- `pivot_longer()` extends  data by tidying rows that contain variables.
+- `pivot_longer()` pivots  data by tidying rows that contain variables.
  - this means more observations, i.e. *longer* dataset.
 
 ```{r}
@@ -332,7 +331,7 @@ tidy_population
 
 # `pivot_wider()`
 
-- `pivot_wider()` extends data by tidying columns with more than one variable.
+- `pivot_wider()` pivots data by tidying columns with more than one variable.
  - this means more variables, i.e. *wider*.
 
 .pull-left[
@@ -567,9 +566,15 @@ io_income_summarised2
 
 - The pipe operator (%>%) changes this logic.
 
+--
+
 - It takes the output of one function and passes it into another function as an argument.
 
+--
+
 - This is why we call it *functional-programming*.
+
+--
 
 ```{r}
 
