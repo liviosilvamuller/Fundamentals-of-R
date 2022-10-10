@@ -1,0 +1,12 @@
+unnamed-chunk-1	count	filter	group_by	left_join	mutate	pivot_long	pivot_wide	select	separate	summarize	unite
+refs	::	myBib
+unnamed-chunk-2	display.brewer.all	library
+unnamed-chunk-3	data	gapminder	library	sample_n
+unnamed-chunk-4	aes	gapminder	gdpPercap	ggplot	library	lifeExp
+unnamed-chunk-5	p
+unnamed-chunk-6	geom_point
+unnamed-chunk-7	p
+unnamed-chunk-8	geom_smooth
+unnamed-chunk-9	p
+unnamed-chunk-10	::	element_text	labs	scale_x_log10	theme
+unnamed-chunk-11	p

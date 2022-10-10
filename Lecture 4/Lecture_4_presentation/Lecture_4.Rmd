@@ -1,0 +1,459 @@
+---
+title: "Fundamentals of R"
+subtitle: "Block 3: Principles and Practices of Data Visualization"
+author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
+date: "<small>October 15, 2022<small>"
+output:
+  xaringan::moon_reader:
+    css: 
+      - "default"
+      - "assets/iheid-xaringan-style.css"
+      - "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      - "ninjutsu"
+    chakra: "https://remarkjs.com/downloads/remark-latest.min.js"
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      beforeInit: "assets/macros.js"
+      countIncrementalSlides: false
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>`
+---
+
+```{r setup, include=FALSE}
+# don't mind this code chunk, it just sets up a few things for the rest
+# it doesn't appear, because the include argument above is FALSE...
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE)
+knitr::opts_chunk$set(cache=TRUE, autodep = TRUE, fig.retina = 3, message = FALSE, warning = FALSE)
+old <- ggplot2::theme_set(iheiddown::theme_iheid())
+```
+
+```{r, load_refs, include=FALSE, cache=FALSE}
+# Initializes the bibliography
+library(RefManageR)
+BibOptions(check.entries = FALSE,
+           bib.style = "authoryear", # Bibliography style
+           max.names = 3, # Max author names displayed in bibliography
+           sorting = "nyt", #Name, year, title sorting
+           cite.style = "authoryear", # citation style
+           style = "markdown",
+           hyperlink = FALSE,
+           dashed = FALSE)
+myBib <- ReadBib("assets/myBib.bib", check = FALSE)
+# Note: don't forget to clear the knitr cache to account for changes in the
+# bibliography.
+```
+
+---
+class: split two
+
+# What did we learn last week?
+
+--
+
+.pull-left[
+
+Conceptually:
+
+- Tidy datasets
+
+- Wrangling data
+
+- Functional Programming
+
+
+
+]
+
+--
+
+.pull-right[
+
+Practically:
+
+```{r echo=TRUE, eval=FALSE}
+# %>% the pipe operator
+separate()
+unite()
+pivot_long()
+pivot_wide()
+select()
+filter()
+mutate()
+group_by()
+summarize()
+count()
+left_join() #family of functions to join datasets
+
+```
+
+]
+
+
+---
+class: split two
+
+# Homework for today
+
+.pull-left[
+
+*Let's start by going through the homework together!*
+
+- Common issues
+
+
+
+- Any other general questions?
+
+]
+
+.pull.right[
+
+![:scale 40%](assets/images/dog.png)
+
+
+]
+
+---
+
+class: split two
+
+![:scale 40%](assets/images/roadmap.png)
+.pull-left[
+## Lecture:
+
+  - Principles of good visualization.
+  - Grammar of Graphs (ggplot2).
+  - Basic plots.
+ 
+]
+
+.pull-right[
+## Practical:
+
+  - Bar plots, line (and smoothed) plots, scatter (and jittered) plots, and box plots.
+  - How to size, color, shape and label things.
+  - How to facet plots.
+
+]
+
+
+---
+#What makes good visualization?
+
+--
+
+- *Gestalt Principles*: sizes, colors, and shapes can structure a plot.
+
+--
+
+- *Tufte's Principle*: too much visual information makes comprehension more difficult.
+
+--
+
+##In other words:
+
+- Leverage size, color, and shapes to...
+
+- ...decrease unnecessary information while highlighting necessary information,
+
+- **So one plot, tells one story clearly**.
+
+---
+## Gestalt principles (1/5)
+
+![:scale 50%](assets/images/structure.png)
+
+- We look for structure... and we infer relationships from structure!
+
+--
+
+  - **Proximity**: things that are spatially near to one another seem related.
+  
+--
+
+  - **Similarity**: things that look alike seem to be related.
+  
+--
+
+  - **Connections**: things that are connected seem to be related.
+
+--
+
+.fifty[Image from and text adapted from: [Healy, 2018](https://socviz.co/)]
+---
+class: center middle
+
+##  Gestalt principles: sizing things (2/5)
+
+![:scale 50%](assets/images/read_this_first.jpeg)
+
+---
+##  Gestalt principles: sizing things (3/5)
+
+- Size, more than order, will define what is noticed first.
+- Size things around and in your plot by their hierarchy of importance.
+
+--
+
+![:scale 65%](assets/images/sizing_plot.png)
+
+---
+##  Gestalt principles: shapping and colouring things (4/5)
+
+![:scale 100%](assets/images/c_n_s.png)
+
+
+.fifty[Image from: [Kieran Healy](https://kieranhealy.org/blog/)]
+
+---
+##  Gestalt principles: shapping and colouring things (5/5)
+
+.pull-left[
+
+- Shape or color are good when you want to show contrast.
+
+- Both together are often too much.
+  - If you have color, shape, and two axis you are plotting 4 variables!
+
+- Choose colors based on
+  - the relationship: continuous or discrete?
+  - intution: red for high temperatures, blue for low.
+
+- *Remember: colorblindness is more frequent than you think!*
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+library(RColorBrewer)
+display.brewer.all(colorblindFriendly = TRUE)
+```
+
+
+]
+
+---
+#Tufte's Law: Reduce data-to-ink ratio (1/4)
+
+![:scale 100%](assets/images/tufte1.png)
+
+---
+#Tufte's Law: Reduce data-to-ink ratio (2/4)
+![:scale 100%](assets/images/tufte2.png)
+
+---
+#Tufte's Law: Reduce data-to-ink ratio (3/4)
+![:scale 100%](assets/images/tufte3.png)
+
+---
+#Tufte's Law: Reduce data-to-ink ratio (4/4)
+![:scale 100%](assets/images/tufte4.png)
+
+---
+#One plot, one clear story!
+
+.pull-left[
+![:scale 100%](assets/images/inter_story.png)
+
+]
+
+--
+
+.pull-right[
+
+![:scale 100%](assets/images/increase_story.png)
+
+]
+
+---
+## Okay, but how do I know which plot is the best plot?
+
+![:scale 50%](assets/images/data_viz.png)
+
+
+.fifty[From: [Data-to-Viz](https://www.data-to-viz.com/#explore)]
+
+---
+# How do I plot?
+
+--
+We will use a package called the [´{ggplot2}´](https://ggplot2.tidyverse.org/)
+
+
+> ggplot2 is a system for declaratively creating graphics, based on **The Grammar of Graphics**. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
+
+--
+
+- Map variables to aesthetics: linking data do things you see.
+- Graphical primitives: type of graph you want ( line, box, scatter...)
+---
+#ggplot2: a general workflow (1/)
+
+- Tell ggplot2 **what we want to see**: the data and the variables.
+  - What are our axis?
+  - Do we want colors?
+  - Do we want sizes?
+  
+--
+  
+- Tell ggplot2 **how you want to see it**: the types of graphs (points, lines, boxes)
+  - What type of graph we want?
+  - Do we want more graphs on it?
+  - Do we want to add some summary statistics?
+  
+--
+
+- Tell ggplot2 **how to improve what is there**: scales, labels, titles, marks and so forth.
+  - Do we want titles, sub-titles, captions?
+  - Are the scales meaningful?
+  - Are legends and marks explanatory?
+  
+---
+##the data for the next few slides
+
+```{r}
+
+library(gapminder) #downloading the package with the data
+library(dplyr) # loading dplyr
+data("gapminder") # loading the data from the package
+sample_n(gapminder,15) #showing a random sample
+
+```
+
+---
+#ggplot2: what we want to see (2/)
+
+.pull-left[
+
+First, let's tell ggplot what data we have, and how to map variables to aesthetics.
+  - Our data is gapminder.
+  - Our x will be GDP per capita, our y life expectancy.
+ 
+```{r}
+
+library(ggplot2)
+p<- ggplot(data=gapminder, mapping=aes(x=gdpPercap, y=lifeExp))
+
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+p
+```
+]
+
+
+---
+#ggplot2: how we want to see (3/)
+
+.pull-left[
+
+Second, let's tell ggplot2 how we want to see the relationships.
+- `geom_point()` inherits the x and y as we specified inside the `ggplot()`, and draws points for observations.
+- We can just **add** the geom to the object p we created.
+- In ggplot2 we add things, because we are **layering** rather than piping.
+ 
+```{r}
+p <- p+ geom_point()
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE}
+
+p
+
+```
+]
+---
+#ggplot2: how we want to see (4/)
+
+.pull-left[
+
+- `geom_()` is a family of functions that built various types of graphs (bar, lines, boxes)
+
+- There are multiple kinds of geoms, you can check them in the cheat sheet for [´{ggplot2}´](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
+
+- Following the logic of layering, you can just add a new geom to the object we have.
+
+- In this case, we are adding `geom_smooth()`.
+```{r}
+
+p<- p+ geom_smooth() #smooth plots a trend line.
+
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE}
+p
+```
+]
+
+---
+#ggplot2: how to improve what we see (5/)
+
+- Third (and finally), we improve what we see.
+  - We can scale x in log because the range of gdpPercap is too big.
+  - We specify that gdpPercap is in dollars, so the axis show it properly.
+  - We can add and size titles, subtitles, and caption.
+  - We can change the axis titles.
+ 
+ 
+```{r}
+p<- p+
+  scale_x_log10(labels=scales::dollar) + # scale_x_log10() rescales our x to improve visualization
+  labs( x="Life Expectancy", y=" GDP per Capita",
+        title= "The Relantionship between Life Expectancy and GDP per Capita",
+        subtitle=" Dataset composed of 142 countries from 1952 to 2007",
+        caption= "Source: Gapminder Dataset",
+        color="" ) + # labs add axis titles, titles, subtitles, and captions.
+  theme(title = element_text(color="black", size=12, face="bold"),
+        axis.text = element_text(color="black", size=10),
+        plot.subtitle = element_text(color="black", size=10, face= "plain"),
+        plot.caption = element_text(color="black", size=8, face="bold"))
+#theme() resizes, changes face, font and many others.
+``` 
+
+
+---
+
+```{r echo=FALSE}
+p
+```
+
+
+---
+class:center middle with-logo
+
+Made with `{iheiddown}`, the R-package for IHEID publications
+`r Cite(myBib, "iheiddown")`.
+
+---
+
+# References
+
+```{r refs, echo=FALSE, results="asis"}
+RefManageR::PrintBibliography(myBib)
+```
