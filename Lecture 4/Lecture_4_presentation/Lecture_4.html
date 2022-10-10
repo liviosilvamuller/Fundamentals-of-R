@@ -231,20 +231,20 @@ display.brewer.all(colorblindFriendly = TRUE)
 ]
 
 ---
-#Tufte's Law: Reduce data-to-ink ratio (1/4)
+#Tufte's Law: Reduce data-to-ink ratio
 
 ![:scale 100%](assets/images/tufte1.png)
 
 ---
-#Tufte's Law: Reduce data-to-ink ratio (2/4)
+#Tufte's Law: Reduce data-to-ink ratio
 ![:scale 100%](assets/images/tufte2.png)
 
 ---
-#Tufte's Law: Reduce data-to-ink ratio (3/4)
+#Tufte's Law: Reduce data-to-ink ratio
 ![:scale 100%](assets/images/tufte3.png)
 
 ---
-#Tufte's Law: Reduce data-to-ink ratio (4/4)
+#Tufte's Law: Reduce data-to-ink ratio
 ![:scale 100%](assets/images/tufte4.png)
 
 ---
@@ -284,8 +284,10 @@ We will use a package called the [´{ggplot2}´](https://ggplot2.tidyverse.org/)
 
 - Map variables to aesthetics: linking data do things you see.
 - Graphical primitives: type of graph you want ( line, box, scatter...)
+
+.fifty[All slides below are highly inspired from [Healy, 2018](https://socviz.co/) check out his blog and book!]
 ---
-#ggplot2: a general workflow (1/)
+#ggplot2: a general workflow (1/5)
 
 - Tell ggplot2 **what we want to see**: the data and the variables.
   - What are our axis?
@@ -339,7 +341,7 @@ sample_n(gapminder,15) #showing a random sample
 ```
 
 ---
-#ggplot2: what we want to see (2/)
+#ggplot2: what we want to see (2/5)
 
 .pull-left[
 
@@ -359,17 +361,12 @@ p&lt;- ggplot(data=gapminder, mapping=aes(x=gdpPercap, y=lifeExp))
 
 .pull-right[
 
-
-```r
-p
-```
-
 &lt;img src="Lecture_4_files/figure-html/unnamed-chunk-5-1.png" width="504" /&gt;
 ]
 
 
 ---
-#ggplot2: how we want to see (3/)
+#ggplot2: how we want to see (3/5)
 
 .pull-left[
 
@@ -392,7 +389,7 @@ p &lt;- p+ geom_point()
 &lt;img src="Lecture_4_files/figure-html/unnamed-chunk-7-1.png" width="504" /&gt;
 ]
 ---
-#ggplot2: how we want to see (4/)
+#ggplot2: how we want to see (4/5)
 
 .pull-left[
 
@@ -418,35 +415,185 @@ p&lt;- p+ geom_smooth() #smooth plots a trend line.
 ]
 
 ---
-#ggplot2: how to improve what we see (5/)
+#ggplot2: how to improve what we see (5/5)
 
 - Third (and finally), we improve what we see.
-  - We can scale x in log because the range of gdpPercap is too big.
-  - We specify that gdpPercap is in dollars, so the axis show it properly.
-  - We can add and size titles, subtitles, and caption.
-  - We can change the axis titles.
+  - We can scale x in log because the range of gdpPercap is too big, and specified it in dollars with `scale_x_log10()`.
+  - We can add titles, subtitles, axis-titles and caption with `labs()`.
+  - We can change sizes, font, and face with `theme()`.
  
  
 
 ```r
 p&lt;- p+
-  scale_x_log10(labels=scales::dollar) + #takes the log and portrays dollars.
-  labs( x="Life Expectancy", y=" GDP per Capita",
-        title= "The Relantionship between Life Expectancy and GDP per Capita",
+  scale_x_log10(labels=scales::dollar) + # scale_x_log10() rescales our x to improve visualization
+  labs( y="Life Expectancy", x=" GDP per Capita",
+        title= "Life expectancy and GDP per capita along time",
         subtitle=" Dataset composed of 142 countries from 1952 to 2007",
         caption= "Source: Gapminder Dataset",
-        color="" ) + # axis, titles, and subtitles
-  theme(title = element_text(color="black", size=12, face="bold"),
+        color="" ) + # labs add axis titles, titles, subtitles, and captions.
+  theme(title = element_text(color="black", size=10, face="bold"),
         axis.text = element_text(color="black", size=10),
         plot.subtitle = element_text(color="black", size=10, face= "plain"),
         plot.caption = element_text(color="black", size=8, face="bold"))
+#theme() resizes, changes face, font and many others.
 ```
 
 
 ---
+class: center middle
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-11-1.png" width="50%" /&gt;
 
-&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-11-1.png" width="504" /&gt;
+---
+## Mapping aesthetics vs setting aesthetics (1/3)
 
+  -Color is a possible aesthetic in ggplot2; it expects a variable.
+
+--
+
+  -The code below is creating a new variable with value "purple" for observations.
+
+--
+
+  -All observation have the same value ("purple") for color, so they take the same color.
+  
+--
+
+.pull-left[
+
+```r
+purp&lt;-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp,
+color = "purple"))+
+  geom_point()+
+  scale_x_log10(labels=scales::dollar)
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-13-1.png" width="80%" /&gt;
+
+]
+
+---
+## Mapping aesthetics vs setting aesthetics (2/3)
+
+  - If we want the points to be purple, we need to **set** them as purple.
+  
+--
+
+  - **Setting** is different than mapping to an aesthetic, and it is done *outside* the `ggplot(mapping=aes())`.
+  
+--
+
+  - You **set** at the  `geom()` level.
+  
+--
+.pull-left[
+
+```r
+purp2&lt;-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp))+
+  geom_point(color="purple")+
+  scale_x_log10(labels=scales::dollar)
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-15-1.png" width="70%" /&gt;
+
+]
+
+---
+## Mapping aesthetics vs setting aesthetics (3/3)
+
+  - If we want the points to be colored by a variable, we need map the variable to an aesthetics.
+  
+--
+
+  - This means: `ggplot(mapping=aes(color=continent))`. Continent is a variable of the gapminder dataset.
+  
+--
+
+.pull-left[
+
+```r
+purp3&lt;-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, color=continent))+
+  geom_point()+
+  scale_x_log10(labels=scales::dollar)
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-17-1.png" width="80%" /&gt;
+
+]
+
+---
+## Aesthetics can also be mapped per `geom()`
+
+
+  - You might want different `geom()` to show different things.
+  
+--
+
+  - That can be easily achieve that by mapping at the `geom()` level.
+  
+--
+
+  - Whatever is mapped at the `geom()` level, will override what is mapped at `ggplot()`.
+
+.pull-left[
+
+```r
+purp5&lt;-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, color="purple"))+
+  geom_point(mapping=aes(color=continent))+
+  scale_x_log10(labels=scales::dollar)
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-19-1.png" width="80%" /&gt;
+
+]
+
+---
+## PS: same logic applies for other aesthetics.
+
+  - If we want the points to be sized by a variable, we need map the variable to an aesthetics.
+
+--
+ - These are all aesthetics in ggplot2:
+    - size, 
+    - shape, 
+    - line-type, 
+    - color (outside color), 
+    - fill (inside color).
+  
+--
+
+.pull-left[
+
+```r
+purp4&lt;-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size= pop))+
+  geom_point()+
+  scale_x_log10(labels=scales::dollar)+
+  theme(legend.position="none")
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-21-1.png" width="80%" /&gt;
+
+]
 
 ---
 class:center middle with-logo

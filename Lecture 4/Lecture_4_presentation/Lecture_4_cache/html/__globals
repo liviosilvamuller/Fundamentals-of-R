@@ -10,3 +10,13 @@ unnamed-chunk-8	geom_smooth
 unnamed-chunk-9	p
 unnamed-chunk-10	::	element_text	labs	scale_x_log10	theme
 unnamed-chunk-11	p
+unnamed-chunk-12	::	aes	gapminder	gdpPercap	geom_point	ggplot	lifeExp	scale_x_log10
+unnamed-chunk-13	purp
+unnamed-chunk-14	::	aes	gapminder	gdpPercap	geom_point	ggplot	lifeExp	scale_x_log10
+unnamed-chunk-15	purp2
+unnamed-chunk-16	::	aes	continent	gapminder	gdpPercap	geom_point	ggplot	lifeExp	scale_x_log10
+unnamed-chunk-17	purp3
+unnamed-chunk-18	::	aes	continent	gapminder	gdpPercap	geom_point	ggplot	lifeExp	scale_x_log10
+unnamed-chunk-19	purp5
+unnamed-chunk-20	::	aes	gapminder	gdpPercap	geom_point	ggplot	lifeExp	pop	scale_x_log10	theme
+unnamed-chunk-21	purp4
