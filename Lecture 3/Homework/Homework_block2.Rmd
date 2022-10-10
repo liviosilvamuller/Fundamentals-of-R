@@ -76,7 +76,7 @@ Which department offers a higher share of courses in the spring semester?
 
 List the three favorite topics overall.
 
-# Question 10 
+## Question 10 
 
 List the three favorite topics of each department.
 (Tip: group and slice).

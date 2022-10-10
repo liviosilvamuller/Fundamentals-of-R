@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Fundamentals of R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Henrique Sposito and Livio Silva-Muller" />
+    <meta name="date" content="2022-10-15" />
+    <script src="Lecture_4_files/header-attrs/header-attrs.js"></script>
+    <link href="Lecture_4_files/remark-css/default.css" rel="stylesheet" />
+    <link href="Lecture_4_files/remark-css/ninjutsu.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/iheid-xaringan-style.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Fundamentals of R
+]
+.subtitle[
+## Block 3: Principles and Practices of Data Visualization
+]
+.author[
+### <large>Henrique Sposito and Livio Silva-Muller</large>
+]
+.date[
+### <small>October 15, 2022<small>
+]
+
+---
+
+
+
+
+
+
+---
+class: split two
+
+# What did we learn last week?
+
+--
+
+.pull-left[
+
+Conceptually:
+
+- Tidy datasets
+
+- Wrangling data
+
+- Functional Programming
+
+
+
+]
+
+--
+
+.pull-right[
+
+Practically:
+
+
+```r
+# %&gt;% the pipe operator
+separate()
+unite()
+pivot_long()
+pivot_wide()
+select()
+filter()
+mutate()
+group_by()
+summarize()
+count()
+left_join() #family of functions to join datasets
+```
+
+]
+
+
+---
+class: split two
+
+# Homework for today
+
+.pull-left[
+
+*Let's start by going through the homework together!*
+
+- Common issues
+
+
+
+- Any other general questions?
+
+]
+
+.pull.right[
+
+![:scale 40%](assets/images/dog.png)
+
+
+]
+
+---
+
+class: split two
+
+![:scale 40%](assets/images/roadmap.png)
+.pull-left[
+## Lecture:
+
+  - Principles of good visualization.
+  - Grammar of Graphs (ggplot2).
+  - Basic plots.
+ 
+]
+
+.pull-right[
+## Practical:
+
+  - Bar plots, line (and smoothed) plots, scatter (and jittered) plots, and box plots.
+  - How to size, color, shape and label things.
+  - How to facet plots.
+
+]
+
+
+---
+#What makes good visualization?
+
+--
+
+- *Gestalt Principles*: sizes, colors, and shapes can structure a plot.
+
+--
+
+- *Tufte's Principle*: too much visual information makes comprehension more difficult.
+
+--
+
+##In other words:
+
+- Leverage size, color, and shapes to...
+
+- ...decrease unnecessary information while highlighting necessary information,
+
+- **So one plot, tells one story clearly**.
+
+---
+## Gestalt principles (1/5)
+
+![:scale 50%](assets/images/structure.png)
+
+- We look for structure... and we infer relationships from structure!
+
+--
+
+  - **Proximity**: things that are spatially near to one another seem related.
+  
+--
+
+  - **Similarity**: things that look alike seem to be related.
+  
+--
+
+  - **Connections**: things that are connected seem to be related.
+
+--
+
+.fifty[Image from and text adapted from: [Healy, 2018](https://socviz.co/)]
+---
+class: center middle
+
+##  Gestalt principles: sizing things (2/5)
+
+![:scale 50%](assets/images/read_this_first.jpeg)
+
+---
+##  Gestalt principles: sizing things (3/5)
+
+- Size, more than order, will define what is noticed first.
+- Size things around and in your plot by their hierarchy of importance.
+
+--
+
+![:scale 65%](assets/images/sizing_plot.png)
+
+---
+##  Gestalt principles: shapping and colouring things (4/5)
+
+![:scale 100%](assets/images/c_n_s.png)
+
+
+.fifty[Image from: [Kieran Healy](https://kieranhealy.org/blog/)]
+
+---
+##  Gestalt principles: shapping and colouring things (5/5)
+
+.pull-left[
+
+- Shape or color are good when you want to show contrast.
+
+- Both together are often too much.
+  - If you have color, shape, and two axis you are plotting 4 variables!
+
+- Choose colors based on
+  - the relationship: continuous or discrete?
+  - intution: red for high temperatures, blue for low.
+
+- *Remember: colorblindness is more frequent than you think!*
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+library(RColorBrewer)
+display.brewer.all(colorblindFriendly = TRUE)
+```
+
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-2-1.png" width="504" /&gt;
+
+
+]
+
+---
+#Tufte's Law: Reduce data-to-ink ratio (1/4)
+
+![:scale 100%](assets/images/tufte1.png)
+
+---
+#Tufte's Law: Reduce data-to-ink ratio (2/4)
+![:scale 100%](assets/images/tufte2.png)
+
+---
+#Tufte's Law: Reduce data-to-ink ratio (3/4)
+![:scale 100%](assets/images/tufte3.png)
+
+---
+#Tufte's Law: Reduce data-to-ink ratio (4/4)
+![:scale 100%](assets/images/tufte4.png)
+
+---
+## Okay, but how do I know which plot is the best plot?
+
+![:scale 50%](assets/images/data_viz.png)
+
+
+.fifty[From: [Data-to-Viz](https://www.data-to-viz.com/#explore)]
+
+---
+# How do I plot?
+
+--
+We will use a package called the [´{ggplot2}´](https://ggplot2.tidyverse.org/)
+
+
+&gt; ggplot2 is a system for declaratively creating graphics, based on **The Grammar of Graphics**. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
+
+--
+
+- Map variables to aesthetics: linking data do things you see.
+- Graphical primitives: type of graph you want ( line, box, scatter...)
+
+---
+#ggplot2: Basic structure
+
+
+```r
+library(gapminder) #downloading the package with the data
+library(dplyr) # loading dplyr
+data("gapminder") # loading the data from the package
+sample_n(gapminder,15) #showing a random sample
+```
+
+```
+## # A tibble: 15 × 6
+##    country       continent  year lifeExp       pop gdpPercap
+##    &lt;fct&gt;         &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+##  1 Peru          Americas   2007    71.4  28674757     7409.
+##  2 Angola        Africa     1962    34     4826015     4269.
+##  3 Malawi        Africa     2007    48.3  13327079      759.
+##  4 Lesotho       Africa     1977    52.2   1251524      745.
+##  5 Belgium       Europe     1967    70.9   9556500    13149.
+##  6 Zambia        Africa     1952    42.0   2672000     1147.
+##  7 Paraguay      Americas   1982    66.9   3366439     4259.
+##  8 Afghanistan   Asia       1952    28.8   8425333      779.
+##  9 Cote d'Ivoire Africa     1982    54.0   9025951     2603.
+## 10 Canada        Americas   1972    72.9  22284500    18971.
+## 11 Serbia        Europe     1957    61.7   7271135     4981.
+## 12 Slovenia      Europe     1972    69.8   1694510    12383.
+## 13 Bolivia       Americas   1957    41.9   3211738     2128.
+## 14 Bangladesh    Asia       2002    62.0 135656790     1136.
+## 15 Switzerland   Europe     1962    71.3   5666000    20431.
+```
+
+---
+#ggplot2: Basic structure
+
+.pull-left[
+
+First, let's tell ggplot what data we have, and how to map variables to aesthetics.
+  - Our data is gapminder.
+  - Our x will be GDP per capita, our y life expectancy.
+ 
+
+```r
+library(ggplot2)
+p&lt;- ggplot(data=gapminder, mapping=aes(x=gdpPercap, y=lifeExp))
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+p
+```
+
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-5-1.png" width="504" /&gt;
+]
+
+
+---
+#ggplot2: Basic structure
+
+.pull-left[
+
+Second, let's tell ggplot2 what plot we want.
+- We want a scatterplot, so we call `geom_point()`.
+- We can just **add** the geom to the object p we created.
+- In ggplot2 we add things, because we are **layering** rather than piping.
+ 
+
+```r
+p2&lt;- p+ geom_point()
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+p2
+```
+
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-7-1.png" width="504" /&gt;
+]
+---
+#ggplot2: Basic structure
+
+.pull-left[
+
+There are multiple kinds of geom, you can check them in [´{ggplot2 Cheat Sheet}´](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
+ 
+
+```r
+p3&lt;- p+ geom_boxplot()
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+p3
+```
+
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-9-1.png" width="504" /&gt;
+]
+---
+class:center middle with-logo
+
+Made with `{iheiddown}`, the R-package for IHEID publications
+.
+
+---
+
+# References
+
+NULL
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="assets/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>`"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
