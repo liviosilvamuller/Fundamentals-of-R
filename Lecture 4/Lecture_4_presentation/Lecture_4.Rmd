@@ -258,6 +258,22 @@ display.brewer.all(colorblindFriendly = TRUE)
 ![:scale 100%](assets/images/tufte4.png)
 
 ---
+#One plot, one clear story!
+
+.pull-left[
+![:scale 100%](assets/images/inter_story.png)
+
+]
+
+--
+
+.pull-right[
+
+![:scale 100%](assets/images/increase_story.png)
+
+]
+
+---
 ## Okay, but how do I know which plot is the best plot?
 
 ![:scale 50%](assets/images/data_viz.png)
@@ -278,9 +294,30 @@ We will use a package called the [´{ggplot2}´](https://ggplot2.tidyverse.org/)
 
 - Map variables to aesthetics: linking data do things you see.
 - Graphical primitives: type of graph you want ( line, box, scatter...)
-
 ---
-#ggplot2: Basic structure
+#ggplot2: a general workflow (1/)
+
+- Tell ggplot2 **what we want to see**: the data and the variables.
+  - What are our axis?
+  - Do we want colors?
+  - Do we want sizes?
+  
+--
+  
+- Tell ggplot2 **how you want to see it**: the types of graphs (points, lines, boxes)
+  - What type of graph we want?
+  - Do we want more graphs on it?
+  - Do we want to add some summary statistics?
+  
+--
+
+- Tell ggplot2 **how to improve what is there**: scales, labels, titles, marks and so forth.
+  - Do we want titles, sub-titles, captions?
+  - Are the scales meaningful?
+  - Are legends and marks explanatory?
+  
+---
+##the data for the next few slides
 
 ```{r}
 
@@ -292,7 +329,7 @@ sample_n(gapminder,15) #showing a random sample
 ```
 
 ---
-#ggplot2: Basic structure
+#ggplot2: what we want to see (2/)
 
 .pull-left[
 
@@ -320,19 +357,17 @@ p
 
 
 ---
-#ggplot2: Basic structure
+#ggplot2: how we want to see (3/)
 
 .pull-left[
 
-Second, let's tell ggplot2 what plot we want.
-- We want a scatterplot, so we call `geom_point()`.
+Second, let's tell ggplot2 how we want to see the relationships.
+- `geom_point()` inherits the x and y as we specified inside the `ggplot()`, and draws points for observations.
 - We can just **add** the geom to the object p we created.
 - In ggplot2 we add things, because we are **layering** rather than piping.
  
 ```{r}
-
-p2<- p+ geom_point()
-
+p <- p+ geom_point()
 ```
 
 ]
@@ -341,20 +376,27 @@ p2<- p+ geom_point()
 
 .pull-right[
 
-```{r}
-p2
+```{r echo=FALSE}
+
+p
+
 ```
 ]
 ---
-#ggplot2: Basic structure
+#ggplot2: how we want to see (4/)
 
 .pull-left[
 
-There are multiple kinds of geom, you can check them in [´{ggplot2 Cheat Sheet}´](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
- 
+- `geom_()` is a family of functions that built various types of graphs (bar, lines, boxes)
+
+- There are multiple kinds of geoms, you can check them in the cheat sheet for [´{ggplot2}´](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
+
+- Following the logic of layering, you can just add a new geom to the object we have.
+
+- In this case, we are adding `geom_smooth()`.
 ```{r}
 
-p3<- p+ geom_boxplot()
+p<- p+ geom_smooth() #smooth plots a trend line.
 
 ```
 
@@ -364,10 +406,44 @@ p3<- p+ geom_boxplot()
 
 .pull-right[
 
-```{r}
-p3
+```{r echo=FALSE}
+p
 ```
 ]
+
+---
+#ggplot2: how to improve what we see (5/)
+
+- Third (and finally), we improve what we see.
+  - We can scale x in log because the range of gdpPercap is too big.
+  - We specify that gdpPercap is in dollars, so the axis show it properly.
+  - We can add and size titles, subtitles, and caption.
+  - We can change the axis titles.
+ 
+ 
+```{r}
+p<- p+
+  scale_x_log10(labels=scales::dollar) + # scale_x_log10() rescales our x to improve visualization
+  labs( x="Life Expectancy", y=" GDP per Capita",
+        title= "The Relantionship between Life Expectancy and GDP per Capita",
+        subtitle=" Dataset composed of 142 countries from 1952 to 2007",
+        caption= "Source: Gapminder Dataset",
+        color="" ) + # labs add axis titles, titles, subtitles, and captions.
+  theme(title = element_text(color="black", size=12, face="bold"),
+        axis.text = element_text(color="black", size=10),
+        plot.subtitle = element_text(color="black", size=10, face= "plain"),
+        plot.caption = element_text(color="black", size=8, face="bold"))
+#theme() resizes, changes face, font and many others.
+``` 
+
+
+---
+
+```{r echo=FALSE}
+p
+```
+
+
 ---
 class:center middle with-logo
 
