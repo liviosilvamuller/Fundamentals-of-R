@@ -417,31 +417,105 @@ p
 #ggplot2: how to improve what we see (5/5)
 
 - Third (and finally), we improve what we see.
-  - We can scale x in log because the range of gdpPercap is too big, and specified it in dollars with `scale_x_log10()`.
-  - We can add titles, subtitles, axis-titles and caption with `labs()`.
-  - We can change sizes, font, and face with `theme()`.
- 
- 
+  - We can scale x in log because the range of gdpPercap is too big: `scale_x_log10()`.
+  - Inside the `scale_()` is also a familiy of various functions doing different things.
+  - Inside `scale_x_log10()`, we can specify the unit of measurement as dollars.
+  
+
+.pull-left[
+
 ```{r}
+
 p<- p+
-  scale_x_log10(labels=scales::dollar) + # scale_x_log10() rescales our x to improve visualization
-  labs( y="Life Expectancy", x=" GDP per Capita",
-        title= "Life expectancy and GDP per capita along time",
+  scale_x_log10(labels=scales::dollar) 
+# scale_x_log10() rescales our x to improve visualization
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE, out.width="75%"}
+p
+```
+
+]
+
+---
+##We can add titles, subtitles, axis-titles and caption with `labs()`.
+
+.pull-left[
+
+```{r}
+
+p<- p+
+    labs( y="Life Expectancy", x=" GDP per Capita",
+        title= "Life expectancy and GDP per capita",
         subtitle=" Dataset composed of 142 countries from 1952 to 2007",
-        caption= "Source: Gapminder Dataset",
-        color="" ) + # labs add axis titles, titles, subtitles, and captions.
+        caption= "Source: Gapminder Dataset")
+# labs add axis titles, titles, subtitles, and captions.
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE, out.width="75%"}
+p
+```
+
+]
+
+---
+## We can change sizes, font, and face with `theme()`.
+
+.pull-left[
+
+```{r}
+
+p<- p+
+      theme(title = element_text(color="black", size=12, face="bold"),
+        axis.text = element_text(color="black", size=10),
+        plot.subtitle = element_text(color="black", size=10, face= "plain"),
+        plot.caption = element_text(color="black", size=8, face="bold"))
+  #theme() resizes, changes face, font and many others.
+
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE}
+p
+```
+
+]
+
+
+---
+## with a few details,we get a nicer plot!
+
+```{r echo=FALSE, out.width="50%"}
+
+ggplot(data=gapminder, mapping=aes(x=gdpPercap, y=lifeExp)) +
+  geom_point(color="grey", alpha=.5)+
+  geom_smooth(se=FALSE, size=.75, color="gold")+
+  scale_x_log10(labels=scales::dollar)+
+  labs( y="Life Expectancy", x=" GDP per Capita",
+        title= "People in richer countries live longer.",
+        subtitle=" Dataset composed of 142 countries from 1952 to 2007",
+        caption= "Source: Gapminder Dataset" )+
   theme(title = element_text(color="black", size=10, face="bold"),
         axis.text = element_text(color="black", size=10),
         plot.subtitle = element_text(color="black", size=10, face= "plain"),
         plot.caption = element_text(color="black", size=8, face="bold"))
-#theme() resizes, changes face, font and many others.
-``` 
-
-
----
-class: center middle
-```{r echo=FALSE, out.width="50%"}
-p
 ```
 
 ---
@@ -594,6 +668,42 @@ purp4<-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size= 
 .pull-right[
 ```{r echo=FALSE, out.width="80%"}
 purp4
+```
+
+]
+---
+##quick look at the data again!
+
+```{r}
+
+library(gapminder) #downloading the package with the data
+library(dplyr) # loading dplyr
+data("gapminder") # loading the data from the package
+sample_n(gapminder,15) #showing a random sample
+
+```
+
+---
+##Last, ggplot2 works with pipes!
+  
+  - Just remember the difference between piping (%>%) and layering (+)!
+  
+.pull-left[
+```{r}
+
+plot <- gapminder %>%
+          filter(country=="Switzerland")%>%
+          ggplot(mapping=aes(x=year, y=pop)) +
+          geom_line()
+
+```
+]
+
+--
+
+.pull-right[
+```{r echo=FALSE, out.width="80%"}
+plot
 ```
 
 ]
