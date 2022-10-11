@@ -16,7 +16,9 @@ output:
 
 The 'io_income_rs.csv' dataset contains funding data from some international organizations in Geneva.
 
-*Tips: Adding titles, legends, and themes helps us help you!*
+Please load the dataset, we will be working with it today.
+
+*Tip: Adding titles, legends, and themes to your plots helps us help you!*
 
 ## Question 1
 
@@ -24,12 +26,16 @@ Create a bar plot displaying the top 10 overall donors and their total donations
 
 ## Question 2
 
-Has the amount the US donated over time to all issue areas increased? Please illustrate this relationship in an appropriate plot and colored by the 
+Has the amount the US donates to all issue areas increased over time? Please illustrate this relationship in an appropriate plot and colored by the respective issue areas.
 
 ## Question 3
 
-From 2019 to 2021, which countries donated more health related international organizations? Produce a scatter plot with all donors during the period. Please label the donors (tip: "geom_text(aes(label = donor))") and shape by their dots according to their type (tip: use "geom_point(aes(shape = donor_type"))"). 
+From 2019 to 2021, which donors donated more health related international organizations? Produce a scatter plot with the amount donated per donor per year during the period. Please label the donors (tip: "geom_text(aes(label = donor))") and shape by their dots according to their type (tip: use "geom_point(aes(shape = donor_type"))"). 
 
 ## Question 4
 
-Plot the distribution of all donations in the year 2000 and the year 2020 for public and private donors. Are there outliers for either of these types of donors in 2000? what about in 2020? 
+Plot the distribution of all donations in the year 2000 and in the year 2020 comparing public and private donors. Are there outliers for either of these types of donors in 2000? What about in 2020?
+
+## Question 5
+
+Plot the all donations towards peace by year since 2000. Why do you think the amount donated towards peace fluctuates in time?

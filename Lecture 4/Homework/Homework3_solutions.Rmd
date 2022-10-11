@@ -1,0 +1,10 @@
+---
+title: "Homework Solutions"
+author: "Henrique Sposito and Livio Silva-Muller"
+date: '2022-10-11'
+output: html_document
+---
+
+# 1
+
+
