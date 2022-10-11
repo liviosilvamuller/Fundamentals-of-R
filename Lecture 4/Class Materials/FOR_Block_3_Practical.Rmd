@@ -1,10 +1,10 @@
 ---
 title: "Fundamentals of R"
 author: "Henrique Sposito and Livio Muller-Silva"
-date: '2022-10-10'
+date: '2022-10-14'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 subtitle: Block 3 - Practical Visualizations
 ---
 
@@ -56,15 +56,15 @@ For inserting R code click on the **C** buttom above or use Cmd + Option + I on 
 as.character("R Markdown is awesome")
 ```
 
-Code chunks can be evaluated (run code?), included (should it be displayed in knitted document?), and much more. [rmarkdown](https://rmarkdown.rstudio.com/), as a [tidyverse](https://www.tidyverse.org/) package, has a [cheat sheet](https://www.rstudio.com/resources/cheatsheets/)!
+Code chunks can be evaluated (run code?), included (should it be displayed in knitted document?), and much more. [rmarkdown](https://rmarkdown.rstudio.com/), as a [tidyverse](https://www.tidyverse.org/) package, also has a [cheat sheet](https://www.rstudio.com/resources/cheatsheets/)!
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. 
+When you click the **Knit** button a document in HTML or PDF can be generated that includes both content as well as the output of any embedded R code chunks within the document. 
 
 Lastly, R Markdown can be further used to create presentations in R (as the ones we use in class, see the [xaringan](https://bookdown.org/yihui/rmarkdown/xaringan.html) package) or even to write your Master's thesis (check out [iheidown](https://jhollway.github.io/iheiddown/)).
 
 # Visualizations
 
-## Mind the GAP: with visualizations!
+## Mind the GAP
 
 Do you remember the [gapminder](https://www.gapminder.org/) package and data?
 
@@ -75,22 +75,20 @@ summary(gapminder) # summary data
 
 ## The ggplot2 canvas
 
-Before we start, the holy grail of visualization [books](https://ggplot2-book.org/introduction.html), using the ggplot2 package, is open source and was written in R Markdown.
+Before we start, the holy grail duide of visualizations [books](https://ggplot2-book.org/introduction.html), using the ggplot2 package, is open source and was written in R Markdown.
 
 Do not forget that ggplot2 is a tidyverse package, therefore, there is a [cheat sheet](https://www.rstudio.com/resources/cheatsheets/) for it!
 
 In ggplot2, we use the '+' operator instead of the '%>%'.
 Remember the '%>%' takes the result of a previous operation and uses as the first argument to the following operation (for more details see [here](https://stackoverflow.com/questions/24536154/what-does-mean-in-r/24536653#24536653)).
-The '+', instead, adds layers to a ggplot2 plot (for more infomation see [here](https://stackoverflow.com/questions/35332861/what-is-the-difference-between-the-operator-in-ggplot2-and-the-operato))
+The '+', instead, adds layers to a ggplot2 plot (for more information see [here](https://stackoverflow.com/questions/35332861/what-is-the-difference-between-the-operator-in-ggplot2-and-the-operato))
 
 For example, without layers a ggplot2 plot looks like this:
 
 ```{r, eval=FALSE}
-
 gapminder %>%
   ggplot(aes(x = year,
              y = lifeExp))
-
 ```
 
 This is just an empty canvas waiting to be filled with your art!
@@ -104,21 +102,17 @@ To create bar plot in ggplot2 we use the [`geom_bar()`](https://ggplot2.tidyvers
 Would a bar plot be a good choice to plot life expectancy by country in 1957?
 
 ```{r}
-
 gapminder %>% # select data
   filter(year == 1957) %>% # filter for years of interest
   ggplot(aes(x = country, # map country in the x axis
              y = lifeExp)) + # map average life expectancy in the y axis
   geom_bar(stat = "identity") # add bars
-
 # stat = "identity" tells R that the values are provided and need not be counted!
-
 ```
 
 This is clearly not a good plotting choice (too much information)...
 
 ```{r, include=FALSE}
-
 # We could perhaps change the angles of the names.
 # Do you think this would solve the issue?
 
@@ -140,7 +134,6 @@ gapminder %>% # select data
 ```
 
 ```{r, include=FALSE}
-
 # We could plot countries in one continent only at two different time points, no?
 
 gapminder %>% # select data
@@ -152,7 +145,6 @@ gapminder %>% # select data
   geom_bar(stat = "identity") # add bars
 
 # What are some of the issues with this?
-
 ```
 
 Instead, let's use bars to plot the average difference in life expectancy from 1957 to 2007 across continents.
@@ -255,7 +247,7 @@ gapminder %>%
        x = "Continent", 
        y = "Life expectation",
        caption = "Source: Gapminder") + # add caption
-  theme_clean()
+  theme_minimal()
 ```
 
 Can you make the same box plot for GDP?

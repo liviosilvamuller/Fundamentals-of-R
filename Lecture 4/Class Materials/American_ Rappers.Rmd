@@ -1,7 +1,7 @@
 ---
 title: "Swearing and Religion in American Rap in the 21st Century"
 author: "Henrique Sposito and Livio Silva-Muller"
-date: '2022-10-11'
+date: '2022-10-14'
 output:
   pdf_document: default
   html_document: default
