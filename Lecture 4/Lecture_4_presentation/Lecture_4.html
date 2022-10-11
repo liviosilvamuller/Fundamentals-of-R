@@ -501,32 +501,28 @@ p&lt;- p+
 ---
 ## Mapping aesthetics vs setting aesthetics (1/3)
 
-  -Color is a possible aesthetic in ggplot2; it expects a variable.
-
---
-
-  -The code below is creating a new variable with value "purple" for observations.
-
---
-
-  -All observation have the same value ("purple") for color, so they take the same color.
-  
---
-
 .pull-left[
 
 ```r
-purp&lt;-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp,
+purp &lt;- ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp,
 color = "purple"))+
   geom_point()+
   scale_x_log10(labels=scales::dollar)
 ```
+
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-18-1.png" width="75%" /&gt;
+
 ]
 
 --
 
 .pull-right[
-&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-18-1.png" width="80%" /&gt;
+
+  -Color is a possible aesthetic in ggplot2; it expects a variable.
+
+  -The code below is creating a new variable with value "purple" for observations.
+
+  -All observation have the same value ("purple") for color, so they take the same color.
 
 ]
 
