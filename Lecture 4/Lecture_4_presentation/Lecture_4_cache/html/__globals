@@ -27,4 +27,4 @@ unnamed-chunk-25	::	aes	gapminder	gdpPercap	geom_point	ggplot	lifeExp	pop	scale_
 unnamed-chunk-26	purp4
 unnamed-chunk-27	data	gapminder	library	sample_n
 unnamed-chunk-28	%>%	==	aes	country	filter	gapminder	geom_line	ggplot	pop	year
-unnamed-chunk-29	plot
+unnamed-chunk-29	options	plot

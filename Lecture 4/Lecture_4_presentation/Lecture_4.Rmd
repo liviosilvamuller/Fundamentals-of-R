@@ -541,7 +541,7 @@ purp
 
   -Color is a possible aesthetic in ggplot2; it expects a variable.
 
-  -The code below is creating a new variable with value "purple" for observations.
+  -The code is creating a new variable with value "purple" for observations.
 
   -All observation have the same value ("purple") for color, so they take the same color.
 
@@ -683,6 +683,8 @@ sample_n(gapminder,15) #showing a random sample
 ##Last, ggplot2 works with pipes!
   
   - Just remember the difference between piping (%>%) and layering (+)!
+    - The '%>%' pipes the output of an operation as the first argument of the next one ( [here](https://stackoverflow.com/questions/24536154/what-does-mean-in-r/24536653#24536653)).
+    - The '+', instead, adds layers to a ggplot2 plot ( [here](https://stackoverflow.com/questions/35332861/what-is-the-difference-between-the-operator-in-ggplot2-and-the-operato))
   
 .pull-left[
 ```{r}
@@ -698,7 +700,8 @@ plot <- gapminder %>%
 --
 
 .pull-right[
-```{r echo=FALSE, out.width="80%"}
+```{r echo=FALSE, out.width="50%"}
+options(scipen=999)
 plot
 ```
 
