@@ -563,8 +563,12 @@ purp2&lt;-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp))+
   
 --
 
-  - This means: `ggplot(mapping=aes(color=continent))`. Continent is a variable of the gapminder dataset.
+  - This means: `ggplot(mapping=aes(color=continent))`.
   
+--
+
+  - This reads: map the variable continent to the aesthetic color. 
+
 --
 
 .pull-left[
@@ -579,7 +583,7 @@ purp3&lt;-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, col
 --
 
 .pull-right[
-&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-22-1.png" width="80%" /&gt;
+&lt;img src="Lecture_4_files/figure-html/unnamed-chunk-22-1.png" width="75%" /&gt;
 
 ]
 
@@ -678,8 +682,8 @@ sample_n(gapminder,15) #showing a random sample
 ##Last, ggplot2 works with pipes!
   
   - Just remember the difference between piping (%&gt;%) and layering (+)!
-    - The '%&gt;%' pipes the output of an operation as the first argument of the next one ( [here](https://stackoverflow.com/questions/24536154/what-does-mean-in-r/24536653#24536653)).
-    - The '+', instead, adds layers to a ggplot2 plot ( [here](https://stackoverflow.com/questions/35332861/what-is-the-difference-between-the-operator-in-ggplot2-and-the-operato))
+    - The '%&gt;%' pipes the output of an operation as the first argument of the next one ([here](https://stackoverflow.com/questions/24536154/what-does-mean-in-r/24536653#24536653)).
+    - The '+', instead, adds layers to a ggplot2 plot ([here](https://stackoverflow.com/questions/35332861/what-is-the-difference-between-the-operator-in-ggplot2-and-the-operato))
   
 .pull-left[
 
@@ -702,7 +706,7 @@ plot &lt;- gapminder %&gt;%
 class:center middle with-logo
 
 Made with `{iheiddown}`, the R-package for IHEID publications
-.
+(Hollway, 2021).
 
 ---
 

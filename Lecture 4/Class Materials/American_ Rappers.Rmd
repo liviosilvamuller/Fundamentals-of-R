@@ -1,7 +1,7 @@
 ---
 title: "Swearing and Religion in American Rap in the 21st Century"
 author: "Henrique Sposito and Livio Silva-Muller"
-date: '2022-10-14'
+date: October 2022
 output:
   pdf_document: default
   html_document: default
@@ -163,8 +163,27 @@ What are some problems with this plot? How can we deal with outliers?
 ```{r swear words outliers, message=FALSE, warning=FALSE}
 american_rappers %>% filter(swear_words < 100) %>%
   ggplot(., aes(year, swear_words)) +
-  geom_point(aes(color = rapper)) +
-  geom_text(aes(label = title), check_overlap=T, size=3) +
+  geom_point(aes(color=rapper))+
+  geom_text(aes(label = title), check_overlap=T, size=3, face="bold") +
+  scale_color_brewer(palette="Set2")+
+  labs(x = "", y = "Count",
+       title = "Swearing in American Rappers' songs",
+       subtitle= "782 songs from Eminem, Jay Z, Kendrick Lamar, and Kanye West.")+
+  theme(panel.background = element_rect("white", "black", .5, "solid"),
+        panel.grid.major = element_line(color = "grey", size = 0.3,
+                                        linetype = "solid"),
+        axis.text = element_text(color = "black", size = 10),
+        title = element_text(color = "black", size = 10, face = "bold"),
+        legend.title = element_blank(),
+        plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
+        legend.position = "bottom")
+```
+
+```{r swear words outliers nicer, message=FALSE, warning=FALSE}
+american_rappers %>% filter(swear_words < 100) %>%
+  ggplot(., aes(year, swear_words)) +
+  geom_text(aes(label = title, color=rapper), check_overlap=T, size=3, face="bold") +
+  scale_color_brewer(palette="Set2")+
   labs(x = "", y = "Count",
        title = "Swearing in American Rappers' songs",
        subtitle= "782 songs from Eminem, Jay Z, Kendrick Lamar, and Kanye West.")+
@@ -184,6 +203,7 @@ american_rappers %>% group_by (album, rapper) %>%
   summarise(swear_words = sum(swear_words, na.rm = TRUE))%>%
   ggplot(., aes(x=swear_words, y=reorder(album, swear_words))) +
   geom_bar(aes(fill=rapper), stat="identity") +
+  scale_fill_brewer(palette="Set2")+
   labs(x = "Count", y = "Album Title",
        title = "Swearing in American Rappers' Albums",
        subtitle= "46 Albums since 1996")+
@@ -224,7 +244,7 @@ Yes, we need to normalize scores!
 
 But what would be the best normalization given our data?
 
-```{r swera in time normalized year, message=FALSE, warning=FALSE}
+```{r swearing in time normalized year, message=FALSE, warning=FALSE}
 american_rappers %>%
   group_by(year, rapper) %>%
   mutate(songs_per_year = n()) %>%
@@ -248,9 +268,9 @@ american_rappers %>%
   facet_wrap(~rapper)
 ```
 
-Let's actually normalize by the number of songs in per album.
+Let's actually normalize by the number of words per song
 
-```{r swera per year normalized, message=FALSE, warning=FALSE}
+```{r swearing per year normalized, message=FALSE, warning=FALSE}
 american_rappers$word_per_song <-str_count(american_rappers$lyrics, "\\w+")
 # counting words in lyrics
 american_rappers$normalized_swear_words2 <- american_rappers$swear_words /
@@ -277,13 +297,40 @@ american_rappers %>%
 
 What happens with the unit of measurement (i.e. average number of swear words per song)?
 
-## Religious vocabulary in time
+## Religious vocabulary in time: smoothing is okay?
 
-```{r religion, message=FALSE, warning=FALSE}
+```{r religion smoothed, message=FALSE, warning=FALSE}
 american_rappers %>%
-  gather("topic", "normalized_count2", 9:10) %>%
+  group_by(year) %>%
+  summarise(normalized_s=mean(normalized_swear_words2),
+            normalized_r=mean(normalized_religious_words2)) %>%
+    pivot_longer(2:3, names_to="topic", values_to="normalized_count2") %>%
   ggplot(., aes(x=year, y=normalized_count2, color=topic)) +
-  geom_smooth(se=FALSE) +
+  geom_smooth(se=FALSE)+
+      scale_color_brewer(palette="Set2")+
+  labs(x = "", y = "Average number of swear words per song",
+       title = " Religion and Swearing in American Rappers' Repertoire",
+       subtitle= "782 songs since 1996")+
+  theme(panel.background = element_rect("white", "black", .5, "solid"),
+        panel.grid.major = element_line(color = "grey", size = 0.3,
+                                        linetype = "solid"),
+        axis.text = element_text(color = "black", size = 10),
+        title = element_text(color = "black", size = 10, face = "bold"),
+        legend.title = element_blank(),
+        plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
+        legend.position = "bottom")
+```
+
+
+```{r religion line, message=FALSE, warning=FALSE}
+american_rappers %>%
+  group_by(year) %>%
+  summarise(normalized_s=mean(normalized_swear_words2),
+            normalized_r=mean(normalized_religious_words2)) %>%
+    pivot_longer(2:3, names_to="topic", values_to="normalized_count2") %>%
+  ggplot(., aes(x=year, y=normalized_count2, color=topic)) +
+  geom_line(size=1)+
+    scale_color_brewer(palette="Set2")+
   labs(x = "", y = "Average number of swear words per song",
        title = " Religion and Swearing in American Rappers' Repertoire",
        subtitle= "782 songs since 1996")+
@@ -301,10 +348,11 @@ Do you think there is a trend a wider trend in American Rappers using more relig
 
 ```{r religion by rapper, message=FALSE, warning=FALSE}
 american_rappers %>%
-  gather("topic", "normalized_count2", 9:10) %>%
+  pivot_longer(9:10, names_to= "topic", values_to="normalized_count2") %>%
   ggplot(., aes(x=year, y=normalized_count2, color=topic)) +
   geom_smooth(se=FALSE) +
-  labs(x = "", y = "Average number of swear words per song",
+    scale_color_brewer(palette="Set2")+
+  labs(x = "", y = "Smoothed average number of swear words per song",
        title = " Religion and Swearing in American Rappers' Repertoire",
        subtitle= "782 songs since 1996")+
   theme(panel.background = element_rect("white", "black", .5, "solid"),
@@ -336,7 +384,7 @@ Kanye_West <- american_rappers %>%
 
 ```{r kim effect, message=FALSE, warning=FALSE}
 Kanye_West %>%
-  gather("topic", "word_count", 6:7) %>%
+  pivot_longer(6:7, names_to="topic", values_to = "word_count") %>%
   group_by(year) %>%
   mutate(songs_per_year = n()) %>%
   group_by(songs_per_year, topic, kim_kardashian) %>%
@@ -389,7 +437,9 @@ Kanye_West %>%
 ## Lamar's Repertoire
 
 ```{r lamar cleaning, include=FALSE, message=FALSE, warning=FALSE}
+
 # The function "function()" creates a function; in this case, our function cleans the text in multiple ways.
+
 cleanCorpus<-function(corpus, customStopwords){
   corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
   corpus <- tm_map(corpus, removeNumbers)

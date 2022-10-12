@@ -585,8 +585,12 @@ purp2
   
 --
 
-  - This means: `ggplot(mapping=aes(color=continent))`. Continent is a variable of the gapminder dataset.
+  - This means: `ggplot(mapping=aes(color=continent))`.
   
+--
+
+  - This reads: map the variable continent to the aesthetic color. 
+
 --
 
 .pull-left[
@@ -600,7 +604,7 @@ purp3<-ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, color=
 --
 
 .pull-right[
-```{r echo=FALSE, out.width="80%"}
+```{r echo=FALSE, out.width="75%"}
 purp3
 ```
 
@@ -683,8 +687,8 @@ sample_n(gapminder,15) #showing a random sample
 ##Last, ggplot2 works with pipes!
   
   - Just remember the difference between piping (%>%) and layering (+)!
-    - The '%>%' pipes the output of an operation as the first argument of the next one ( [here](https://stackoverflow.com/questions/24536154/what-does-mean-in-r/24536653#24536653)).
-    - The '+', instead, adds layers to a ggplot2 plot ( [here](https://stackoverflow.com/questions/35332861/what-is-the-difference-between-the-operator-in-ggplot2-and-the-operato))
+    - The '%>%' pipes the output of an operation as the first argument of the next one ([here](https://stackoverflow.com/questions/24536154/what-does-mean-in-r/24536653#24536653)).
+    - The '+', instead, adds layers to a ggplot2 plot ([here](https://stackoverflow.com/questions/35332861/what-is-the-difference-between-the-operator-in-ggplot2-and-the-operato))
   
 .pull-left[
 ```{r}
