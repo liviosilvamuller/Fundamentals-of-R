@@ -3,8 +3,8 @@ title: "Fundamentals of R"
 author: "Henrique Sposito and Livio Muller-Silva"
 date: '2022-10-14'
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 subtitle: Block 3 - Practical Visualizations
 ---
 
@@ -82,8 +82,7 @@ To create bar plot in ggplot2 we use the [`geom_col()`](https://ggplot2.tidyvers
 
 Let's start with a simple plot:
 
-```{r, include=FALSE}
-
+```{r echo=TRUE}
 # We could plot countries in one continent only at two different time points, no?
 
 gapminder %>% # select data
@@ -98,7 +97,7 @@ gapminder %>% # select data
 
 ```
 
-```{r, include=FALSE}
+```{r echo=TRUE}
 
 gapminder %>%
   filter(year == 1957 | year == 2007,
@@ -112,7 +111,7 @@ gapminder %>%
 
 ```
 
-```{r, include=FALSE}
+```{r echo=TRUE}
 
 gapminder %>%
   filter(year == 1957 | year == 2007,
@@ -134,7 +133,7 @@ gapminder %>%
 
 Let's use bars to plot the average difference in life expectancy from 1957 to 2007 across continents.
 
-```{r}
+```{r echo=TRUE}
 
 gapminder %>% # select data
   filter(year == 1957 | year == 2007) %>% # filter for years of interest
@@ -155,7 +154,7 @@ gapminder %>% # select data
 
 Would a bar plot be a good choice to plot life expectancy by country in 1957?
 
-```{r}
+```{r echo=TRUE}
 
 gapminder %>% # select data
   filter(year == 1957) %>% # filter for years of interest
@@ -168,7 +167,7 @@ gapminder %>% # select data
 
 This is clearly not a good plotting choice (too much information)...
 
-```{r, include=FALSE}
+```{r echo=TRUE}
 # We could perhaps change the angles of the names.
 # Do you think this would solve the issue?
 
