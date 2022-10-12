@@ -3,8 +3,8 @@ title: "Fundamentals of R"
 author: "Henrique Sposito and Livio Muller-Silva"
 date: '2022-10-14'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 subtitle: Block 3 - Practical Visualizations
 ---
 
@@ -65,7 +65,8 @@ When you click the **Knit** button a document in HTML or PDF can be generated th
 Lastly, R Markdown can be further used to create presentations in R (as the ones we use in class, see the [xaringan](https://bookdown.org/yihui/rmarkdown/xaringan.html) package) or even to write your Master's thesis (check out [iheidown](https://jhollway.github.io/iheiddown/)).
 
 # Visualizations
-##Setting up the Gap minder data
+
+## Setting up the Gapminder data
 
 ```{r, eval=FALSE}
 gapminder <- gapminder::gapminder # create an object
@@ -74,67 +75,106 @@ summary(gapminder) # summary data
 
 Before we start, the [ggplot2 book](https://ggplot2-book.org/introduction.html) is a great source for you to learn the details of visualizing with ggplot (and it was written using an RMarkdown!!).
 
+## Line plots: The evolution of life expectancy 
+
+To create line plots in ggplot2 we use the [`geom_line()`](https://ggplot2.tidyverse.org/reference/geom_line.html) function.
+
+[What are line plots good for in this case?](https://rkabacoff.github.io/datavis/Time.html#TimeSeries)
+
+Let's plot life expectancy in time!
+
+```{r}
+gapminder %>%
+  filter(country == "Switzerland") %>% # filter for Switzerland
+  ggplot(aes(x = year, y = lifeExp)) + # adds a first ggplot2 layer
+  geom_line() # add a line
+```
+
+How can we improve this?
+
+```{r}
+gapminder %>%
+  filter(country == "Switzerland") %>% # filter for Switzerland
+  ggplot(aes(x = year, y = lifeExp)) + # adds a first ggplot2 layer
+  geom_line() + # add a line
+  labs(title = "Life expectancy in Switzerland from 1957 to 2007", # add title
+       x = "Year",  # add label for x axis
+       y = "Life expectation", # add label for y axis
+       caption = "Source: Gapminder") # add caption
+```
+
+Do you think that life increased for across all continents though?
+
+```{r}
+gapminder %>%
+  group_by(continent, year) %>% # group by year and country
+  summarise(Avg_life_expectancy = mean(lifeExp)) %>%  #  mean life expectancy
+  ggplot(aes(x = year, y = Avg_life_expectancy)) + # map
+  geom_line(aes(color = continent)) + #here we are mapping color by continent at the geom_level
+  labs(title = "Life expectancy by continent from 1957 to 2007", # add title
+       x = "Year", # add
+       y = "Average life expectation", # add lable for y axis
+       caption = "Source: Gapminder") + # add caption
+  theme_classic() # add theme
+```
+
+Could you make the same line plots for GDP per capita across continents in time?
+
 ## Bar plots: Life expectancy from 1957 to 2007 across continents 
 
-To create bar plot in ggplot2 we use the [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) function.
+To create bar plot in ggplot2 we use the [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_col.html) function.
 
 [What are bar plots good for?](https://www.data-to-viz.com/graph/barplot.html)
 
-Let's start with a simple plot:
+Let's start with a simple bar plot, one continent only at two different time points.
 
-```{r echo=TRUE}
-# We could plot countries in one continent only at two different time points, no?
-
+```{r}
 gapminder %>% # select data
   filter(year == 1957 | year == 2007,
          continent == "Oceania") %>% # filter for years of interest and Oceania
   ggplot(aes(x = country, # country in the x axis
              y = lifeExp, # map average life expectancy in the y axis
-             fill = as.factor(year))) + # map fill by year (as factor), remember that fill means the color filling the geom.
+             fill = as.factor(year))) +
+  # map fill by year (as factor), remember that fill means the color filling the geom.
   geom_col()
-
-# What happened here?
-
 ```
 
-```{r echo=TRUE}
+What is the issue with this plot?
 
-gapminder %>%
+```{r}
+gapminder %>% # select data
   filter(year == 1957 | year == 2007,
-         continent == "Oceania") %>% 
-  ggplot(aes(x = country, 
-             y = lifeExp, 
+         continent == "Oceania") %>% # filter for years of interest and Oceania
+  ggplot(aes(x = country, # country in the x axis
+             y = lifeExp, # map average life expectancy in the y axis
              fill = as.factor(year))) +
-  geom_col(position= "dodge") # separated the columns.
-
-# The plot looks nicer, but there are still some issues with this. What are they?
-
+  # map fill by year (as factor), remember that fill means the color filling the geom
+  geom_col(position= "dodge") # separated the columns
 ```
 
-```{r echo=TRUE}
+This looks nicer, but there are several improvements we can still make!
 
-gapminder %>%
+```{r echo=TRUE}
+gapminder %>% # select data
   filter(year == 1957 | year == 2007,
-         continent == "Oceania") %>% 
-  ggplot(aes(x = country, 
-             y = lifeExp, 
+         continent == "Oceania") %>% # filter for years of interest and Oceania
+  ggplot(aes(x = country, # country in the x axis
+             y = lifeExp, # map average life expectancy in the y axis
              fill = as.factor(year))) +
-  geom_col(position= "dodge")+ # defining the position of stat in bars
+  # map fill by year (as factor), remember that fill means the color filling the geom
+  geom_col(position= "dodge") # separated the columns
   labs(title = "Life expectancy from 1957 to 2007 in Oceania", # add a title
        x = "Country", # add a label for x axis
        y = "Average Life Expectancy", # add a label for y axis
        fill = "Year") + # sub legend for fill
   scale_fill_manual(values = c("gray", "darkgreen")) + # manually set colors
-  theme_classic() # add a theme; theme_classic is a "clean" theme that removes many unncessary things.
-
-# The plot looks nicer, but there are still some issues with this. What are they?
-
+  theme_classic() 
+  # adds a theme; theme_classic is a "clean" theme that removes unnecessary stuff
 ```
 
-Let's use bars to plot the average difference in life expectancy from 1957 to 2007 across continents.
+Lastly, let's use the same bar plots the average difference in life expectancy from 1957 to 2007 across continents.
 
 ```{r echo=TRUE}
-
 gapminder %>% # select data
   filter(year == 1957 | year == 2007) %>% # filter for years of interest
   group_by(continent, year) %>% # group by year and country
@@ -149,60 +189,7 @@ gapminder %>% # select data
        fill = "Year") + # sub legend for fill
   scale_fill_manual(values = c("gray", "darkgreen")) + # manually set colors
   theme_classic() # add a theme
-
 ```
-
-Would a bar plot be a good choice to plot life expectancy by country in 1957?
-
-```{r echo=TRUE}
-
-gapminder %>% # select data
-  filter(year == 1957) %>% # filter for years of interest
-  ggplot(aes(x = country, # map country in the x axis
-             y = lifeExp)) + # map average life expectancy in the y axis
-  geom_col()
-
-
-```
-
-This is clearly not a good plotting choice (too much information)...
-
-```{r echo=TRUE}
-# We could perhaps change the angles of the names.
-# Do you think this would solve the issue?
-
-# Change the angle of text
-gapminder %>% 
-  filter(year == 2007) %>% 
-  ggplot(aes(x = reorder(country, lifeExp),
-             y = lifeExp)) + 
-  geom_col() + 
-  theme(axis.text.x = element_text(angle = 90))+ # change the angle for text in x axis
-  coord_flip() # flip coordinates instead
-
-
-```
-
-## Line plots: The evolution of life expectancy 
-
-To create line plots in ggplot2 we use the [`geom_line()`](https://ggplot2.tidyverse.org/reference/geom_line.html) function.
-
-[What are line plots good for in this case?](https://rkabacoff.github.io/datavis/Time.html#TimeSeries)
-
-```{r}
-gapminder %>%
-  group_by(continent, year) %>% # group by year and country
-  summarise(Avg_life_expectancy = mean(lifeExp)) %>%  #  mean life expectancy
-  ggplot(aes(x = year, y = Avg_life_expectancy)) +
-  geom_line(aes(color = continent)) + #here we are mapping color by continent at the geom_level
-  labs(title = "Life expectation by continent from 1957 to 2007",
-       x = "Year", 
-       y = "Average life expectation",
-       caption = "Source: Gapminder") + # add caption
-  theme_classic() # add theme
-```
-
-Could you make the same line plots for GDP per capita across continents in time?
 
 ## Box plots: Distribution of life expectancies across continent
 
@@ -211,58 +198,34 @@ To create scatter plots in ggplot2 we use the [`geom_boxplot()`](https://ggplot2
 [What are box plots good for in this case?](https://www.r-bloggers.com/2021/11/how-to-make-stunning-boxplots-in-r-a-complete-guide-with-ggplot2/)
 
 ```{r}
-gapminder %>%
-  filter(year == 1957 | year == 2007) %>% 
-  ggplot(aes(x = continent, y = lifeExp, fill = continent)) +
-  geom_boxplot() +
-  labs(title = "Life expectation by continent in 1957 and 2007",
-       x = "Continent", 
-       y = "Life expectation",
-       caption = "Source: Gapminder")
-
-# what is happening here?
-# which information is redundant?
-
+gapminder %>% # get data
+  filter(year == 1957) %>% # filter by year
+  ggplot(aes(x = continent, y = lifeExp, fill = continent)) + # map first layer
+  geom_boxplot() + # box plot
+  labs(title = "Life expectation by continent in 1957", # adds title
+       x = "Continent", # adds x axis label
+       y = "Life expectation", # adds y axis label
+       caption = "Source: Gapminder") # adds caption
 ```
 
-```{r}
-gapminder %>%
-  filter(year == 1957 | year == 2007) %>% 
-  ggplot(aes(x = continent, y = lifeExp, fill = continent)) +
-  geom_boxplot() +
-  facet_wrap(~year)+ #facet_wrap() quickly separates our data in facets
-  labs(title = "Life expectation by continent in 1957 and 2007",
-       x = "", #continent was redundant, let's remove it
-       y = "Life expectation",
-       caption = "Source: Gapminder")+
-  theme(legend.position="none") # legend on the side was redundant, let's remove it.
-
-#we still have a problem, these colors are not friendly. How can we use the RColorBrewer package from the lecture?
-
-```
-
+There is a lot of redundant information in this plot, no?
 
 ```{r}
-
 library(RColorBrewer)
-display.brewer.all(colorblindFriendly = TRUE, type = "qual") #why type "qual"?
-
-
-gapminder %>%
-  filter(year == 1957 | year == 2007) %>% 
-  ggplot(aes(x = continent, y = lifeExp, fill = continent)) +
-  geom_boxplot() +
-  facet_wrap(~year)+ 
+display.brewer.all(colorblindFriendly = TRUE, type = "qual") # "qual" stands for qualitative!
+gapminder %>% 
+  filter(year == 1957 | year == 2007) %>% # filter
+  ggplot(aes(x = continent, y = lifeExp, fill = continent)) + # fill by continent
+  geom_boxplot() + # box plot
+  facet_wrap(~year) + # separate plots by year; creates 2 different plots in this case
   labs(title = "Life expectation by continent in 1957 and 2007",
-       x = "", 
+       x = "", # remove labels for x axis
        y = "Life expectation",
-       caption = "Source: Gapminder")+
-  theme(legend.position="none")+
+       caption = "Source: Gapminder") +
+  theme(legend.position="none") +
   scale_fill_brewer(palette="Set2") 
-
 #scale_fill_brewer() colours the aesthetics fill with "Set2".
 #scale_colour_brewer() colours the aesthetics color with the palette you indicate.
-
 ```
 
 Can you make the same box plot for GDP?
@@ -273,40 +236,19 @@ To create scatter plots in ggplot2 we use the [`geom_point()`](https://ggplot2.t
 
 [What are scatter plots good for in this case?](https://chartio.com/learn/charts/what-is-a-scatter-plot/)
 
-Let's plot population and GDP per capita, in 2007!
-
 ```{r}
-gapminder %>%
-  filter(year == 2007) %>%
-  ggplot(aes(x = lifeExp, 
-             y = gdpPercap)) +
-  geom_point() # add points to plot
-```
-
-Is this plot informative? How could we improve this?
-
-```{r, include=FALSE}
-# We could color by continent?
-gapminder %>% 
-  filter(year == 2007) %>% 
-  ggplot(aes(x = lifeExp,
-             y = gdpPercap,
-             fill = continent)) + # map fill by continent
-  geom_point(aes(color = continent)) # map color by continent
-```
-
-What if we focus on population, life expectation and GDP?
-
-```{r}
+library(ggthemes) # This package has several cool themes!
 gapminder %>% 
   filter(year == 2007) %>%
   ggplot(aes(x = gdpPercap, y = lifeExp)) +
-  geom_point(aes(size = pop, color = continent)) + # color all points blue
+  geom_point(aes(size = pop, color = continent)) +
+  # size points by population and color by continent
   geom_smooth(se = FALSE, color = "gray") + # add a smoothed line
   labs(title = "How much life money can buy?",
        x = "GDP per capita", 
        y = "Life expectation",
        caption = "Source: Gapminder") + # add caption
-  theme_bw() # add theme
+  scale_x_log10() +
+  theme_fivethirtyeight() # add theme from the ggthemes package
 ```
 
