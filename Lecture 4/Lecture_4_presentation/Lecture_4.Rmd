@@ -95,30 +95,6 @@ left_join() #family of functions to join datasets
 
 
 ---
-class: split two
-
-# Homework for today
-
-.pull-left[
-
-*Let's start by going through the homework together!*
-
-- Common issues
-
-
-
-- Any other general questions?
-
-]
-
-.pull.right[
-
-![:scale 40%](assets/images/dog.png)
-
-
-]
-
----
 
 class: split two
 
@@ -135,7 +111,7 @@ class: split two
 .pull-right[
 ## Practical:
 
-  - Bar plots, line (and smoothed) plots, scatter (and jittered) plots, and box plots.
+  - Bar, line, scatter, and box plots.
   - How to size, color, shape and label things.
   - How to facet plots.
 
@@ -369,7 +345,7 @@ Second, let's tell ggplot2 how we want to see the relationships.
 - In ggplot2 we add things, because we are **layering** rather than piping.
  
 ```{r}
-p <- p+ geom_point()
+p <- p + geom_point()
 ```
 
 ]
@@ -398,7 +374,7 @@ p
 - In this case, we are adding `geom_smooth()`.
 ```{r}
 
-p<- p+ geom_smooth() #smooth plots a trend line.
+p<- p + geom_smooth() #smooth plots a trend line.
 
 ```
 
@@ -426,7 +402,7 @@ p
 
 ```{r}
 
-p<- p+
+p<- p +
   scale_x_log10(labels=scales::dollar) 
 # scale_x_log10() rescales our x to improve visualization
 ```
@@ -450,7 +426,7 @@ p
 
 ```{r}
 
-p<- p+
+p<- p +
     labs( y="Life Expectancy", x=" GDP per Capita",
         title= "Life expectancy and GDP per capita",
         subtitle=" Dataset composed of 142 countries from 1952 to 2007",
@@ -477,7 +453,7 @@ p
 
 ```{r}
 
-p<- p+
+p<- p +
       theme(title = element_text(color="black", size=12, face="bold"),
         axis.text = element_text(color="black", size=10),
         plot.subtitle = element_text(color="black", size=10, face= "plain"),
@@ -710,17 +686,3 @@ plot
 ```
 
 ]
-
----
-class:center middle with-logo
-
-Made with `{iheiddown}`, the R-package for IHEID publications
-`r Cite(myBib, "iheiddown")`.
-
----
-
-# References
-
-```{r refs, echo=FALSE, results="asis"}
-RefManageR::PrintBibliography(myBib)
-```
