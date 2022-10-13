@@ -22,7 +22,7 @@ Please load the dataset, we will be working with it today.
 
 ## Question 1
 
-Create a bar plot displaying the top 10 overall donors and their total donations to all international organizations. Please color the donors by their type (e.g. public or private).
+Create a bar plot displaying the top 10 overall donors and their total donations to all international organizations. Please color the donors by their type (i.e. public or private).
 
 ## Question 2
 
@@ -30,10 +30,8 @@ Has the amount the US donates to all issue areas increased over time? Please ill
 
 ## Question 3
 
-Plot the distribution of all donations in the year 2000 and in the year 2020 comparing public and private donors. Are there outliers for either of these types of donors in 2000? What about in 2020? (Tip: box plots are great for distributions, you might have to as.factor(year) and scale the amount_nominal in log10)
+Plot the distribution of all donations in the year 2000 and in the year 2020 comparing public and private donors. Are there outliers for either of these types of donors in 2000? What about in 2020? (Tip: box plots are great for distributions! Please treat year as factor and scale the nominal amount using "scale_y_log10(labels = scales::dollar)").
 
 ## Question 4
 
-We want one scatter plot for each issue area containing all donation by year per donor type. The shape of the points should reflect the donor type.
-In each facet, we want a smoothed line to show the direction of the relationship (TIP: geom_smooth(method="lm")). This line should be colored "red".
-
+Create four scatter plots, one for each issue area, containing all donation by year per donor type (Tip: use "facet_wrap(~issue_area)"). The shape of the points should reflect the donor type (Tip: use "geom_point(aes(shape = donor_type"))"). In each facet, please add a smoothed line to show the direction of the relationship (TIP: use "geom_smooth()"). The smoothed lines should be colored "red".

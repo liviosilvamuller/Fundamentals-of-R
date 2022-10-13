@@ -48,10 +48,9 @@ q1 %>%
     title = element_text(color = "black", size = 10, face = "bold"),
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
-    legend.position = "bottom")+
+    legend.position = "bottom") +
     coord_flip() #flipping it to simplify reading
 ```
-
 
 ## Question 2
 
@@ -86,11 +85,9 @@ io_income_rs %>%
     facet_wrap(~issue_area)
 ```
 
-
 ## Question 3
 
 Plot the distribution of all donations in the year 2000 and in the year 2020 comparing public and private donors. Are there outliers for either of these types of donors in 2000? What about in 2020? (Tip: box plots are great for distributions, you might have to as.factor(year) and scale the amount_nominal in log10)
-
 
 ```{r q3, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
 io_income_rs %>%
@@ -119,12 +116,10 @@ io_income_rs %>%
     legend.position = "right")
 ```
 
-
 ## Question 4
 
 We want one scatter plot for each issue area containing all donation by year per donor type. The shape of the points should reflect the donor type.
 In each facet, we want a smoothed line to show the direction of the relationship (TIP: geom_smooth(method="lm")). This line should be colored "red".
-
 
 ```{r q4, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
 io_income_rs %>%
@@ -136,15 +131,17 @@ io_income_rs %>%
   facet_wrap(~issue_area) #minimal
 
 io_income_rs %>%
-  drop_na(type_donor)%>%
-  ggplot(mapping=aes(x=year, y=amount_nominal))+
+  drop_na(type_donor) %>%
+  ggplot(mapping=aes(x=year, y=amount_nominal)) +
   geom_point(aes(shape=type_donor), position="jitter", alpha=.5)+ #position jitter adds random noise to each observation, so they do not line up by year.
-  geom_smooth(method = "lm", color="red")+
-  scale_y_log10(labels=scales::dollar)+
-  facet_wrap(~issue_area)+
-  labs( x = NULL, y = NULL, title = "Donations to issues areay by year per type since 2000", #removing redundat info
-    subtitle=" composed by 4500 randomly sampled observations from dataset",
-    caption = "Source: io_income_rs dataset")+
+  geom_smooth(method = "lm", color="red") +
+  scale_y_log10(labels=scales::dollar) +
+  facet_wrap(~issue_area) +
+  labs(x = NULL, y = NULL,
+       title = "Donations to issues areay by year per type since 2000",
+       #removing redundant info
+       subtitle=" composed by 4500 randomly sampled observations from dataset",
+       caption = "Source: io_income_rs dataset") +
   theme(panel.background = element_rect("white", "black", .5, "solid"),
     panel.grid.major = element_line(color = "grey", size = 0.3, linetype = "solid"),
     axis.text = element_text(color = "black", size = 10),
@@ -152,6 +149,4 @@ io_income_rs %>%
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
     legend.position = "right")
-
 ```
-
