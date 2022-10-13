@@ -30,12 +30,10 @@ Has the amount the US donates to all issue areas increased over time? Please ill
 
 ## Question 3
 
-Plot the distribution of all donations in the year 2000 and in the year 2020 comparing public and private donors. Are there outliers for either of these types of donors in 2000? What about in 2020? (Tip: box plots are great for distributions)
+Plot the distribution of all donations in the year 2000 and in the year 2020 comparing public and private donors. Are there outliers for either of these types of donors in 2000? What about in 2020? (Tip: box plots are great for distributions, you might have to as.factor(year) and scale the amount_nominal in log10)
 
 ## Question 4
 
-Make a scatter plot for all donations towards health by year since 2000. Please label the donors (tip: "geom_text(aes(label = donor))") and shape by their dots according to their type (tip: use "geom_point(aes(shape = donor_type"))"). Why do you think the amount donated towards peace fluctuates in time?
+We want one scatter plot for each issue area containing all donation by year per donor type. The shape of the points should reflect the donor type.
+In each facet, we want a smoothed line to show the direction of the relationship (TIP: geom_smooth(method="lm")). This line should be colored "red".
 
-## Question 5
-
-Has the amount the US donates to all issue areas increased over time? Please illustrate this relationship with a geom_area(), colored by the respective issue areas.
