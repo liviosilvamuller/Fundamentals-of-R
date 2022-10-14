@@ -95,6 +95,18 @@ left_join() #family of functions to join datasets
 
 
 ---
+#Feedback: thanks for answering!
+
+- We will work with datasets within R packages, to facilitate the in class slides and practical.
+ 
+- Case studies: everlasting promise?
+  - We will cover a case study today.
+  - Next week class ends at 16:00. For those interested, we will cover a second case study from 16:15 to 17:00 or so.
+  
+- If there are still questions after class, feel free to drop us an e-mail and we can arrange time to meet.
+
+ 
+---
 
 class: split two
 
