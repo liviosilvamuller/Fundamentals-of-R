@@ -135,14 +135,16 @@ class: split two
 
 - Leverage size, color, and shapes to...
 
-- ...decrease unnecessary information while highlighting necessary information,
+- ...decrease unnecessary information,
 
 - **So one plot, tells one story clearly**.
 
 ---
-## Gestalt principles (1/5)
+## Gestalt principles (1/6)
 
-![:scale 50%](assets/images/structure.png)
+![:scale 75%](assets/images/structure.png)
+---
+## Gestalt principles (2/6)
 
 - We look for structure... and we infer relationships from structure!
 
@@ -162,14 +164,12 @@ class: split two
 
 .fifty[Image from and text adapted from: [Healy, 2018](https://socviz.co/)]
 ---
-class: center middle
-
-##  Gestalt principles: sizing things (2/5)
+##  Gestalt principles: sizing things (3/6)
 
 ![:scale 50%](assets/images/read_this_first.jpeg)
 
 ---
-##  Gestalt principles: sizing things (3/5)
+##  Gestalt principles: sizing things (4/6)
 
 - Size, more than order, will define what is noticed first.
 - Size things around and in your plot by their hierarchy of importance.
@@ -179,7 +179,7 @@ class: center middle
 ![:scale 65%](assets/images/sizing_plot.png)
 
 ---
-##  Gestalt principles: shapping and colouring things (4/5)
+##  Gestalt principles: shapping and colouring things (5/6)
 
 ![:scale 100%](assets/images/c_n_s.png)
 
@@ -187,7 +187,7 @@ class: center middle
 .fifty[Image from: [Kieran Healy](https://kieranhealy.org/blog/)]
 
 ---
-##  Gestalt principles: shapping and colouring things (5/5)
+##  Gestalt principles: shapping and colouring things (6/6)
 
 .pull-left[
 
@@ -367,7 +367,7 @@ p
 
 - `geom_()` is a family of functions that built various types of graphs (bar, lines, boxes)
 
-- There are multiple kinds of geoms, you can check them in the cheat sheet for [´{ggplot2}´](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
+- There are multiple kinds of geoms, you can check them in the cheat sheet: [´{ggplot2}´](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
 
 - Following the logic of layering, you can just add a new geom to the object we have.
 
