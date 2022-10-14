@@ -42,13 +42,17 @@ academic_year %>%
   select(course_title, semester, language) %>% 
   filter(semester == "Autumn" & language == "english")
 
+# one of your solutions with base
+# count(academic_year, language, semester)
+
 # 7
 
 academic_year %>% 
-  group_by(department, semester) %>% 
+  group_by(Department, semester) %>% 
   count() %>% 
   arrange(-n) %>% 
   rename("Number of courses" = n)
+
 
 # 8
 
@@ -84,6 +88,8 @@ academic_year %>%
 academic_year <- academic_year %>% 
   mutate(topic = ifelse(type == "workshop", "skills", topic))
 
+
+
 # 12
 
 academic_year %>% 
@@ -97,6 +103,16 @@ academic_year %>%
 academic_year <- academic_year %>% 
   mutate(comp_type = ifelse(type == "compulsory" & topic == "theory" | 
                               topic == "methods", 1, 0))
+
+
+
+# solution with case_when for those asking( you'll need to change NA for 0 afterwards)
+
+#academic_year <- dplyr::mutate(`academic_year` , comp_type = 
+#                                case_when( type == "compulsory" & topic == "theory" ~ 1,
+#                                          type == "compulsory" & topic == "methods" ~ 1, 
+#                                         FALSE ~ 0)) 
+
 
 # 14
 
