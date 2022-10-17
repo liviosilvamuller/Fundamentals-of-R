@@ -65,8 +65,8 @@ Lastly, R Markdown can be further used to create presentations in R (as the ones
 
 ## Setting up the Gapminder data
 
-```{r, eval=FALSE}
-gapminder <- gapminder::gapminder # create an object
+```{r}
+gapminder <- gapminder:gapminder # create an object
 summary(gapminder) # summary data
 ```
 

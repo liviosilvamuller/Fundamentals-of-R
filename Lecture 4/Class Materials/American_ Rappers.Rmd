@@ -35,7 +35,7 @@ Eminem <- readRDS("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Clas
 Kendrick_Lamar <- readRDS("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Class Material/Kendrick_Lamar.RDS")
 ```
 
-After loading the packages e datasets, we need to join these together.
+After loading the packages and datasets, we need to join these together.
 
 If we simply join the datasets though, we will lose the name of the artist. So let's add a name variable to each dataset before joining them.
 
@@ -58,10 +58,8 @@ american_rappers <- full_join(Eminem,
                                         full_join(Jay_Z, Kendrick_Lamar)))
 ```
 
-Please notice that we can only join them without specifying the "by =" argument because the datasets have the same variables with the same names.
-
-However, this is not a very elegant solution.
-A more elegant solution for joining multiple datasets would entail using the ´{purrr}´ package.
+We can only join them without specifying the "by =" argument because the datasets have the same variables with the same names.
+However, this is not a very elegant solution. A more elegant solution for joining multiple datasets would entail using the ´{purrr}´ package.
 
 ```{r alternative join, eval=FALSE}
 library(purrr)
@@ -224,7 +222,7 @@ american_rappers %>% group_by (year, rapper) %>%
   summarise(swear_words = sum(swear_words, na.rm = TRUE))%>%
   ggplot(., aes(year, swear_words)) +
   geom_smooth(se=FALSE, color="black") +
-  labs(x = "Year", y = "Swear Words",
+  labs(x = "Year", y = "Swear Words Count",
        title = " Swear words by year",
        subtitle= "782 songs since 1996")+
   theme(panel.background = element_rect("white", "black", .5, "solid"),
@@ -274,7 +272,7 @@ Let's actually normalize by the number of words per song
 american_rappers$word_per_song <-str_count(american_rappers$lyrics, "\\w+")
 # counting words in lyrics
 american_rappers$normalized_swear_words2 <- american_rappers$swear_words /
-  american_rappers$word_per_song # normalize for swera words
+  american_rappers$word_per_song # normalize for swear words
 american_rappers$normalized_religious_words2 <- american_rappers$religious_words / 
   american_rappers$word_per_song # normalize for religious words
 # Plot

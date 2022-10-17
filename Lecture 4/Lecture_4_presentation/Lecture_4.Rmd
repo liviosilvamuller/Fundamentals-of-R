@@ -48,7 +48,6 @@ myBib <- ReadBib("assets/myBib.bib", check = FALSE)
 # bibliography.
 ```
 
----
 class: split two
 
 # What did we learn last week?
@@ -432,7 +431,7 @@ p
 ]
 
 ---
-##We can add titles, subtitles, axis-titles and caption with `labs()`.
+##We can add titles, subtitles, axis-titles and caption with `labs()`: read at home
 
 .pull-left[
 
@@ -459,7 +458,7 @@ p
 ]
 
 ---
-## We can change sizes, font, and face with `theme()`.
+## We can change sizes, font, and face with `theme()`: read at home
 
 .pull-left[
 
@@ -488,7 +487,7 @@ p
 
 
 ---
-## with a few details,we get a nicer plot!
+## with a few details,we get a nicer plot: read at home
 
 ```{r echo=FALSE, out.width="50%"}
 
