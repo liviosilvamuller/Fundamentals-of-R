@@ -22,24 +22,28 @@ options(scipen = 999)
 Create a bar plot displaying the top 10 overall donors and their total donations to all international organizations. Please color the donors by their type (e.g. public or private).
 
 ```{r q1, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
-q1 <- io_income_rs %>%
+io_income_rs %>%
   drop_na(donor)%>%
   group_by(donor, type_donor)%>%
   summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
-  arrange(desc(amount_nominal)) 
-
-q1<- q1[1:10,]
-
-q1 %>%
+  arrange(desc(amount_nominal))%>%
+  ungroup()%>%
+  slice_head(n=10)%>% 
   ggplot(mapping=aes(x=donor, y= amount_nominal, fill=type_donor))+
   geom_col() #minimal solution 
 
-q1 %>%
+io_income_rs %>%
+  drop_na(donor)%>%
+  group_by(donor, type_donor)%>%
+  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
+  arrange(desc(amount_nominal))%>%
+  ungroup()%>%
+  slice_head(n=10)%>%
   ggplot(mapping=aes(x=reorder(donor, amount_nominal), y= amount_nominal, fill=type_donor))+
   geom_col()+
   scale_fill_brewer(type="qual", palette= "Accent", direction=1)+
   scale_y_continuous(labels=scales::dollar)+
-  labs( x = NULL, y = "Total donations to IOs", title = "Top 10 donors from 2000 to 2020", #removing redundat info
+  labs( x = NULL, y = "Total donations to IOs", title = "Top 10 donors from 2000 to 2020", #removing redundant info
     subtitle=" composed by 4500 randomly sampled observations from dataset",
     caption = "Source: io_income_rs dataset")+
   theme(panel.background = element_rect("white", "black", .5, "solid"),
@@ -133,13 +137,12 @@ io_income_rs %>%
 io_income_rs %>%
   drop_na(type_donor) %>%
   ggplot(mapping=aes(x=year, y=amount_nominal)) +
-  geom_point(aes(shape=type_donor), position="jitter", alpha=.5)+ #position jitter adds random noise to each observation, so they do not line up by year.
+  geom_point(aes(shape=type_donor), position="jitter", alpha=.5)+ # position jitter adds random noise to each observation, so they do not line up by year.
   geom_smooth(method = "lm", color="red") +
   scale_y_log10(labels=scales::dollar) +
   facet_wrap(~issue_area) +
   labs(x = NULL, y = NULL,
-       title = "Donations to issues areay by year per type since 2000",
-       #removing redundant info
+       title = "Donations to issues areay by year per type since 2000", #removing redundant info
        subtitle=" composed by 4500 randomly sampled observations from dataset",
        caption = "Source: io_income_rs dataset") +
   theme(panel.background = element_rect("white", "black", .5, "solid"),
