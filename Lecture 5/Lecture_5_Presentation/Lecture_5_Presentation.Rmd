@@ -112,7 +112,7 @@ class: split two
 
 ---
 
-# Common Issue (Rmd 2/4)
+# Common Issues (Rmd 2/4)
 
 - Adding data (just like a script)
 
