@@ -23,7 +23,6 @@ output:
           </div>
         </div>`
 ---
-
 ```{r setup, include=FALSE}
 # don't mind this code chunk, it just sets up a few things for the rest
 # it doesn't appear, because the include argument above is FALSE...
@@ -31,6 +30,108 @@ options(htmltools.dir.version = FALSE, servr.daemon = TRUE)
 knitr::opts_chunk$set(cache=TRUE, autodep = TRUE, fig.retina = 3, message = FALSE, warning = FALSE)
 ```
 
+class: split two
+## General issues: slice_ (1/3)
+```{r include=FALSE}
+library(dplyr)
+library(readr)
+library(tidyr)
+io_income_rs <- read_csv("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 5/Lecture_5_Presentation/assets/data/io_income_rs.csv")
+```
+
+.pull-left[
+```{r echo=TRUE}
+io_income_rs %>%
+  drop_na(donor)%>%
+  group_by(donor, type_donor)%>%
+  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
+  arrange(desc(amount_nominal))%>%
+  slice_head(n=10)
+```
+]
+
+--
+.pull-right[
+```{r echo=TRUE}
+io_income_rs %>%
+  drop_na(donor)%>%
+  group_by(donor, type_donor)%>%
+  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
+  arrange(desc(amount_nominal))%>%
+  ungroup()%>% #group by two variables requires ungrouping before slicing...
+  slice_head(n=10)
+```
+]
+---
+
+## General issues: case_when (2/3)
+
+  - `dplyr::case_when()` and `base::ifelse()` can help you return values based on tests.
+
+--
+
+  - Different from `ifelse()`, `case_when()` can **more** easily return more than two values based on more than one test.
+  
+--
+
+  - Let's say we want a new variable called un_sg (UN Secretary General):
+    - kofi_annan, if years are between 1997 and 2006;
+    - ban_kimoon, if years are between 2007 and 2016;
+    - antonio_guterres, if years are between 2016 and present.
+    
+---
+class: split two
+## General issues: case_when (2/3)
+
+```{r include=FALSE}
+io_income_rs <- io_income_rs%>%
+  filter(type_donor=="public")%>%
+  drop_na(donor)
+```
+
+.pull-left[
+```{r echo=TRUE}
+io_income_rs%>%
+  mutate(un_sg= ifelse (year<2006, "kofi_annan", 
+           ifelse(year>2016,
+                  "antonio_guterres", "ban_kimoon")))%>%
+  slice_sample(n=9)%>%
+  select(year, donor,un_sg)
+```
+]
+
+--
+.pull-right[
+```{r echo=TRUE}
+io_income_rs%>%
+  mutate(un_sg= case_when(
+            year < 2006 ~ "kofi_annan",
+            year <= 2016 ~ "ban_kimoon",
+            year > 2016 ~"antonio_guterres"))%>% #case_when respects order!
+  slice_sample(n=9)%>%
+  select(year, donor,un_sg)
+```
+]
+
+---
+## General issues: replace_na (3/3)
+ - `tidyr::replace_na()` replaces NAs with specified values.
+```{r eval=FALSE, message=TRUE, warning=TRUE, include=TRUE, paged.print=TRUE}
+io_income_rs %>% 
+  mutate(donor=replace_na(donor,"individuals")) #all NAs in donor are now "individuals"
+
+io_income_rs$donor %>% 
+  replace_na("individual") #all NAs in donor are now "individuals"
+
+io_income_rs %>% 
+  replace_na(list(donor="individuals",amount_nominal=0 )) #all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
+
+io_income_rs%>% 
+  replace_na(list(0)) #all NAs in the dataset are now 0
+```
+ 
+ 
+---
 class: split two
 
 # What did we learn last week?
@@ -233,11 +334,15 @@ class: center
 
 # The final assignment
 
-- Please submit a PDF (or HTML) document
+- You will have to submit two files:
+  - First, a PDF (or HTML) document containing your written answers and plots *without your code*.
+  - Second, your rmd file containing all your code.
 
-- We expect you to also interpret the code outputs
+- We expect you to also interpret the code outputs.
 
-- Bonus question
+- When we say create a plot, it might entail various facets.
+
+- No tricky questions, but bonus questions in the end.
 
 **We will hold office hours normally for the next 2 weeks.**
 
