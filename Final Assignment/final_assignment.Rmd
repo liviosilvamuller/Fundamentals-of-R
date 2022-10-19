@@ -216,7 +216,7 @@ co2_dat %>%
 
 ##Question 9
 
-```{r geom_col}
+```{r geom_col, eval=FALSE}
 
 flag_per_capita <- co2_dat %>%
   group_by(country_name)%>%
@@ -228,7 +228,7 @@ flag_per_capita <- co2_dat %>%
 
 co2_dat %>% 
   left_join(flag_per_capita)%>%
-  mutate(top_emitter=replace_na(top_emitter, "rest"))%>%
+  mutate(top_emitter=replace_na(top_emitter, "rest"))+
   group_by(country_name, top_emitter)%>%
   summarise(tot_co2=sum(co2_emissions))%>%
   ungroup()%>%
