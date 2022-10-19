@@ -1,10 +1,10 @@
-unnamed-chunk-1	library	read_csv
-unnamed-chunk-2	%>%	amount_nominal	arrange	desc	donor	drop_na	group_by	io_income_rs	slice_head	sum	summarize	type_donor
-unnamed-chunk-3	%>%	amount_nominal	arrange	desc	donor	drop_na	group_by	io_income_rs	slice_head	sum	summarize	type_donor	ungroup
-unnamed-chunk-4	%>%	==	donor	drop_na	filter	type_donor
-unnamed-chunk-5	%>%	<	>	donor	ifelse	io_income_rs	mutate	select	slice_sample	un_sg	year
-unnamed-chunk-6	%>%	~	case_when	donor	io_income_rs	mutate	select	slice_sample	un_sg	year
-unnamed-chunk-7	%>%	$	donor	io_income_rs	list	mutate	replace_na
-unnamed-chunk-8	aes	data	geom_boxplot	geom_col	geom_line	geom_points	geom_smooth	ggplot	labs	theme
-unnamed-chunk-9	::	install.packages
-unnamed-chunk-10	::	c	install.packages	mean
+unnamed-chunk-1	aes	data	geom_boxplot	geom_col	geom_line	geom_points	geom_smooth	ggplot	labs	theme
+unnamed-chunk-2	::	install.packages
+unnamed-chunk-3	::	c	install.packages	mean
+unnamed-chunk-4	library	read_csv
+unnamed-chunk-5	%>%	amount_nominal	arrange	desc	donor	drop_na	group_by	io_income_rs	slice_head	sum	summarize	type_donor
+unnamed-chunk-6	%>%	amount_nominal	arrange	desc	donor	drop_na	group_by	io_income_rs	slice_head	sum	summarize	type_donor	ungroup
+unnamed-chunk-7	%>%	==	donor	drop_na	filter	type_donor
+unnamed-chunk-8	%>%	<	>	donor	ifelse	io_income_rs	mutate	select	slice_sample	un_sg	year
+unnamed-chunk-9	%>%	~	case_when	donor	io_income_rs	mutate	select	slice_sample	un_sg	year
+unnamed-chunk-10	%>%	$	donor	io_income_rs	list	mutate	replace_na
