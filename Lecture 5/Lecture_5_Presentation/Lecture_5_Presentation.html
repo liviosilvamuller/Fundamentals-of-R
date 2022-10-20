@@ -101,7 +101,7 @@ class: split two
 
 ]
 
-**We will also discuss the final assignment!**
+**We will also discuss the final assignment**
 
 ---
 
@@ -147,7 +147,7 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 ```
 
-- [Figures and citations in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
+- [Figures and tables in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
 
 - Other specific R Markdown issues you had? 
 
@@ -203,7 +203,7 @@ I am having issues getting the mean for a variable in my dataset in R.
 
 As you see, the code returns "NA", even though I am removing NAs to calculate the mean.
 
-Below, you will find a sample of my data, the error, and my system info so that you can reproduce the issue.
+Below, you will find a sample of my data, code, and system info so that you can reproduce the issue.
 
 Could you please help me?
 
@@ -276,7 +276,7 @@ R.Version()$version.string
 
 # The post (Reprex 6/8)
 
-*Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, the error, and my system info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
+*Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, code, and sytem info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
 
 set.seed(1234)
 
@@ -289,6 +289,8 @@ mean(my.df$col2, na.rm = TRUE)
 '#&gt; [1] NA'
 
 '#&gt; Warning in mean.default(my.df$col2, na.rm = TRUE): argument is not numeric or logical: returning NA'
+
+'#&gt; R version: 4.1.2 (2021-11-01) / Loaded packages: dplyr and tidyr'
 
 ---
 
@@ -304,6 +306,8 @@ mean(my.df$col2, na.rm = TRUE)
 ```r
 install.packages("reprex")
 reprex::reprex({
+  R.Version()$version.string
+  search()
   set.seed(1234)
   my.df &lt;- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
                       col2 = as.factor(sample(5)), col3 = letters[1:5],
@@ -312,7 +316,7 @@ reprex::reprex({
 })
 ```
 
-***Help us help you by applying these principles when you post questions on the Moodle forum from now onwards***
+***Help us help you by applying these principles when you post questions on the Moodle forum***
 
 ---
 
@@ -328,9 +332,9 @@ reprex::reprex({
 
 ---
 
-# Github, worths more than a simple mention
+# Github, worth more than this one mention...
 
-- [The ords biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
+- [The worlds biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
 
 - Make your research available online (just like [Livio](https://github.com/liviosilvamuller) and [I](https://github.com/henriquesposito))
 
@@ -404,7 +408,7 @@ io_income_rs %&gt;%
   group_by(donor, type_donor)%&gt;%
   summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %&gt;% 
   arrange(desc(amount_nominal))%&gt;%
-  slice_head(n=10)
+  slice_head(n=5)
 ```
 
 ```
@@ -436,23 +440,18 @@ io_income_rs %&gt;%
   summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %&gt;% 
   arrange(desc(amount_nominal))%&gt;%
   ungroup()%&gt;% #group by two variables requires ungrouping before slicing...
-  slice_head(n=10)
+  slice_head(n=5)
 ```
 
 ```
-## # A tibble: 10 × 3
-##    donor            type_donor amount_nominal
-##    &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt;
-##  1 United States    public        9400452341.
-##  2 European Union   public        2591756148.
-##  3 United Kingdom   public        2386426530.
-##  4 Gates Foundation private       1757741582.
-##  5 Japan            public        1307577439.
-##  6 Peru             public        1128137186.
-##  7 Switzerland      public        1120941885.
-##  8 France           public        1058170068.
-##  9 Sweden           public         981197816.
-## 10 Australia        public         831115823.
+## # A tibble: 5 × 3
+##   donor            type_donor amount_nominal
+##   &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt;
+## 1 United States    public        9400452341.
+## 2 European Union   public        2591756148.
+## 3 United Kingdom   public        2386426530.
+## 4 Gates Foundation private       1757741582.
+## 5 Japan            public        1307577439.
 ```
 ]
 
@@ -570,7 +569,7 @@ io_income_rs%&gt;%
 ]
 ---
 
-class: split two
+class: split two middle
 
 # You made it!
 
@@ -579,9 +578,10 @@ class: split two
 ]
 
 .pull-right[
-![100%](https://media.giphy.com/media/wrzf9P70YWLJK/giphy.gif)
+![100%](https://media.giphy.com/media/hmVVRM1uV7vYA/giphy.gif)
 ]
 
+*Disclaimer: this pilot course was offered by the [Tech Hub](https://www.graduateinstitute.ch/tech-hub)*
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

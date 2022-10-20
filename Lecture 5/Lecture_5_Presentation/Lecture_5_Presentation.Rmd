@@ -98,7 +98,7 @@ class: split two
 
 ]
 
-**We will also discuss the final assignment!**
+**We will also discuss the final assignment**
 
 ---
 
@@ -198,7 +198,7 @@ I am having issues getting the mean for a variable in my dataset in R.
 
 As you see, the code returns "NA", even though I am removing NAs to calculate the mean.
 
-Below, you will find a sample of my data, the error, and my system info so that you can reproduce the issue.
+Below, you will find a sample of my data, code, and system info so that you can reproduce the issue.
 
 Could you please help me?
 
@@ -248,7 +248,7 @@ R.Version()$version.string
 
 # The post (Reprex 6/8)
 
-*Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, the error, and my system info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
+*Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, code, and sytem info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
 
 set.seed(1234)
 
@@ -261,6 +261,8 @@ mean(my.df$col2, na.rm = TRUE)
 '#> [1] NA'
 
 '#> Warning in mean.default(my.df$col2, na.rm = TRUE): argument is not numeric or logical: returning NA'
+
+'#> R version: 4.1.2 (2021-11-01) / Loaded packages: dplyr and tidyr'
 
 ---
 
@@ -275,6 +277,8 @@ mean(my.df$col2, na.rm = TRUE)
 ```{r, eval=FALSE}
 install.packages("reprex")
 reprex::reprex({
+  R.Version()$version.string
+  search()
   set.seed(1234)
   my.df <- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
                       col2 = as.factor(sample(5)), col3 = letters[1:5],
@@ -301,7 +305,7 @@ reprex::reprex({
 
 # Github, worth more than this one mention...
 
-- [The ords biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
+- [The worlds biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
 
 - Make your research available online (just like [Livio](https://github.com/liviosilvamuller) and [I](https://github.com/henriquesposito))
 
@@ -379,7 +383,7 @@ io_income_rs %>%
   group_by(donor, type_donor)%>%
   summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
   arrange(desc(amount_nominal))%>%
-  slice_head(n=10)
+  slice_head(n=5)
 ```
 ]
 
@@ -392,7 +396,7 @@ io_income_rs %>%
   summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
   arrange(desc(amount_nominal))%>%
   ungroup()%>% #group by two variables requires ungrouping before slicing...
-  slice_head(n=10)
+  slice_head(n=5)
 ```
 ]
 
@@ -481,7 +485,7 @@ io_income_rs%>%
 ]
 ---
 
-class: split two
+class: split two middle
 
 # You made it!
 
@@ -490,6 +494,7 @@ class: split two
 ]
 
 .pull-right[
-![100%](https://media.giphy.com/media/wrzf9P70YWLJK/giphy.gif)
+![100%](https://media.giphy.com/media/hmVVRM1uV7vYA/giphy.gif)
 ]
 
+*Disclaimer: this pilot course was offered by the [Tech Hub](https://www.graduateinstitute.ch/tech-hub)*

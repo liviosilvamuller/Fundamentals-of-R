@@ -4,7 +4,7 @@ unnamed-chunk-3	::	install.packages
 unnamed-chunk-4	as.factor	c	data.frame	letters	sample	set.seed
 unnamed-chunk-5	$	mean	my.df
 unnamed-chunk-6	$	R.Version	search	sessionInfo
-unnamed-chunk-7	::	$	as.factor	c	data.frame	install.packages	letters	mean	sample	set.seed
+unnamed-chunk-7	::	$	as.factor	c	data.frame	install.packages	letters	mean	R.Version	sample	search	set.seed
 unnamed-chunk-8	library	read_csv
 unnamed-chunk-9	%>%	amount_nominal	arrange	desc	donor	drop_na	group_by	io_income_rs	slice_head	sum	summarize	type_donor
 unnamed-chunk-10	%>%	amount_nominal	arrange	desc	donor	drop_na	group_by	io_income_rs	slice_head	sum	summarize	type_donor	ungroup

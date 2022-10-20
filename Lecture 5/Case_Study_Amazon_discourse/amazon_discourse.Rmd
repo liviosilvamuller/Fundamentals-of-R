@@ -200,7 +200,7 @@ summary(fixed)
 # Not a good choice here, why? (tip: is this a balanced panel)
 
 random <- plm::plm(con_vs_all ~ km_to_manaus + election_year + def_year + AAI,
-                   data = ama_model, model = "random", index = c("year"))
+                   data = ama_model, model = "random", index = c("president"))
 summary(random)
 # Better, but not a good choice here, why? (tip: is this a balanced panel)
 ```
