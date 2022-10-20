@@ -1,3 +1,3 @@
-# Fundametals-of-R-IHEID2022-
+# Fundametals of R IHEID 2022 (MINT338)
 
-Repository containing class materials for Fundamentals of R course
+Repository containing class materials for Fundamentals of R course!
