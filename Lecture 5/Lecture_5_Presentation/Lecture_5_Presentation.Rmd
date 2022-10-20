@@ -142,7 +142,7 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 ```
 
-- [Figures and citations in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
+- [Figures and tables in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
 
 - Other specific R Markdown issues you had? 
 
@@ -283,7 +283,7 @@ reprex::reprex({
 })
 ```
 
-***Help us help you by applying these principles when you post questions on the Moodle forum from now onwards***
+***Help us help you by applying these principles when you post questions on the Moodle forum***
 
 ---
 
@@ -299,7 +299,7 @@ reprex::reprex({
 
 ---
 
-# Github, worths more than a simple mention
+# Github, worth more than this one mention...
 
 - [The ords biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
 
@@ -470,6 +470,15 @@ io_income_rs%>%
   replace_na(list(0)) #all NAs in the dataset are now 0
 ```
 
+---
+
+# There ain't no such thing as a free lunch
+
+[Or is there?](https://www.graduateinstitute.ch/communications/events/how-has-brazilian-amazon-been-constructed-problem-presidential-speeches-and)
+
+.center[
+![:scale 70%](assets/images/CIES_talk.png)
+]
 ---
 
 class: split two
