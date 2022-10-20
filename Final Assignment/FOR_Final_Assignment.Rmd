@@ -50,11 +50,9 @@ Remember, each dataset is messy in their own way and requires cleaning before yo
 
 ## Question 2: inspecting the dataset
 
-a-) Transform `year`,`co2_emissions`, `total_pop`, `urban_pop_share`, `gdp`  to numeric class.
+a-) Transform `year`,`co2_emissions`, `total_pop`, `urban_pop_share`, `gdp`  to numeric class. Produce a summary of the dataset.
 
 b-) How many countries are there?
-
-c-) How many observations are there?
 
 ## Question 3: missing values
 
@@ -66,19 +64,19 @@ b-) Drop all observations with missing values in any variable.
 
 ## Question 4: normalizing our measures
 
-We will need a few new variables for the subsequent analysis, create the following:
+We will need a few new variables for the subsequent analysis, create the following variables in the dataset:
 
-`co2_per_cap`, which is the `co2_emissions` divided by `total_pop`.
+a-) `co2_per_cap`, which is the `co2_emissions` divided by `total_pop`.
 
-`gdp_per_cap`, which is the `gdp` divided by `total_pop`.
+b-) `gdp_per_cap`, which is the `gdp` divided by `total_pop`.
 
 ## Question 5: top emitters
 
-a-) Rank countries by their total `co2_emissions`, print the top 20 emitters.
+a-) Rank countries by their total `co2_emissions`. What are the top 20 emitters?
 
-b-) Rank countries by their mean `co2_per_cap`, print the top 20 emitters. Write a brief paragraph commenting how this rank is different than the one from question 5a.
+b-) Rank countries by their mean `co2_per_cap`. What are top 20 emitters? How does this change from the one from question 5a?
 
-c-) Calculate the mean emissions per capita per country in three different decades: 1990s, 2000s, and 2010s.Did the top three emitters per capita changed in these decades?
+c-) Calculate the mean emissions per capita per country in three different decades: 1990s, 2000s, and 2010s. Did the top three emitters per capita changed in these decades?
 
 ## Question 6: emissions in time
 
@@ -88,29 +86,26 @@ b-) Now create a plot showing the yearly evolution of `co2_per_cap` for the Unit
 
 c-) Finally, create a plot showing the yearly evolution of `co2_per_cap` by `income_group`.
 
-d-) In light of the three plots, what can you say about co2 emissions along time?
-
+d-) In light of the three plots above, what can you say about co2 emissions since 1990?
 
 ## Question 7: emissions, growth, and population
 
-a-) Create a plot showing the relationship between `co2_emissions` and `population` by `income_group`.
+a-) Create a plot showing the relationship between `co2_emissions` and `population` by `income_group`. Comment the relationship between emissions, population, and income group.
 
-b-) Create a box plot showing the distribution of `co2_per_cap` by `income_group`. Comment the relationship between emissions, growth and population.
+b-) Create a box plot showing the distribution of `co2_per_cap` by `income_group`. Comment the relationship between emissions and income group.
 
-c-) Re-create the plot as above, now as a histogram (Tip: use a `geom_histogram()`).
+c-) Re-create the same plot as above (b), now as a histogram (tip: use a `geom_histogram()`).
 
 ## Question 8:urban population and co2 emissions
 
-a-) Are countries with higher share of urban populations, higher emitters on average? Create a plot.
+a-) Are countries with higher share of urban populations, higher emitters on average? Plot the relationship.
 
-b-) Does the relationship between share of urban population and co2 emissions hold across regions? Create a plot.
+b-) Does the relationship between share of urban population and co2 emissions hold across regions? Plot the relationship.
 
 ## Question 9: top emitters, revisited
 
-Create a bar plot that ranks countries by their total co2 emissions(`co2_emissions`) overall. Countries should be colored differently if they are within the top 20 emitters in terms of their co2 emissions per capita (`co2_per_cap`) overall.
+Create a bar plot that ranks countries by their total co2 emissions (`co2_emissions`) overall. Countries should be colored differently if they are within the top 20 emitters in terms of their co2 emissions per capita (`co2_per_cap`) overall.
 
 ## Bonus Question 10: Modelling
 
-a-) Run a linear model with `co2_emissions` as your dependent variable. The independent variables should be `population` and `gdp`. Print and interpret the output.
-
-b-) Add year as fixed effect. Print and interpret the output.
+Run a linear model with `co2_emissions` as your dependent variable. The independent variables should be `population` and `gdp`. Print a table and interpret the output.
