@@ -82,7 +82,7 @@ class: split two
 
 ## Lecture:
 
-  - R Markdown
+  - R Markdown  
   
   - Minimal reproducible examples
   
@@ -353,13 +353,11 @@ class: center
   - First, a PDF (or HTML) document containing your written answers and plots *without your code*.
   - Second, your rmd file containing all your code.
 
-- We expect you to also interpret the code outputs.
-
 - When we say create a plot, it might entail various facets.
 
 - No tricky questions, but bonus questions in the end.
 
-**We will hold office hours normally for the next 2 weeks.**
+**We will hold office hours normally for the next 2 weeks, but we will not solve the final assignment with you**
 
 ***The assignment is due on November 6th, 23:59!***
 
