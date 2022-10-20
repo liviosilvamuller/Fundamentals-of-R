@@ -1,6 +1,5 @@
 ---
-title: How has the Brazilian Amazon been constructed as a problem:presidential speeches
-  and transnational politics since 1985
+title: How has the Brazilian Amazon been constructed as a problem - presidential speeches and transnational politics since 1985
 author: "Henrique Sposito and Livio Silva-Muller"
 date: '2022-10-21'
 output:
@@ -16,7 +15,7 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(include = FALSE)
+knitr::opts_chunk$set(warning=FALSE, message = FALSE)
 library(dplyr)
 library(tidyr)
 library(stargazer)
@@ -36,13 +35,13 @@ options(stringsAsFactors = FALSE, scipen = 999)
 
 *We need to preserve the Amazon as a standing ecosystem.*
 
-```{r figure1, echo=FALSE, fig.cap="The Amazon Forest", out.width = '75%', include=TRUE}
+```{r figure1, fig.cap="The Amazon Forest", out.width = '75%'}
 knitr::include_graphics("amazon_basin.jpeg")
 ```
 
 \newpage
 
-# Research Question
+# Question
 
 ***How the Brazilian Amazon has been constructed as a problem in transnational presidential speeches since 1985?***
 
@@ -56,20 +55,21 @@ knitr::include_graphics("amazon_basin.jpeg")
 
 - Hand-coding and supervised machine learning
 
-- Limitations
+- Can you think of some limitations with this?
 
 \newpage
 
 \blandscape
 
-```{r figure2, echo=FALSE, fig.cap="Operationalization of problem-constructions", out.width = '100%', include=TRUE}
+```{r figure2, fig.cap="Operationalization of problem-constructions", out.width = '100%'}
 knitr::include_graphics("figure1pic.png")
 ```
 
 \elandscape
 
 \newpage
-```{r data, message=FALSE, warning=FALSE, include=FALSE}
+
+```{r data, include=FALSE}
 #Load data
 ama <- readRDS("final_data_as.Rds")
 ama <- ama %>%
@@ -178,7 +178,7 @@ ama_mx <-  ama %>%
 
 Why do we use a logistic model and not a linear one [here](https://stackoverflow.com/questions/12146914/what-is-the-difference-between-linear-regression-and-logistic-regression)?
 
-```{r logistic, warning=FALSE, message=FALSE, include=TRUE}
+```{r logistic}
 ama_model <- dplyr::left_join(ama_mx, amazon_def_year, by = "year") #merge
 ama_model <- dplyr::left_join(ama_model, AAI, by = "year") #merge
 ama_model <- filter(ama_model, location_cat != "Non Identified",
@@ -197,7 +197,7 @@ summary(model_logit_con)
 
 *[Need an easy publication table?](https://rpubs.com/omerorsun/week3_stargazer)*
 
-```{r table 1, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, include=TRUE, results="asis"}
+```{r table 1, results="asis"}
 con_model <- stargazer::stargazer(model_logit_con, header = FALSE)
 ```
 
@@ -207,7 +207,7 @@ con_model <- stargazer::stargazer(model_logit_con, header = FALSE)
 
 Does time matter?
 
-```{r fixed effects, echo=TRUE, include=TRUE}
+```{r fixed effects}
 ols <- plm::plm(con_vs_all ~ km_to_manaus + election_year + def_year + AAI,
                 data = ama_model, model = "pooling", index = c("year"))
 fixed <- plm::plm(con_vs_all ~ km_to_manaus + election_year + def_year + AAI,
@@ -225,7 +225,7 @@ summary(random)
 
 Can you see the relationship?
 
-```{r Figure 3, fig.cap="Logistic Regression predicted values", echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, include=TRUE}
+```{r Figure 3, fig.cap="Logistic Regression predicted values"}
 # other models
 model_logit_ei <- glm(EI_vs_all ~ km_to_manaus + election_year + def_year + AAI,
                    family=binomial(link = "logit"), data = ama_model)
@@ -271,7 +271,7 @@ ggplot(plot_loc, aes(x = km_to_manaus, y=pred, color=p_c)) +
 
 Why should we divide distances to Manaus?
 
-```{r Table 2, fig.cap="Logistic Regressions Output", echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, include=TRUE, results="asis"}
+```{r Table 2, fig.cap="Logistic Regressions Output", results="asis"}
 ama_model$thousand_km<- ama_model$km_to_manaus/1000
 model_logit_con2 <- glm(con_vs_all ~ thousand_km + election_year + def_year + AAI,
                    family=binomial(link = "logit"), data = ama_model)
@@ -299,4 +299,3 @@ library(sjPlot)
 sjPlot::tab_model(model_logit_con2, model_logit_ei2,
                   model_logit_sd2,model_logit_sov2)
 ```
-

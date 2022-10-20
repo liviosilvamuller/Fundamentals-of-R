@@ -102,7 +102,7 @@ class: split two
 
 ---
 
-# R Markdown, a one-stop shop (Rmd 1/4)
+# R Markdown, a one-stop shop (Rmd 1/5)
 
 - Write your text, execute code, and produce high quality (reproducible) reports in [one place](https://rmarkdown.rstudio.com/gallery.html)!
 
@@ -112,24 +112,45 @@ class: split two
 
 ---
 
-# Common Issues (Rmd 2/4)
+# R Markdown options (Rmd 2/5)
+
+- [Code chunk options:](https://rmarkdown.rstudio.com/lesson-15.html)
+
+  - echo
+  - eval
+  - include
+  - warning
+  - message
+  - fig.cap
+
+- Global options: apply to every code chunk if used in setup!
+
+```{r, eval=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+---
+
+# Common Issues (Rmd 3/5)
 
 - Adding data (just like a script)
 
 - Latex engines (for PDF rendering)
-
-- [Figures and citations in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
-
-- Other specific RMD issues you had?
 
 ```{r, eval=FALSE}
 install.packages("tinytex")
 tinytex::install_tinytex()
 ```
 
+- [Figures and citations in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
+
+- Other specific R Markdown issues you had? 
+
+- Please remember to use the Moodle forum for questions!
+
 ---
 
-# From R Markdown with care (Rmd 3/4)
+# From R Markdown with care (Rmd 4/5)
 
 - [Articles](https://resulumit.com/teaching/rmd_workshop.html#44)
 
@@ -145,7 +166,7 @@ tinytex::install_tinytex()
 
 ---
 
-# Quarto, the future? (Rmd 4/4)
+# Quarto, the future? (Rmd 5/5)
 
 - [Quarto is handy for users of multiple programming languages, but is it really necessary for R users?](https://yihui.org/en/2022/04/quarto-r-markdown/)
 
@@ -157,25 +178,116 @@ tinytex::install_tinytex()
 
 ---
 
-# Exchanging with the community (Reprex 1/3)
+# Exchanging with the community (Reprex 1/8)
 
-- You do not need any package to make a minimal reproducible example, but the [reprex](https://reprex.tidyverse.org/) package can help!
-
-- Reproducibility of an error is the key
+- [Reproducibility](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example) of an error is the key
 
 - Don't forget about the [minimal](https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html) part
 
 - The better the question, the better the [answer](https://data.library.virginia.edu/ask-better-code-questions-and-get-better-answers-with-reprex/)
 
-```{r, eval=FALSE}
-install.packages("reprex")
-reprex::reprex(mean(c(2, 3, 4, NA_character_)))
-# use "{}" for multiple lines
+- You do not need any package to make a minimal reproducible example, but the [reprex](https://reprex.tidyverse.org/) package can help!
+
+---
+
+# The question (Reprex 2/8)
+
+"Dear R friends,
+
+I am having issues getting the mean for a variable in my dataset in R.
+
+As you see, the code returns "NA", even though I am removing NAs to calculate the mean.
+
+Below, you will find a sample of my data, the error, and my system info so that you can reproduce the issue.
+
+Could you please help me?
+
+Thank you in advance for your time and consideration!"
+
+---
+
+# The data (Reprex 3/8)
+
+[`set.seed()`](https://r-coder.com/set-seed-r/) orders random processes
+
+```{r}
+set.seed(1234)
+my.df <- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
+                    col2 = as.factor(sample(5)), col3 = letters[1:5],
+                    col4 = sample(c(TRUE, FALSE), 5, replace = TRUE))
+my.df
+```
+
+Using R datasets (e.g. `USArrests`, `mtcars`, `iris`) is also very handy!
+
+---
+
+# The error (Reprex 4/8)
+
+If you are doing this manually, copy the exact error somewhere in the post!
+
+```{r}
+mean(my.df$col1)
+mean(my.df$col2, na.rm = TRUE)
 ```
 
 ---
 
-# Stack overflow (Reprex 2/3)
+# The sytem (Reprex 5/8)
+
+Sometimes system info can be important...
+
+```{r, eval=FALSE}
+search()
+sessionInfo()
+R.Version()
+R.Version()$version.string
+```
+
+---
+
+# The post (Reprex 6/8)
+
+*Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, the error, and my system info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
+
+set.seed(1234)
+
+my.df <- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
+                    col2 = as.factor(sample(5)), col3 = letters[1:5],
+                    col4 = sample(c(TRUE, FALSE), 5, replace = TRUE))
+
+mean(my.df$col2, na.rm = TRUE)
+
+'#> [1] NA'
+
+'#> Warning in mean.default(my.df$col2, na.rm = TRUE): argument is not numeric or logical: returning NA'
+
+---
+
+#  Reprex, the package (Reprex 7/8)
+
+- Writing a reprex often helps you debug!
+
+- It may not look like much, but ... 
+
+- In practice, allows you to copy and paste to post.
+
+```{r, eval=FALSE}
+install.packages("reprex")
+reprex::reprex({
+  set.seed(1234)
+  my.df <- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
+                      col2 = as.factor(sample(5)), col3 = letters[1:5],
+                      col4 = sample(c(TRUE, FALSE), 5, replace = TRUE))
+  mean(my.df$col2, na.rm = TRUE)
+})
+```
+
+***Help us help you by applying these principles when you post questions on the Moodle forum from now onwards***
+
+---
+
+# Stack overflow (Reprex 8/8)
 
 - You can find virtually anything about an [R issue](https://stackoverflow.com/questions/tagged/r)
 
@@ -187,9 +299,9 @@ reprex::reprex(mean(c(2, 3, 4, NA_character_)))
 
 ---
 
-# Github (Reprex 3/3)
+# Github, worths more than a simple mention
 
-- [Code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
+- [The ords biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
 
 - Make your research available online (just like [Livio](https://github.com/liviosilvamuller) and [I](https://github.com/henriquesposito))
 

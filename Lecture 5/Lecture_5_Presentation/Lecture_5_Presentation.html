@@ -105,7 +105,7 @@ class: split two
 
 ---
 
-# R Markdown, a one-stop shop (Rmd 1/4)
+# R Markdown, a one-stop shop (Rmd 1/5)
 
 - Write your text, execute code, and produce high quality (reproducible) reports in [one place](https://rmarkdown.rstudio.com/gallery.html)!
 
@@ -115,15 +115,31 @@ class: split two
 
 ---
 
-# Common Issue (Rmd 2/4)
+# R Markdown options (Rmd 2/5)
+
+- [Code chunk options:](https://rmarkdown.rstudio.com/lesson-15.html)
+
+  - echo
+  - eval
+  - include
+  - warning
+  - message
+  - fig.cap
+
+- Global options: apply to every code chunk if used in setup!
+
+
+```r
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+---
+
+# Common Issues (Rmd 3/5)
 
 - Adding data (just like a script)
 
 - Latex engines (for PDF rendering)
-
-- [Figures and citations in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
-
-- Other specific RMD issues you had?
 
 
 ```r
@@ -131,9 +147,15 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 ```
 
+- [Figures and citations in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
+
+- Other specific R Markdown issues you had? 
+
+- Please remember to use the Moodle forum for questions!
+
 ---
 
-# From R Markdown with care (Rmd 3/4)
+# From R Markdown with care (Rmd 4/5)
 
 - [Articles](https://resulumit.com/teaching/rmd_workshop.html#44)
 
@@ -149,7 +171,7 @@ tinytex::install_tinytex()
 
 ---
 
-# Quarto, the future? (Rmd 4/4)
+# Quarto, the future? (Rmd 5/5)
 
 - [Quarto is handy for users of multiple programming languages, but is it really necessary for R users?](https://yihui.org/en/2022/04/quarto-r-markdown/)
 
@@ -161,26 +183,140 @@ tinytex::install_tinytex()
 
 ---
 
-# Exchanging with the community (Reprex 1/3)
+# Exchanging with the community (Reprex 1/8)
 
-- You do not need any package to make a minimal reproducible example, but the [reprex](https://reprex.tidyverse.org/) package can help!
-
-- Reproducibility of an error is the key
+- [Reproducibility](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example) of an error is the key
 
 - Don't forget about the [minimal](https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html) part
 
 - The better the question, the better the [answer](https://data.library.virginia.edu/ask-better-code-questions-and-get-better-answers-with-reprex/)
 
+- You do not need any package to make a minimal reproducible example, but the [reprex](https://reprex.tidyverse.org/) package can help!
+
+---
+
+# The question (Reprex 2/8)
+
+"Dear R friends,
+
+I am having issues getting the mean for a variable in my dataset in R.
+
+As you see, the code returns "NA", even though I am removing NAs to calculate the mean.
+
+Below, you will find a sample of my data, the error, and my system info so that you can reproduce the issue.
+
+Could you please help me?
+
+Thank you in advance for your time and consideration!"
+
+---
+
+# The data (Reprex 3/8)
+
+[`set.seed()`](https://r-coder.com/set-seed-r/) orders random processes
+
 
 ```r
-install.packages("reprex")
-reprex::reprex(mean(c(2, 3, 4, NA_character_)))
-# use "{}" for multiple lines
+set.seed(1234)
+my.df &lt;- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
+                    col2 = as.factor(sample(5)), col3 = letters[1:5],
+                    col4 = sample(c(TRUE, FALSE), 5, replace = TRUE))
+my.df
+```
+
+```
+##   col1 col2 col3  col4
+## 1    2    4    a FALSE
+## 2    2    3    b FALSE
+## 3    2    1    c FALSE
+## 4    2    5    d  TRUE
+## 5    1    2    e FALSE
+```
+
+Using R datasets (e.g. `USArrests`, `mtcars`, `iris`) is also very handy!
+
+---
+
+# The error (Reprex 4/8)
+
+If you are doing this manually, copy the exact error somewhere in the post!
+
+
+```r
+mean(my.df$col1)
+```
+
+```
+## [1] 1.8
+```
+
+```r
+mean(my.df$col2, na.rm = TRUE)
+```
+
+```
+## [1] NA
 ```
 
 ---
 
-# Stack overflow (Reprex 2/3)
+# The sytem (Reprex 5/8)
+
+Sometimes system info can be important...
+
+
+```r
+search()
+sessionInfo()
+R.Version()
+R.Version()$version.string
+```
+
+---
+
+# The post (Reprex 6/8)
+
+*Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, the error, and my system info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
+
+set.seed(1234)
+
+my.df &lt;- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
+                    col2 = as.factor(sample(5)), col3 = letters[1:5],
+                    col4 = sample(c(TRUE, FALSE), 5, replace = TRUE))
+
+mean(my.df$col2, na.rm = TRUE)
+
+'#&gt; [1] NA'
+
+'#&gt; Warning in mean.default(my.df$col2, na.rm = TRUE): argument is not numeric or logical: returning NA'
+
+---
+
+#  Reprex, the package (Reprex 7/8)
+
+- Writing a reprex often helps you debug!
+
+- It may not look like much, but ... 
+
+- In practice, allows you to copy and paste to post.
+
+
+```r
+install.packages("reprex")
+reprex::reprex({
+  set.seed(1234)
+  my.df &lt;- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
+                      col2 = as.factor(sample(5)), col3 = letters[1:5],
+                      col4 = sample(c(TRUE, FALSE), 5, replace = TRUE))
+  mean(my.df$col2, na.rm = TRUE)
+})
+```
+
+***Help us help you by applying these principles when you post questions on the Moodle forum from now onwards***
+
+---
+
+# Stack overflow (Reprex 8/8)
 
 - You can find virtually anything about an [R issue](https://stackoverflow.com/questions/tagged/r)
 
@@ -192,9 +328,9 @@ reprex::reprex(mean(c(2, 3, 4, NA_character_)))
 
 ---
 
-# Github (Reprex 3/3)
+# Github
 
-- [Code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
+- [The ords biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
 
 - Make your research available online (just like [Livio](https://github.com/liviosilvamuller) and [I](https://github.com/henriquesposito))
 
@@ -358,17 +494,17 @@ io_income_rs%&gt;%
 
 ```
 ## # A tibble: 9 × 3
-##    year donor              un_sg           
-##   &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;           
-## 1  2019 UN                 antonio_guterres
-## 2  2003 Mozambique         kofi_annan      
-## 3  2017 Sweden             antonio_guterres
-## 4  2013 Armenia            ban_kimoon      
-## 5  2009 Syria              ban_kimoon      
-## 6  2006 China              ban_kimoon      
-## 7  2017 Italy              antonio_guterres
-## 8  2018 Bahamas            antonio_guterres
-## 9  2019 Russian Federation antonio_guterres
+##    year donor       un_sg           
+##   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;           
+## 1  2011 Mongolia    ban_kimoon      
+## 2  2016 Armenia     ban_kimoon      
+## 3  2008 Spain       ban_kimoon      
+## 4  2018 El Salvador antonio_guterres
+## 5  2002 Vietnam     kofi_annan      
+## 6  2020 Bahamas     antonio_guterres
+## 7  2015 Belgium     ban_kimoon      
+## 8  2016 Italy       ban_kimoon      
+## 9  2014 Armenia     ban_kimoon
 ```
 ]
 
@@ -388,17 +524,17 @@ io_income_rs%&gt;%
 
 ```
 ## # A tibble: 9 × 3
-##    year donor                                  un_sg           
-##   &lt;dbl&gt; &lt;chr&gt;                                  &lt;chr&gt;           
-## 1  2012 Eswatini (formerly known as Swaziland) ban_kimoon      
-## 2  2019 Egypt                                  antonio_guterres
-## 3  2002 Germany                                kofi_annan      
-## 4  2017 European Union                         antonio_guterres
-## 5  2004 Andorra                                kofi_annan      
-## 6  2012 Netherlands                            ban_kimoon      
-## 7  2015 Slovakia                               ban_kimoon      
-## 8  2020 United Arab Emirates                   antonio_guterres
-## 9  2016 Luxembourg                             ban_kimoon
+##    year donor          un_sg           
+##   &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;           
+## 1  2012 Peru           ban_kimoon      
+## 2  2016 Bhutan         ban_kimoon      
+## 3  2009 Panama         ban_kimoon      
+## 4  2018 Ecuador        antonio_guterres
+## 5  2009 United Kingdom ban_kimoon      
+## 6  2007 Liberia        ban_kimoon      
+## 7  2020 Australia      antonio_guterres
+## 8  2003 Austria        kofi_annan      
+## 9  2005 Nigeria        kofi_annan
 ```
 ]
 
