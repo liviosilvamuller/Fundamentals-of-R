@@ -46,7 +46,7 @@ Using the four datasets available, create a single tidy dataset named `co2_dat` 
 `gdp`                 Gross domestic product in a given year
 --------------------------------------------------------------------------------
 
-Print the first 10 rows of the dataset.
+Remember, each dataset is messy in their own way and requires cleaning before you can join them...
 
 ## Question 2: inspecting the dataset
 
