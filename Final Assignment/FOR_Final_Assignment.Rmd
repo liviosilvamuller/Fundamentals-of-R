@@ -108,3 +108,9 @@ b-) Does the relationship between share of urban population and co2 emissions ho
 ## Question 9: top emitters, revisited
 
 Create a bar plot that ranks countries by their total co2 emissions(`co2_emissions`) overall. Countries should be colored differently if they are within the top 20 emitters in terms of their co2 emissions per capita (`co2_per_cap`) overall.
+
+## Bonus Question 10: Modelling
+
+a-) Run a linear model with `co2_emissions` as your dependent variable. The independent variables should be `population` and `gdp`. Print and interpret the output.
+
+b-) Add year as fixed effect. Print and interpret the output.
