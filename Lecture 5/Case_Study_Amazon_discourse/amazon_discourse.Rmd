@@ -1,7 +1,7 @@
 ---
-title: How has the Brazilian Amazon been constructed as a problem - presidential speeches and transnational politics since 1985
+title: "How has the Brazilian Amazon been constructed as a problem: presidential speeches and transnational politics since 1985"
 author: "Henrique Sposito and Livio Silva-Muller"
-date: '2022-10-21'
+date: 'October 2022'
 output:
   pdf_document: default
   fig_caption: yes
@@ -47,13 +47,13 @@ knitr::include_graphics("amazon_basin.jpeg")
 
 # Data and methods
 
-- Dataset containing all 6130 official speeches by presidents since 1985
+1-) Dataset containing all 6130 official speeches by presidents since 1985.
 
-- Subset of 2014 “amazonian statements”
+2-) Subset of 2014 "amazonian statements”: two  sentences before, two sentences after "amazon".
 
-- Location
+3-) Location of each speech.
 
-- Hand-coding and supervised machine learning
+4-) Hand-coding and supervised machine learning.
 
 - Can you think of some limitations with this approach?
 
@@ -205,7 +205,7 @@ summary(random)
 # Better, but not a good choice here, why? (tip: is this a balanced panel)
 ```
 
-# Nominal outcome (depenedent) variables, multinomial is the name of the game!
+# Nominal outcome (dependent) variables, multinomial is the name of the game!
 
 ```{r multi, eval = FALSE}
 library(nnet)
@@ -217,7 +217,7 @@ summary(model_multi)
 ```
 
 But very hard to interpret as there are, often, multiple reference categories...
-Above the reference categories are Pure Economic Inegration in International settings?!
+Above the reference categories are Pure Economic Integration in international settings?!
 
 \newpage
 
