@@ -46,21 +46,23 @@ Using the four datasets available, create a single tidy dataset named `co2_dat` 
 `gdp`                 Gross domestic product in a given year
 --------------------------------------------------------------------------------
 
-## Question 2: missing values
+Print the first 10 rows of the dataset.
+
+## Question 2: inspecting the dataset
+
+a-) Transform `year`,`co2_emissions`, `total_pop`, `urban_pop_share`, `gdp`  to numeric class.
+
+b-) How many countries are there?
+
+c-) How many observations are there?
+
+## Question 3: missing values
 
 Our dataset still contains missing values.
 
 a-) Venezuela is missing values for `income_group`. According to the [World Bank](https://blogs.worldbank.org/opendata/new-world-bank-country-classifications-income-level-2021-2022), Venezuela , previously classified as a an upper-middle income country, is now unclassified due to a lack of available data in the recent period. Classify Venezuela as an upper-middle income country. 
 
 b-) Drop all observations with missing values in any variable.
-
-## Question 3: inspecting the dataset
-
-a-) Check whether all classes of the variables are correct.
-
-b-) How many countries are there?
-
-c-) How many observations are there?
 
 ## Question 4: normalizing our measures
 
@@ -72,12 +74,11 @@ We will need a few new variables for the subsequent analysis, create the followi
 
 ## Question 5: top emitters
 
-a-) Rank countries by their total `co2_emissions` , print the top 20 emitters.
+a-) Rank countries by their total `co2_emissions`, print the top 20 emitters.
 
 b-) Rank countries by their mean `co2_per_cap`, print the top 20 emitters. Write a brief paragraph commenting how this rank is different than the one from question 5a.
 
-c-) Create new dataset named decades_rank,which contains three variables (one for each decade) 1990s,2000s, and 2010s, and one variable for country name.
-Values in the decade column should contain the mean emissions per capita of a given country in that decade. Did the top three emitters per capita changed in these decades?
+c-) Calculate the mean emissions per capita per country in three different decades: 1990s, 2000s, and 2010s.Did the top three emitters per capita changed in these decades?
 
 ## Question 6: emissions in time
 
@@ -92,20 +93,18 @@ d-) In light of the three plots, what can you say about co2 emissions along time
 
 ## Question 7: emissions, growth, and population
 
-a-) Create a plot showing the relationship between `co2_emissions` and `population`, faceted by `income_group`.
+a-) Create a plot showing the relationship between `co2_emissions` and `population` by `income_group`.
 
 b-) Create a box plot showing the distribution of `co2_per_cap` by `income_group`. Comment the relationship between emissions, growth and population.
 
-c-) Re-create the plot from b-) as a histogram.(Tip: search for help online!)
+c-) Re-create the plot as above, now as a histogram (Tip: use a `geom_histogram()`).
 
 ## Question 8:urban population and co2 emissions
 
-a-) Are countries with higher urban populations, higher emitters on average? Create a plot.
+a-) Are countries with higher share of urban populations, higher emitters on average? Create a plot.
 
-b-) Does the relationship hold for different income groups *or* for different regions? Create one plot for each.
+b-) Does the relationship between share of urban population and co2 emissions hold across regions? Create a plot.
 
 ## Question 9: top emitters, revisited
 
-Create a bar plot that ranks countries by their `co2_emissions` overall. Countries should be colored differently if they are within top 20 emitters in terms of `co2_per_cap` overall.
-
-
+Create a bar plot that ranks countries by their total co2 emissions(`co2_emissions`) overall. Countries should be colored differently if they are within the top 20 emitters in terms of their co2 emissions per capita (`co2_per_cap`) overall.
