@@ -3,9 +3,9 @@ title: "How has the Brazilian Amazon been constructed as a problem: presidential
 author: "Henrique Sposito and Livio Silva-Muller"
 date: 'October 2022'
 output:
-  pdf_document: default
-  fig_caption: yes
   html_document: default
+  fig_caption: yes
+  pdf_document: default
 header-includes:
  \usepackage{float}
  \floatplacement{figure}{H}
@@ -258,7 +258,7 @@ ggplot(plot_loc, aes(x = km_to_manaus, y=pred, color=p_c)) +
        caption = "Curves in the plots are estimated using loess method.") +
   theme(text = element_text(size=11,  family="Times"),
         panel.background = element_rect("white", "black", .5, "solid"),
-                  panel.grid.major = element_line(color = "grey", linewidth = 0.2,
+                  panel.grid.major = element_line(color = "grey", size = 0.2,
                                                   linetype = "solid"),
         axis.text = element_text(color = "black", size = 11),
         title = element_text(color = "black", size = 12, face = "bold"),
