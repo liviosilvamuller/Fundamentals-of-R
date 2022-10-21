@@ -39,11 +39,12 @@ io_income_rs %>%
   arrange(desc(amount_nominal))%>%
   ungroup()%>%
   slice_head(n=10)%>%
-  ggplot(mapping=aes(x=reorder(donor, amount_nominal), y= amount_nominal, fill=type_donor))+
+  ggplot(mapping=aes(x=reorder(donor, amount_nominal), #order donors acc. to $$$
+                     y= amount_nominal, fill=type_donor))+
   geom_col()+
   scale_fill_brewer(type="qual", palette= "Accent", direction=1)+
   scale_y_continuous(labels=scales::dollar)+
-  labs( x = NULL, y = "Total donations to IOs", title = "Top 10 donors from 2000 to 2020", #removing redundant info
+  labs( x = NULL, y = "Total donations to IOs", title = "Top 10 donors from 2000 to 2020",
     subtitle=" composed by 4500 randomly sampled observations from dataset",
     caption = "Source: io_income_rs dataset")+
   theme(panel.background = element_rect("white", "black", .5, "solid"),
@@ -76,7 +77,8 @@ io_income_rs %>%
   geom_line(size=1)+
   scale_color_brewer(type="qual", palette= "Set2", direction=1)+
   scale_y_continuous(labels=scales::dollar)+
-  labs( x = NULL, y = "Total donations to issue area", title = "Donations by the United States since 2000 by issue area", #removing redundat info
+  labs( x = NULL, y = "Total donations to issue area", 
+        title = "Donations by the United States since 2000 by issue area", 
     subtitle=" composed by 4500 randomly sampled observations from dataset",
     caption = "Source: io_income_rs dataset")+
   theme(panel.background = element_rect("white", "black", .5, "solid"),
@@ -86,7 +88,7 @@ io_income_rs %>%
     legend.title = element_blank(),
     plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
     legend.position = "none")+
-    facet_wrap(~issue_area)
+    facet_wrap(~issue_area, scale="free_y") # let the y-scales of facets change.
 ```
 
 ## Question 3
@@ -108,7 +110,8 @@ io_income_rs %>%
   geom_boxplot()+
   scale_y_log10(labels=scales::dollar)+
   scale_fill_brewer(type="qual", palette= "Set2", direction=1)+
-  labs( x = NULL, y = NULL, title = "Distribution of donations by donor type in 2000 and 2020", #removing redundat info
+  labs( x = NULL, y = NULL, 
+        title = "Distribution of donations by donor type in 2000 and 2020",
     subtitle=" composed by 4500 randomly sampled observations from dataset",
     caption = "Source: io_income_rs dataset")+
   theme(panel.background = element_rect("white", "black", .5, "solid"),
@@ -137,12 +140,16 @@ io_income_rs %>%
 io_income_rs %>%
   drop_na(type_donor) %>%
   ggplot(mapping=aes(x=year, y=amount_nominal)) +
-  geom_point(aes(shape=type_donor), position="jitter", alpha=.5)+ # position jitter adds random noise to each observation, so they do not line up by year.
+  geom_point(aes(shape=type_donor), 
+             position="jitter", 
+# position jitter adds random noise to each observation, so they do not line up by year.
+             alpha=.5)+  
+  # alpha makes the points transparent.
   geom_smooth(method = "lm", color="red") +
   scale_y_log10(labels=scales::dollar) +
   facet_wrap(~issue_area) +
-  labs(x = NULL, y = NULL,
-       title = "Donations to issues areay by year per type since 2000", #removing redundant info
+  labs(x = NULL, y = NULL, #removing redundant info from x and y axis
+       title = "Donations to issues areay by year per type since 2000", 
        subtitle=" composed by 4500 randomly sampled observations from dataset",
        caption = "Source: io_income_rs dataset") +
   theme(panel.background = element_rect("white", "black", .5, "solid"),
