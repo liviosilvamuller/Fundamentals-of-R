@@ -32,7 +32,7 @@ knitr::opts_chunk$set(cache=TRUE, autodep = TRUE, fig.retina = 3, message = FALS
 ```
 class: split two
 
-## General issues: slice_ (1/3)
+## General issues: slice_ (1/4)
 
 ```{r include=FALSE}
 library(dplyr)
@@ -60,13 +60,14 @@ io_income_rs %>%
   group_by(donor, type_donor)%>%
   summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
   arrange(desc(amount_nominal))%>%
-  ungroup()%>% #group by two variables requires ungrouping before slicing...
+  ungroup()%>% 
+  #group by two variables requires ungrouping before slicing...
   slice_head(n=5)
 ```
 ]
 
 ---
-## General issues: case_when (2/3)
+## General issues: case_when (2/4)
 
 - `dplyr::case_when()` and `base::ifelse()` can help you return values based on tests.
 
@@ -84,7 +85,7 @@ io_income_rs %>%
 ---
 class: split two
 
-## General issues: case_when (2/3)
+## General issues: case_when (2/4)
 
 ```{r include=FALSE}
 io_income_rs <- io_income_rs%>%
@@ -95,9 +96,10 @@ io_income_rs <- io_income_rs%>%
 .pull-left[
 ```{r echo=TRUE}
 io_income_rs%>%
-  mutate(un_sg= ifelse (year<2006, "kofi_annan", 
-           ifelse(year>2016,
-                  "antonio_guterres", "ban_kimoon")))%>%
+  mutate(un_sg= 
+    ifelse (year<2006, "kofi_annan", 
+      ifelse(year>=2016,
+        "antonio_guterres", "ban_kimoon")))%>%
   slice_sample(n=9)%>%
   select(year, donor,un_sg)
 ```
@@ -109,9 +111,9 @@ io_income_rs%>%
 ```{r echo=TRUE}
 io_income_rs%>%
   mutate(un_sg= case_when(
-            year < 2006 ~ "kofi_annan",
-            year <= 2016 ~ "ban_kimoon",
-            year > 2016 ~"antonio_guterres"))%>% #case_when respects order!
+      year < 2006 ~ "kofi_annan",
+      year < 2016 ~ "ban_kimoon",
+      year >= 2016 ~"antonio_guterres"))%>% #case_when respects order!
   slice_sample(n=9)%>%
   select(year, donor,un_sg)
 ```
@@ -125,16 +127,20 @@ io_income_rs%>%
  
 ```{r eval=FALSE, message=TRUE, warning=TRUE, include=TRUE, paged.print=TRUE}
 io_income_rs %>% 
-  mutate(donor=replace_na(donor,"individuals")) #all NAs in donor are now "individuals"
+  mutate(donor=replace_na(donor,"individuals")) 
+#all NAs in donor are now "individuals"
 
 io_income_rs$donor %>% 
-  replace_na("individual") #all NAs in donor are now "individuals"
+  replace_na("individual") 
+#all NAs in donor are now "individuals"
 
 io_income_rs %>% 
-  replace_na(list(donor="individuals",amount_nominal=0 )) #all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
+  replace_na(list(donor="individuals",amount_nominal=0 )) 
+#all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
 
 io_income_rs%>% 
-  replace_na(list(0)) #all NAs in the dataset are now 0
+  replace_na(list(0)) 
+#all NAs in the dataset are now 0
 ```
 
 ---
@@ -142,19 +148,19 @@ class: split two
 ## Other (smaller) issues...(4/4)
 
   - Scientific notation is a bit hard to interpret: 2.5e2 =250
-    - Run/include `options(scipen=999)` to the top of your script/markdown remove it completely.
+    - Run (include) `options(scipen=999)` to the top of your script(markdown) remove it completely.
   
 --
 
   - The family of `scale_()` functions in ggplot2 require specifications.
-    - `scale_fill_brewer()` works on the aesthetic fill.
-    - `scale_color_brewer()` works on the aesthetic color.
-    - `scale_x_log10()` will scale x in log 10.
-    - `scale_y_log10()` will scale y in log 10.
+    - `scale_fill_brewer()` works on the aesthetic *fill*.
+    - `scale_color_brewer()` works on the aesthetic *color*.
+    - `scale_x_log10()` will scale *x* in log 10.
+    - `scale_y_log10()` will scale *y* in log 10.
 --
 
   - Remember: there are many characteristics you can change on plots (size, color, fill, alpha,...)
-    - If you include characteristics inside the `mapping=aes()`, mapping a variable to an aesthetic and *a legend will appear*.
+    - If you include characteristics inside the `mapping=aes()`, you are mapping a variable to an aesthetic and *a legend will appear*.
     - If you include characteristics outside the `mapping=aes()`, you are setting it and *no legend appears*.
 ---
 class: split two
@@ -490,14 +496,16 @@ class: center
 # The final assignment
 
 - You will have to submit two files:
-  - First, a PDF (or HTML) document containing your written answers and plots *without your code*.
-  - Second, your rmd file containing all your code.
+  -  A PDF (or HTML) document containing your written answers and plots *without your code*.
+  - Your rmd file containing all your code.
 
 - When we say create a plot, it might entail various facets.
 
+- Remember the workflow: tidy, join, wrangle, and plot.
+
 - No tricky questions, but bonus questions in the end.
 
-**We will hold office hours normally for the next 2 weeks, but we will not solve the final assignment with you**
+**Normal office hours, for the next 2 weeks, but we will not solve the final assignment with you.**
 
 ***The assignment is due on November 6th, 23:59!***
 
