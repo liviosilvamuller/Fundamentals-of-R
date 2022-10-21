@@ -32,7 +32,188 @@ class: center, middle, inverse, title-slide
 
 
 
+class: split two
 
+## General issues: slice_ (1/3)
+
+
+
+.pull-left[
+
+```r
+io_income_rs %&gt;%
+  drop_na(donor)%&gt;%
+  group_by(donor, type_donor)%&gt;%
+  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %&gt;% 
+  arrange(desc(amount_nominal))%&gt;%
+  slice_head(n=5)
+```
+
+```
+## # A tibble: 556 × 3
+## # Groups:   donor [555]
+##    donor                                        type_donor amount_nominal
+##    &lt;chr&gt;                                        &lt;chr&gt;               &lt;dbl&gt;
+##  1 23Technology Limited, United Kingdom         &lt;NA&gt;                  1.5
+##  2 ABB Asea Brown Boveri Ltd.                   private         2199834. 
+##  3 Afghanistan                                  public           169453. 
+##  4 Africa Agriculture and Trade Investment Fund private          175058  
+##  5 Africa Re Foundation                         private          117000  
+##  6 African Development Bank                     public         15561000  
+##  7 African Field Epidemiology Network (AFENET)  private          241500  
+##  8 African Reinsurance Corporation              private          103513  
+##  9 African Union                                public           460000  
+## 10 AG Fund                                      private           52817. 
+## # … with 546 more rows
+```
+]
+
+--
+.pull-right[
+
+```r
+io_income_rs %&gt;%
+  drop_na(donor)%&gt;%
+  group_by(donor, type_donor)%&gt;%
+  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %&gt;% 
+  arrange(desc(amount_nominal))%&gt;%
+  ungroup()%&gt;% #group by two variables requires ungrouping before slicing...
+  slice_head(n=5)
+```
+
+```
+## # A tibble: 5 × 3
+##   donor            type_donor amount_nominal
+##   &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt;
+## 1 United States    public        9400452341.
+## 2 European Union   public        2591756148.
+## 3 United Kingdom   public        2386426530.
+## 4 Gates Foundation private       1757741582.
+## 5 Japan            public        1307577439.
+```
+]
+
+---
+## General issues: case_when (2/3)
+
+- `dplyr::case_when()` and `base::ifelse()` can help you return values based on tests.
+
+--
+
+- Different from `ifelse()`, `case_when()` can **more** easily return more than two values based on more than one test.
+  
+--
+
+- Let's say we want a new variable called un_sg (UN Secretary General):
+  - kofi_annan, if years are between 1997 and 2006;
+  - ban_kimoon, if years are between 2007 and 2016;
+  - antonio_guterres, if years are between 2016 and present.
+
+---
+class: split two
+
+## General issues: case_when (2/3)
+
+
+
+.pull-left[
+
+```r
+io_income_rs%&gt;%
+  mutate(un_sg= ifelse (year&lt;2006, "kofi_annan", 
+           ifelse(year&gt;2016,
+                  "antonio_guterres", "ban_kimoon")))%&gt;%
+  slice_sample(n=9)%&gt;%
+  select(year, donor,un_sg)
+```
+
+```
+## # A tibble: 9 × 3
+##    year donor      un_sg           
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;           
+## 1  2000 Hungary    kofi_annan      
+## 2  2009 Tunisia    ban_kimoon      
+## 3  2003 Angola     kofi_annan      
+## 4  2001 India      kofi_annan      
+## 5  2006 Botswana   ban_kimoon      
+## 6  2017 Rwanda     antonio_guterres
+## 7  2020 Austria    antonio_guterres
+## 8  2001 Ecuador    kofi_annan      
+## 9  2010 Azerbaijan ban_kimoon
+```
+]
+
+--
+
+.pull-right[
+
+```r
+io_income_rs%&gt;%
+  mutate(un_sg= case_when(
+            year &lt; 2006 ~ "kofi_annan",
+            year &lt;= 2016 ~ "ban_kimoon",
+            year &gt; 2016 ~"antonio_guterres"))%&gt;% #case_when respects order!
+  slice_sample(n=9)%&gt;%
+  select(year, donor,un_sg)
+```
+
+```
+## # A tibble: 9 × 3
+##    year donor        un_sg           
+##   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;           
+## 1  2016 Australia    ban_kimoon      
+## 2  2010 Congo        ban_kimoon      
+## 3  2017 Bhutan       antonio_guterres
+## 4  2001 Hungary      kofi_annan      
+## 5  2003 Indonesia    kofi_annan      
+## 6  2018 Saudi Arabia antonio_guterres
+## 7  2001 Poland       kofi_annan      
+## 8  2009 Turkey       ban_kimoon      
+## 9  2014 Turkey       ban_kimoon
+```
+]
+
+---
+
+## General issues: replace_na (3/4)
+
+- `tidyr::replace_na()` replaces NAs with specified values.
+ 
+
+```r
+io_income_rs %&gt;% 
+  mutate(donor=replace_na(donor,"individuals")) #all NAs in donor are now "individuals"
+
+io_income_rs$donor %&gt;% 
+  replace_na("individual") #all NAs in donor are now "individuals"
+
+io_income_rs %&gt;% 
+  replace_na(list(donor="individuals",amount_nominal=0 )) #all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
+
+io_income_rs%&gt;% 
+  replace_na(list(0)) #all NAs in the dataset are now 0
+```
+
+---
+class: split two
+## Other (smaller) issues...(4/4)
+
+  - Scientific notation is a bit hard to interpret: 2.5e2 =250
+    - Run/include `options(scipen=999)` to the top of your script/markdown remove it completely.
+  
+--
+
+  - The family of `scale_()` functions in ggplot2 require specifications.
+    - `scale_fill_brewer()` works on the aesthetic fill.
+    - `scale_color_brewer()` works on the aesthetic color.
+    - `scale_x_log10()` will scale x in log 10.
+    - `scale_y_log10()` will scale y in log 10.
+--
+
+  - Remember: there are many characteristics you can change on plots (size, color, fill, alpha,...)
+    - If you include characteristics inside the `mapping=aes()`, mapping a variable to an aesthetic and *a legend will appear*.
+    - If you include characteristics outside the `mapping=aes()`, you are setting it and *no legend appears*.
+---
 class: split two
 
 # What did we learn last week?
@@ -148,6 +329,8 @@ tinytex::install_tinytex()
 ```
 
 - [Figures and tables in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
+
+- 80 character lines helps you know when to move to the next line!
 
 - Other specific R Markdown issues you had? 
 
@@ -389,172 +572,6 @@ class: center
 **We will hold office hours normally for the next 2 weeks, but we will not solve the final assignment with you**
 
 ***The assignment is due on November 6th, 23:59!***
-
----
-
-class: split two
-
-## General issues: slice_ (1/3)
-
-
-
-.pull-left[
-
-```r
-io_income_rs %&gt;%
-  drop_na(donor)%&gt;%
-  group_by(donor, type_donor)%&gt;%
-  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %&gt;% 
-  arrange(desc(amount_nominal))%&gt;%
-  slice_head(n=5)
-```
-
-```
-## # A tibble: 556 × 3
-## # Groups:   donor [555]
-##    donor                                        type_donor amount_nominal
-##    &lt;chr&gt;                                        &lt;chr&gt;               &lt;dbl&gt;
-##  1 23Technology Limited, United Kingdom         &lt;NA&gt;                  1.5
-##  2 ABB Asea Brown Boveri Ltd.                   private         2199834. 
-##  3 Afghanistan                                  public           169453. 
-##  4 Africa Agriculture and Trade Investment Fund private          175058  
-##  5 Africa Re Foundation                         private          117000  
-##  6 African Development Bank                     public         15561000  
-##  7 African Field Epidemiology Network (AFENET)  private          241500  
-##  8 African Reinsurance Corporation              private          103513  
-##  9 African Union                                public           460000  
-## 10 AG Fund                                      private           52817. 
-## # … with 546 more rows
-```
-]
-
---
-.pull-right[
-
-```r
-io_income_rs %&gt;%
-  drop_na(donor)%&gt;%
-  group_by(donor, type_donor)%&gt;%
-  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %&gt;% 
-  arrange(desc(amount_nominal))%&gt;%
-  ungroup()%&gt;% #group by two variables requires ungrouping before slicing...
-  slice_head(n=5)
-```
-
-```
-## # A tibble: 5 × 3
-##   donor            type_donor amount_nominal
-##   &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt;
-## 1 United States    public        9400452341.
-## 2 European Union   public        2591756148.
-## 3 United Kingdom   public        2386426530.
-## 4 Gates Foundation private       1757741582.
-## 5 Japan            public        1307577439.
-```
-]
-
----
-
-## General issues: case_when (2/3)
-
-- `dplyr::case_when()` and `base::ifelse()` can help you return values based on tests.
-
---
-
-- Different from `ifelse()`, `case_when()` can **more** easily return more than two values based on more than one test.
-  
---
-
-- Let's say we want a new variable called un_sg (UN Secretary General):
-  - kofi_annan, if years are between 1997 and 2006;
-  - ban_kimoon, if years are between 2007 and 2016;
-  - antonio_guterres, if years are between 2016 and present.
-
----
-
-class: split two
-
-## General issues: case_when (2/3)
-
-
-
-.pull-left[
-
-```r
-io_income_rs%&gt;%
-  mutate(un_sg= ifelse (year&lt;2006, "kofi_annan", 
-           ifelse(year&gt;2016,
-                  "antonio_guterres", "ban_kimoon")))%&gt;%
-  slice_sample(n=9)%&gt;%
-  select(year, donor,un_sg)
-```
-
-```
-## # A tibble: 9 × 3
-##    year donor       un_sg           
-##   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;           
-## 1  2011 Mongolia    ban_kimoon      
-## 2  2016 Armenia     ban_kimoon      
-## 3  2008 Spain       ban_kimoon      
-## 4  2018 El Salvador antonio_guterres
-## 5  2002 Vietnam     kofi_annan      
-## 6  2020 Bahamas     antonio_guterres
-## 7  2015 Belgium     ban_kimoon      
-## 8  2016 Italy       ban_kimoon      
-## 9  2014 Armenia     ban_kimoon
-```
-]
-
---
-
-.pull-right[
-
-```r
-io_income_rs%&gt;%
-  mutate(un_sg= case_when(
-            year &lt; 2006 ~ "kofi_annan",
-            year &lt;= 2016 ~ "ban_kimoon",
-            year &gt; 2016 ~"antonio_guterres"))%&gt;% #case_when respects order!
-  slice_sample(n=9)%&gt;%
-  select(year, donor,un_sg)
-```
-
-```
-## # A tibble: 9 × 3
-##    year donor          un_sg           
-##   &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;           
-## 1  2012 Peru           ban_kimoon      
-## 2  2016 Bhutan         ban_kimoon      
-## 3  2009 Panama         ban_kimoon      
-## 4  2018 Ecuador        antonio_guterres
-## 5  2009 United Kingdom ban_kimoon      
-## 6  2007 Liberia        ban_kimoon      
-## 7  2020 Australia      antonio_guterres
-## 8  2003 Austria        kofi_annan      
-## 9  2005 Nigeria        kofi_annan
-```
-]
-
----
-
-## General issues: replace_na (3/3)
-
-- `tidyr::replace_na()` replaces NAs with specified values.
- 
-
-```r
-io_income_rs %&gt;% 
-  mutate(donor=replace_na(donor,"individuals")) #all NAs in donor are now "individuals"
-
-io_income_rs$donor %&gt;% 
-  replace_na("individual") #all NAs in donor are now "individuals"
-
-io_income_rs %&gt;% 
-  replace_na(list(donor="individuals",amount_nominal=0 )) #all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
-
-io_income_rs%&gt;% 
-  replace_na(list(0)) #all NAs in the dataset are now 0
-```
 
 ---
 
