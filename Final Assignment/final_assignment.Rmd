@@ -59,26 +59,24 @@ current_gdp <-  pivot_longer(current_gdp, 5:66, names_to="year", values_to= "gdp
 
 current_gdp <- unite(current_gdp,"country_name;country_code;year;gdp", sep=";")
 
-saveRDS(current_gdp, file="gdp.rds")
+saveRDS(gdp, file="gdp.rds")
 
 ```
 
 ##Question 1
 ```{r}
-names(co2) <- co2[4,] # making fourth line names.
-co2 <- co2[-c(1:4), ] # removing lines that are not observations.
 
 co2 <- co2 %>% 
-  pivot_longer(5:66, names_to="year", values_to= "co2_emissions") %>% 
+  pivot_longer(3:34, names_to="year", values_to= "co2_emissions") %>% 
   left_join(country_region)%>%
   drop_na(co2_emissions)%>%
+  select(-TableName)%>%
   rename(country_name=`Country Name`, country_code= `Country Code`, income_group= `IncomeGroup`, region=Region)%>%
-  select(-c(`Indicator Name`, `Indicator Code`,TableName))%>%
   drop_na(region) #tidy, with regions and income groups.
 
 pop_dat <- pop_dat %>% pivot_wider(names_from ="name", values_from="value") %>% rename(country_name=`Country Name`, country_code= `Country Code`)
 
-gdp <- gdp %>% separate(1, sep=";", into=c("country_name", "country_code", "year", "gdp")) #tidy
+gdp <- gdp %>% separate(1, sep="_", into=c("country_name", "country_code")) #tidy
 
 co2_dat <- co2 %>% left_join(pop_dat) %>% left_join(gdp) #one single dataset
 ```

@@ -1,6 +1,6 @@
 ---
-title: 'Final Assignment: C02 emissions along time'
-subtitle: 
+title: "CO2 Emissions along time"
+subtitle: "Final Assignment"
 date: "October 2022"
 output:
   pdf_document: default
@@ -10,7 +10,8 @@ output:
 ---
 
 - All materials for the exercises below are available in the final assignment folder.
-- Please submit an R Markdown file and a knitted pdf document containing your answers and plots (no code.)
+- Please submit an R Markdown file and a knitted pdf document containing your answers and plots (no code).
+- Files should be submitted in moodle, by November 6th, 23:59.
 
 
 # CO2 Emissions along time
@@ -19,6 +20,8 @@ For the final assignment, we will analyze C02 emissions from 1990 to 2019 and wh
 The [World Bank Data Repository](https://data.worldbank.org/) contains multiple country-year datasets that can help us do so.
 All the datasets share the same country names and codes, but not all of them are tidy.
 For the final assignment, we are providing you with four datasets: (1)`co2_emissions`, (2) `country_region`, (3) `gdp`, and (4) `pop_dat`.
+
+Disclaimer: the `co2_emissions` dataset only contains data on CO2 emissions (rather than all green house gases), and is not adjusted for import and export of goods, off shoring, and carbon sinks. This does not change anything in what you will do subsequently, but most GHG emissions plots you encounter out there might differ from what you produce here.
 
 ## Question 1: tidying and joining data
 
@@ -94,7 +97,7 @@ a-) Create a plot showing the relationship between `co2_emissions` and `populati
 
 b-) Create a box plot showing the distribution of `co2_per_cap` by `income_group`. Comment the relationship between emissions and income group.
 
-c-) Re-create the same plot as above (b), now as a histogram (tip: use a `geom_histogram()`).
+c-) Re-create the same plot as above (7b), now as a histogram (tip: use a `geom_histogram()`).
 
 ## Question 8:urban population and co2 emissions
 
@@ -108,4 +111,4 @@ Create a bar plot that ranks countries by their total co2 emissions (`co2_emissi
 
 ## Bonus Question 10: Modelling
 
-Run a linear model with `co2_emissions` as your dependent variable. The independent variables should be `population` and `gdp`. Print a table and interpret the output.
+Run a linear model with `co2_emissions` as your dependent variable. The independent variables should be `population` and `gdp`. Print a summary of the model and interpret the output. What other variables you think should be added to the model?
