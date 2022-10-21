@@ -95,7 +95,7 @@ a-) Create a plot showing the relationship between `co2_emissions` and `populati
 
 b-) Create a box plot showing the distribution of `co2_per_cap` by `income_group`. Comment the relationship between emissions and income group.
 
-c-) Re-create the same plot as above (question 7b), now as a histogram (tip: use a `geom_histogram()`).
+c-) Re-create the same plot as above (question 7b), now as a histogram (tip: use a `geom_histogram()` for `co2_per_cap` and facet wrap the histograms by `income_group`).
 
 ## Question 8:urban population and co2 emissions
 
