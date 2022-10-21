@@ -76,7 +76,8 @@ io_income_rs %>%
   ggplot(mapping=aes(x=year, y=amount_nominal, color=issue_area))+
   geom_line(size=1)+
   scale_color_brewer(type="qual", palette= "Set2", direction=1)+
-  scale_y_continuous(labels=scales::dollar)+
+  scale_y_continuous(labels=scales::dollar_format(scale=.000001, suffix="m", prefix = "$"))+
+    #dollar_format allows you to format the scale of dollars(thousands, millions, billions)
   labs( x = NULL, y = "Total donations to issue area", 
         title = "Donations by the United States since 2000 by issue area", 
     subtitle=" composed by 4500 randomly sampled observations from dataset",
