@@ -55,7 +55,7 @@ Remember, each dataset is messy in their own way and requires cleaning before yo
 
 a-) Transform `year`,`co2_emissions`, `total_pop`, `urban_pop_share`, `gdp`  to numeric class. Produce a summary of the dataset.
 
-b-) How many countries are there?
+b-) How many countries are there in the dataset?
 
 ## Question 3: missing values
 
@@ -77,19 +77,17 @@ b-) `gdp_per_cap`, which is the `gdp` divided by `total_pop`.
 
 a-) Rank countries by their total `co2_emissions`. What are the top 20 emitters?
 
-b-) Rank countries by their mean `co2_per_cap`. What are top 20 emitters? How does this change from the one from question 5a?
+b-) Rank countries by their mean `co2_per_cap`. What are top 20 emitters? How does this change from the rank above (question 5a)?
 
-c-) Calculate the mean emissions per capita per country in three different decades: 1990s, 2000s, and 2010s. Did the top three emitters per capita changed in these decades?
+c-) Calculate the mean emissions per capita per country in three different decades: 1990s, 2000s, and 2010s. Did the top three emitters per capita change in these decades?
 
 ## Question 6: emissions in time
 
-a-) Create a plot showing the yearly evolution of `co2_per_cap`.
+a-) Create a plot showing the yearly evolution of `co2_per_cap`. Comment on the yearly evolution of `co2_per_cap`.
 
-b-) Now create a plot showing the yearly evolution of `co2_per_cap` for the United States, China, and India.
+b-) Now create a plot showing the yearly evolution of `co2_per_cap` for the United States, China, and India. Comment on the yearly evolution of `co2_per_cap` in these three countries.
 
-c-) Finally, create a plot showing the yearly evolution of `co2_per_cap` by `income_group`.
-
-d-) In light of the three plots above, what can you say about co2 emissions since 1990?
+c-) Finally, create a plot showing the yearly evolution of `co2_per_cap` by `income_group`. Comment on the relationship.
 
 ## Question 7: emissions, growth, and population
 
@@ -97,7 +95,7 @@ a-) Create a plot showing the relationship between `co2_emissions` and `populati
 
 b-) Create a box plot showing the distribution of `co2_per_cap` by `income_group`. Comment the relationship between emissions and income group.
 
-c-) Re-create the same plot as above (7b), now as a histogram (tip: use a `geom_histogram()`).
+c-) Re-create the same plot as above (question 7b), now as a histogram (tip: use a `geom_histogram()`).
 
 ## Question 8:urban population and co2 emissions
 
