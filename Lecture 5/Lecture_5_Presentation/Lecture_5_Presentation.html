@@ -149,6 +149,8 @@ tinytex::install_tinytex()
 
 - [Figures and tables in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
 
+- Try to keep code lines in code chunks under 80 characters (marked line)
+
 - Other specific R Markdown issues you had? 
 
 - Please remember to use the Moodle forum for questions!
@@ -183,7 +185,7 @@ tinytex::install_tinytex()
 
 ---
 
-# Exchanging with the community (Reprex 1/8)
+# Exchanging with the community (Reprex 1/9)
 
 - [Reproducibility](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example) of an error is the key
 
@@ -195,7 +197,7 @@ tinytex::install_tinytex()
 
 ---
 
-# The question (Reprex 2/8)
+# The question (Reprex 2/9)
 
 "Dear R friends,
 
@@ -211,7 +213,7 @@ Thank you in advance for your time and consideration!"
 
 ---
 
-# The data (Reprex 3/8)
+# The data (Reprex 3/9)
 
 [`set.seed()`](https://r-coder.com/set-seed-r/) orders random processes
 
@@ -237,7 +239,7 @@ Using R datasets (e.g. `USArrests`, `mtcars`, `iris`) is also very handy!
 
 ---
 
-# The error (Reprex 4/8)
+# The error (Reprex 4/9)
 
 If you are doing this manually, copy the exact error somewhere in the post!
 
@@ -260,7 +262,7 @@ mean(my.df$col2, na.rm = TRUE)
 
 ---
 
-# The sytem (Reprex 5/8)
+# The sytem (Reprex 5/9)
 
 Sometimes system info can be important...
 
@@ -274,7 +276,7 @@ R.Version()$version.string
 
 ---
 
-# The post (Reprex 6/8)
+# The post (Reprex 6/9)
 
 *Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, code, and sytem info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
 
@@ -294,7 +296,7 @@ mean(my.df$col2, na.rm = TRUE)
 
 ---
 
-#  Reprex, the package (Reprex 7/8)
+#  Reprex, the package (Reprex 7/9)
 
 - Writing a reprex often helps you debug!
 
@@ -320,7 +322,19 @@ reprex::reprex({
 
 ---
 
-# Stack overflow (Reprex 8/8)
+# Reprex for R Markdown, more or less the same (Reprex 8/9)
+
+***Rules-of-thumb:***
+
+  - If issue is within a code chunk, make a normal reprex
+  
+  - If issue is with knitting, copy the document (yaml) header and all code chunks until the one that fails to knit or displays the issue (the rest is the same)
+  
+  - If you want to improve the knitting itself, post a (minimal) R Markdown document and the knitted document
+
+---
+
+# Stack overflow (Reprex 9/9)
 
 - You can find virtually anything about an [R issue](https://stackoverflow.com/questions/tagged/r)
 
