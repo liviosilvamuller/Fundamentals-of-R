@@ -183,6 +183,14 @@ co2_dat %>%
   scale_y_log10()
 ```
 
+```{r 7c}
+co2_dat %>% 
+  ggplot(aes(x=co2_per_cap))+
+  geom_histogram()+
+  scale_x_log10()+
+  facet_wrap(~income_group)
+```
+
 ##Question 8
 
 ```{r 8a}
@@ -215,7 +223,6 @@ co2_dat %>%
 ##Question 9
 
 ```{r geom_col, eval=FALSE}
-
 flag_per_capita <- co2_dat %>%
   group_by(country_name)%>%
   summarise(co2_per_cap_2= mean(co2_per_cap))%>%
@@ -235,5 +242,4 @@ co2_dat %>%
   ggplot(aes(x=reorder(country_name, tot_co2), y=tot_co2, fill=top_emitter))+
   geom_col()+
   coord_flip()
-  
 ```
