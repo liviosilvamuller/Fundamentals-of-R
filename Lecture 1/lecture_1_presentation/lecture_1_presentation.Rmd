@@ -30,7 +30,7 @@ knitr::opts_chunk$set(cache=TRUE, autodep = TRUE, fig.retina = 3, message = FALS
 old <- ggplot2::theme_set(iheiddown::theme_iheid())
 ```
 
-```{r, load_refs, include=FALSE, cache=FALSE}
+```{r load_refs, include=FALSE, cache=FALSE}
 # Initializes the bibliography
 library(RefManageR)
 BibOptions(check.entries = FALSE,
