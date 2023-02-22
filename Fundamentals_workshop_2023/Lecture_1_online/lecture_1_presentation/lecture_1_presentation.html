@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Fundamentals of R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Henrique Sposito and Livio Silva-Muller" />
+    <meta name="date" content="2022-09-23" />
+    <script src="lecture_1_presentation_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture_1_presentation_files/remark-css/default.css" rel="stylesheet" />
+    <link href="lecture_1_presentation_files/remark-css/ninjutsu.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/iheid-xaringan-style.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Fundamentals of R
+]
+.author[
+### <large>Henrique Sposito and Livio Silva-Muller</large>
+]
+.date[
+### <small>September 23, 2022<small>
+]
+
+---
+
+
+
+
+
+class: center
+
+# The world back then... (and now)
+
+&lt;iframe width="800" height="450" src="https://www.youtube.com/embed/kOO31qFmi9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;1
+
+---
+
+![:scale 60%](assets/Images/roadmap.png)
+
+- What is R?
+
+- Why R?
+
+- How to R?
+
+- Course overview
+
+---
+
+class: split two
+
+# What is R?
+
+.pull-left[
+- Programming language and software develop in 1990s by Ihaka and Gentleman [(see Ihaka and Gentleman 1996)](https://www.jstor.org/stable/1390807#metadata_info_tab_contents), but really only released in 2000...
+
+- Open source with extensive and coherent set of tools for statistical analysis and programming
+
+- More than a statistics software:
+  - text analysis
+  - web scraping
+  - building websites
+  - interactive apps
+  - presentations (like this one)
+  - and much more!
+]
+
+.pull-right[
+
+![:scale 100%](assets/Images/RS.png)
+
+*Thank you RStudio (and [Hadley](https://hadley.nz/))!*
+]
+
+---
+
+class: split two
+
+# Why R?
+
+.pull-left[
+
+- [R growth has been impressive, specially within academia and governments](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)
+
+
+- Fast(ish), Flexible, and Free
+
+- Visualize, Communicate, Share, and Reproduce
+
+- Thousands of packages
+
+- Other programming languages can be integrated (as Phyton and C)
+]
+
+--
+.pull-right[
+[But the learning curve can be steep...](https://www.r-bloggers.com/2020/12/6-reasons-to-learn-r-for-business-2021/)
+
+![:scale 90%](assets/Images/curvel.webp)
+]
+
+---
+
+# How to R?
+
+- R is collaborative
+
+- Google, google, google (and stack overflow) until you make it!
+
+- "How to (...) in R?"
+
+- Or just copy and paste the error...
+
+.pull-right[
+![:scale 80%](assets/Images/rhelp.png)
+]
+
+---
+
+class: split two
+
+# The R(Studio) panes
+
+.pull-left[
+- Console
+
+- Source Editor
+
+- Environment
+
+- Plots (and files)
+]
+
+.pull-right[
+![:scale 200%](assets/Images/panes.png)
+]
+
+---
+
+class: split two
+
+# Is this workshop for you?
+
+.pull-left[
+
+## This workshop is not...
+
+- a statistics workshop, but...
+
+- a programming workshop, but...
+]
+
+.pull-right[
+
+## This workshop is...
+
+- for beginners...
+
+- for social science research ...
+]
+
+**No statistical software is a substitute for clear conceptual thinking, they are just tools (specially R). Thinking and data are compliments, not substitutes (Mesquita and Fowler 2021).**
+
+---
+
+# Workshop objectives
+
+By the end of this workshop you should be able to:
+
+- import data
+
+- clean and wrangle data
+
+- visualize variation
+
+- produce reproducible reports
+
+***Above all:***
+
+- *continue to learn R on your own*
+
+- *ask/find help online*
+
+---
+
+# Workshop polices and assignments
+
+- Attendance (40%)
+
+  - Come to class and be respectful
+
+- Weekly assignments (60%)
+
+  - Try your best and remember to ask for help, if needed
+  - 3 assignments released after lecture and due by midnight on the day before the following lecture
+
+**Office Hours: Wednesdays 15:00 to 17:00 P1-547**
+
+---
+
+# Questions? Please ask in the forum!
+
+A space to colaborate and help each other
+
+**Remember to sign up on Moodle to receive notifications!**
+
+---
+
+# Thank you!
+
+*References:*
+
+Made with `{iheiddown}`, the R-package for IHEID publications
+(Hollway, 2021).
+
+Hollway, J. (2021). _iheiddown: A package for writing IHEID documents
+in RMarkdown_. R package version 0.8.0. URL:
+[https://github.com/jhollway/iheiddown](https://github.com/jhollway/iheiddown).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="assets/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>`"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
