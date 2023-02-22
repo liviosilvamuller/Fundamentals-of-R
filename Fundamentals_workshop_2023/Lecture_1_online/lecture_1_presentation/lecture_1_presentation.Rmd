@@ -1,7 +1,7 @@
 ---
 title: "Fundamentals of R"
+subtitle: "Getting started with R"
 author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
-date: "<small>September 23, 2022<small>"
 output:
   xaringan::moon_reader:
     css: 
@@ -46,14 +46,6 @@ myBib <- ReadBib("assets/myBib.bib", check = FALSE)
 # bibliography.
 ```
 
-class: center
-
-# The world back then... (and now)
-
-<iframe width="800" height="450" src="https://www.youtube.com/embed/kOO31qFmi9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>1
-
----
-
 ![:scale 60%](assets/Images/roadmap.png)
 
 - What is R?
@@ -61,8 +53,6 @@ class: center
 - Why R?
 
 - How to R?
-
-- Course overview
 
 ---
 
@@ -154,74 +144,7 @@ class: split two
 ![:scale 200%](assets/Images/panes.png)
 ]
 
----
-
-class: split two
-
-# Is this workshop for you?
-
-.pull-left[
-
-## This workshop is not...
-
-- a statistics workshop, but...
-
-- a programming workshop, but...
-]
-
-.pull-right[
-
-## This workshop is...
-
-- for beginners...
-
-- for social science research ...
-]
-
-**No statistical software is a substitute for clear conceptual thinking, they are just tools (specially R). Thinking and data are compliments, not substitutes (Mesquita and Fowler 2021).**
-
----
-
-# Workshop objectives
-
-By the end of this workshop you should be able to:
-
-- import data
-
-- clean and wrangle data
-
-- visualize variation
-
-- produce reproducible reports
-
-***Above all:***
-
-- *continue to learn R on your own*
-
-- *ask/find help online*
-
----
-
-# Workshop polices and assignments
-
-- Attendance (40%)
-
-  - Come to class and be respectful
-
-- Weekly assignments (60%)
-
-  - Try your best and remember to ask for help, if needed
-  - 3 assignments released after lecture and due by midnight on the day before the following lecture
-
-**Office Hours: Wednesdays 15:00 to 17:00 P1-547**
-
----
-
-# Questions? Please ask in the forum!
-
-A space to colaborate and help each other
-
-**Remember to sign up on Moodle to receive notifications!**
+[Installing R and Rstudio](https://intro2r.com/chap1.html)
 
 ---
 

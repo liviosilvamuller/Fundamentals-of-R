@@ -1,0 +1,109 @@
+---
+title: "Fundamentals of R"
+subtitle: "Introduction"
+author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
+output:
+  xaringan::moon_reader:
+    css: 
+      - "default"
+      - "assets/iheid-xaringan-style.css"
+      - "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      - "ninjutsu"
+    chakra: "https://remarkjs.com/downloads/remark-latest.min.js"
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      beforeInit: "assets/macros.js"
+      countIncrementalSlides: false
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>`
+---
+```{r setup, include=FALSE}
+# don't mind this code chunk, it just sets up a few things for the rest
+# it doesn't appear, because the include argument above is FALSE...
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE)
+knitr::opts_chunk$set(cache=TRUE, autodep = TRUE, fig.retina = 3, message = FALSE, warning = FALSE)
+old <- ggplot2::theme_set(iheiddown::theme_iheid())
+```
+
+# Workshop structure
+
+- Pre-recorded online materials
+
+- Four sessions, in person
+
+- Office hours
+
+---
+
+class: split two
+
+# Is this workshop for you?
+
+.pull-left[
+
+## This workshop is not...
+
+- a statistics workshop, but...
+
+- a programming workshop, but...
+]
+
+.pull-right[
+
+## This workshop is...
+
+- for beginners...
+
+- for policy and social sciences ...
+]
+
+**No statistical software is a substitute for clear conceptual thinking, they are just tools (specially R). Thinking and data are compliments, not substitutes (Mesquita and Fowler 2021).**
+
+---
+
+# Workshop objectives
+
+By the end of this workshop you should be able to:
+
+- import data
+
+- clean and wrangle data
+
+- visualize variation
+
+- produce reproducible reports
+
+***Above all:***
+
+- *continue to learn R on your own*
+
+- *ask/find help online*
+
+---
+
+# Workshop polices and assignments
+
+- Attendance (40%)
+
+  - Come to class and be respectful
+
+- Weekly assignments (60%)
+
+  - Try your best and remember to ask for help, if needed
+  
+  - 3 assignments released after lecture and due by midnight on the day before the following lecture
+
+**Office Hours: Wednesdays 15:00 to 17:00 P1-547**
+
+---
+
+# Questions? Please ask in the forum!
+
+A space to colaborate and help each other
+
+*Remember to sign up on Moodle to receive notifications!*
