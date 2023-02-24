@@ -78,6 +78,8 @@ class: split two
 
 ![:scale 100%](assets/Images/RS.png)
 
+or is it **[Posit](https://www.youtube.com/watch?v=u1Gzxg8Pd08)**?
+
 *Thank you RStudio (and [Hadley](https://hadley.nz/))!*
 ]
 
@@ -91,8 +93,7 @@ class: split two
 
 - [R growth has been impressive, specially within academia and governments](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)
 
-
-- Fast(ish), Flexible, and Free
+- **F**ast(ish), **F**lexible, and **F**ree
 
 - Visualize, Communicate, Share, and Reproduce
 
