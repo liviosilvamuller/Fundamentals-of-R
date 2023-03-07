@@ -1,0 +1,51 @@
+refs	::	myBib
+unnamed-chunk-1	install.packages	library	read_csv	setwd	View
+unnamed-chunk-2	
+unnamed-chunk-3	
+unnamed-chunk-4	class	paste
+unnamed-chunk-5	class
+unnamed-chunk-6	class	isTRUE
+unnamed-chunk-7	class	Sys.Date
+unnamed-chunk-8	class	typeof
+unnamed-chunk-9	as.Date	as.numeric
+unnamed-chunk-10	c
+unnamed-chunk-11	dim
+unnamed-chunk-12	age	lecturers	speaks_portuguese
+unnamed-chunk-13	age	cbind	data.frame	lecturers	speaks_portuguese
+unnamed-chunk-14	$	$<-	c
+unnamed-chunk-15	$	course
+unnamed-chunk-16	$	$<-	c	factor
+unnamed-chunk-17	<	==	$	course
+unnamed-chunk-18	!=	&	<	$	course
+unnamed-chunk-19	ifelse	no	test	yes
+unnamed-chunk-20	>	$	$<-	ifelse
+unnamed-chunk-21	$	$<-	grepl	gsub
+unnamed-chunk-22	beep	library
+unnamed-chunk-23	course	summary
+setup	::	$	c	library	options	use_extra_styles	use_xaringan_extra
+unnamed-chunk-27	install.packages	library	read_csv	setwd	View
+unnamed-chunk-28	
+unnamed-chunk-29	class	paste
+unnamed-chunk-30	class
+unnamed-chunk-31	class	isTRUE
+unnamed-chunk-32	class	Sys.Date
+unnamed-chunk-33	class	typeof
+unnamed-chunk-34	as.Date	as.numeric
+unnamed-chunk-35	c
+unnamed-chunk-36	dim
+unnamed-chunk-37	age	lecturers	speaks_portuguese
+unnamed-chunk-38	age	cbind	data.frame	lecturers	speaks_portuguese
+unnamed-chunk-39	$	$<-	c
+unnamed-chunk-40	$	course
+unnamed-chunk-41	$	$<-	c	factor
+unnamed-chunk-42	<	==	$	course
+unnamed-chunk-43	!=	&	<	$	course
+unnamed-chunk-44	ifelse	no	test	yes
+unnamed-chunk-45	>	$	$<-	ifelse
+unnamed-chunk-46	$	$<-	grepl	gsub
+unnamed-chunk-47	course	summary
+unnamed-chunk-48	c	unique
+unnamed-chunk-49	c	mean	median
+unnamed-chunk-24	c	unique
+xaringanExtra	c	library	use_extra_styles	use_xaringan_extra
+unnamed-chunk-25	c	mean	median
