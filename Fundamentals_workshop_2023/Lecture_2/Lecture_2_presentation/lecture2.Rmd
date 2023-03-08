@@ -226,8 +226,6 @@ typeof(1)
 **But if this is confusing to you, do not worry about it ...**
 
 ---
-class: split two
-
 # Fun(ish) break
 
 .pull-left[
@@ -243,8 +241,11 @@ as.numeric(as.Date("1970-01-01"))
 ]
 
 .pull-right[
-<img src = "https://imgs.xkcd.com/comics/historical_dates.png" />
+
+![100%](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjNjMDk0ZDhiZWI2MDRmY2YyMzhlM2M5ZjU3NzkxN2MyZDgzNjExNyZjdD1n/APqEbxBsVlkWSuFpth/giphy-downsized-large.gif)
 ]
+
+[Are you paying attention to class right now?](https://connorrothschild.github.io/what-are-you-doing/)
 
 ---
 class: split two
@@ -331,23 +332,6 @@ course
 .pull-right[
 ![:scale 100%](assets/images/df.png)
 ]
-
----
-class: split two
-
-#  Fun(ish) break ...
-
-.pull-left[
-
-[Are you paying attention to class right now?](https://connorrothschild.github.io/what-are-you-doing/)
-
-]
-
-.pull-right[
-
-![100%](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjNjMDk0ZDhiZWI2MDRmY2YyMzhlM2M5ZjU3NzkxN2MyZDgzNjExNyZjdD1n/APqEbxBsVlkWSuFpth/giphy-downsized-large.gif)
-]
-
 
 ---
 # You can navigate (through data) if you have $ (functions 1/6)
@@ -451,16 +435,15 @@ class: split two
 library(beepr)
 beep(8)
 ```
-
---
-
-Gotcha you!
-
 ]
 
 .pull-right[
 ![100](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTUyYjI0NGVjN2M5MzRjNWJmNmQyZTk3MThhNDcxN2UxMDNkZWU2YyZjdD1n/lPF1CyJXXcTZmUrP2J/giphy.gif)
 ]
+
+--
+
+Gotcha you!
 
 ---
 class: split two
@@ -500,6 +483,11 @@ median(c(18, 81, 28))
 - All operators we cover today are base R
 
 - [Above all, teaching base R facilitates comprehension of how R, as a software and programming language, works for beginners](https://github.com/matloff/TidyverseSkeptic/)
+
+---
+# Housekeeping
+
+![:scale 100%](assets/images/homework.png)
 
 ---
 

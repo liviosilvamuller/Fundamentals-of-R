@@ -12,7 +12,7 @@ phd_theses <- readRDS("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamenta
 
 - All materials for the exercises below are available in the homework folder on Moodle.
 - Please submit an R script containing both the code and results.
-- For each question, please do not forget to include the code used to find the answer. 
+- For each question, please do not forget to include the code used to find the answer.
 - You can #comment out any sentences that are part of your answers but are not R code.
 
 # PhD theses at the Graduate Institute
@@ -68,19 +68,19 @@ nrow(subset(phd_theses, year >= 2000))
 
 ## Question 4
 
-a) What is the mean for year?
+a) What is the mean for the variable year?
 
 ```{r, include=FALSE}
 mean(phd_theses$year)
 ```
 
-b) What about the median?
+b) What about the median for the variable year?
 
 ```{r, include=FALSE}
 median(phd_theses$year)
 ```
 
-c) Is the mean bigger than the median? Please create logical tests comparing the mean and median for year. Please also add a sentence explaining why do you think they differ.
+c) Is the mean bigger than the median? Please create logical tests comparing the mean and median for the variable year. Please also add a sentence explaining why do you think they differ.
 
 ```{r, include=FALSE}
 mean(phd_theses$year) < median(phd_theses$year)
@@ -123,7 +123,7 @@ a) How many PhD theses were written in each program ?
 summary(factor(phd_theses$program))
 ```
 
-b) A lot of PhD theses do not have a program specified and are categorized as "No specialisation". Could you please change this category within the program variable to "Not Available" (hint: brackets can help here or you can find help [online](https://stackoverflow.com/questions/5824173/replace-a-value-in-a-data-frame-based-on-a-conditional-if-statement)).
+b) A lot of PhD theses do not have a program specified and are categorized as "No specialisation". Could you please change this category within the program variable to "Not Available" (hint: brackets can help here or you can find help [here](https://stackoverflow.com/questions/5824173/replace-a-value-in-a-data-frame-based-on-a-conditional-if-statement)).
 
 ```{r, include=FALSE}
 phd_theses$program[phd_theses$program == "No specialisation (1928-2001)"] <- "Not Available"
@@ -158,14 +158,16 @@ For the PhD theses in the institute, candidates often have the choice of writing
 
 ```{r, include=FALSE}
 subset(phd_theses, grepl("essay|essays", phd_theses$title) & 
-         grepl("International Economics|Development Economics", phd_theses$program))
+         grepl("International Economics|Development Economics",
+               phd_theses$program))
 ```
 
 ## Bonus Question
 
-Please create a new dataset aggregating all PhD theses' titles by their program. The new dataset should have two columns, one called "program" with the PhD theses program and the other called "titles" with all the titles pasted together. The new dataset should have 12 rows, one for each program. Please use ´aggregate()´ and ´paste()´ to accomplish this. (hint: use the practical script for reference or find help [here](https://stackoverflow.com/questions/61082463/set-collapse-for-paste-function-in-aggregate)).
+Please create a new dataset aggregating all PhD theses' titles by their program. The new dataset should have two columns, one called "program" with the PhD theses program and the other called "titles" with all the titles pasted together. The new dataset should have 12 rows, one for each program. Please use ´aggregate()´ and ´paste()´ to accomplish this (hint: use the practical script for reference or find help [here](https://stackoverflow.com/questions/61082463/set-collapse-for-paste-function-in-aggregate)).
 
 ```{r, include=FALSE}
-phd_theses_aggregated <- aggregate(phd_theses$title, list(phd_theses$program),
+phd_theses_aggregated <- aggregate(phd_theses$title,
+                                   list(phd_theses$program),
                                    FUN = paste, collapse= ",")
 ```
