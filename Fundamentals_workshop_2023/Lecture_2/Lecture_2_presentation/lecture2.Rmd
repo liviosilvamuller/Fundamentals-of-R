@@ -123,7 +123,7 @@ class: split two
 
   - Download, load, and explore data
   - Grouping and subsetting data
-  - **GAPMINDER**
+  - Mind the gap with **GAPMINDER**
 ]
 
 ---
@@ -465,7 +465,7 @@ Gotcha you!
 ---
 class: split two
 
-# Other useful base R functions we forgot?
+# Other useful functions we forgot?
 
 --
 
