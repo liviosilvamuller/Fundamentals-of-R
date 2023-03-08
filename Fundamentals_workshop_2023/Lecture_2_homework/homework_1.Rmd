@@ -17,9 +17,9 @@ phd_theses <- readRDS("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamenta
 
 # PhD theses at the Graduate Institute
 
-The Institute has been home thousands of PhD students over time.
-In this homework, we will use a dataset on these PhD theses projects.
-Please download and load the "phd_thesis" dataset from the course Moodle page.
+The Institute has been the home for thousands of PhD students over time.
+In this homework, we will use a dataset on PhD theses at the Institute.
+Please download and load the "phd_theses" dataset from the course Moodle page.
 
 ## Question 1
 
@@ -117,13 +117,13 @@ mean(IRPS$year)
 
 ## Question 6
 
-a) How many PhD theses were written in each program (hint: ´summary()´ and ´factor()´ could help)?
+a) How many PhD theses were written in each program ?
 
 ```{r, include=FALSE}
 summary(factor(phd_theses$program))
 ```
 
-b) A lot of PhD theses do not have a program specified and are categorized as "No specialisation (1928-2001)". Could you please change this category within the program variable to "Not Available" (hint: brakets can help here or you can find help [online](https://stackoverflow.com/questions/5824173/replace-a-value-in-a-data-frame-based-on-a-conditional-if-statement)).
+b) A lot of PhD theses do not have a program specified and are categorized as "No specialisation". Could you please change this category within the program variable to "Not Available" (hint: brackets can help here or you can find help [online](https://stackoverflow.com/questions/5824173/replace-a-value-in-a-data-frame-based-on-a-conditional-if-statement)).
 
 ```{r, include=FALSE}
 phd_theses$program[phd_theses$program == "No specialisation (1928-2001)"] <- "Not Available"
@@ -139,7 +139,7 @@ grep("development", phd_theses$title)
 phd_theses[grep("development", phd_theses$title),]
 ```
 
-b) Please create a new variable in the dataset called "about_development" with the value of 1 if the title of the PhD theses contains the word "development" in it or the value 0 if the PhD title does not contain the word "development" in it (hint: ´grepl()´ and ´ifelse()´ can help).
+b) Please create a new variable in the dataset called "about_development" with the value of 1 if the title of the PhD thesis contains the word "development" or the value 0 if the PhD title does not contain the word "development" (hint: ´grepl()´ and ´ifelse()´ can help).
 
 ```{r, include=FALSE}
 phd_theses$about_development <- ifelse(grepl("development", phd_theses$title), 1, 0)
@@ -154,26 +154,18 @@ subset(phd_theses, about_development == 1 & year > 2000)
 
 ## Question 7
 
-a) For the PhD theses in the institute, candidates often have the choice of writing multiple essays or a manuscript. Suppose you are interested in their format, how many PhD theses contain the words "essay" or "essays" in their title and were written in the PhD in PhD in International Economics or the PhD in Development Economics programs (hint: you can use ´subset()´ with ´grepl()´)?
+For the PhD theses in the institute, candidates often have the choice of writing multiple essays or a manuscript. Suppose you are interested in their format, how many PhD theses contain the words "essay" or "essays" in their title and were written in the PhD in International Economics or the PhD in Development Economics programs (hint: you can use ´subset()´ with ´grepl()´)?
 
 ```{r, include=FALSE}
 subset(phd_theses, grepl("essay|essays", phd_theses$title) & 
          grepl("International Economics|Development Economics", phd_theses$program))
 ```
 
-b) Please create a new variable called "essays_in_economics" with the value of 1 if a PhD theses contain the words "essay" or "essays" in their title and were written in the PhD in the PhD in International Economics or the PhD in Development Economics programs. Please add the value of 0 for everything else (hint: ´grepl()´ and ´ifelse()´ can help).
+## Bonus Question
 
-```{r, include=FALSE}
-phd_theses$essays_in_economics <-  ifelse(grepl("essay|essays", phd_theses$title) & 
-         grepl("International Economics|Development Economics", phd_theses$program),
-         1, 0)
-```
-
-## Questions 8
-
-Please create a new dataset aggregating all PhD theses' titles by their program. The new dataset should have two columns, one called "program" with the PhD theses program and the other called "titles" with all the titles pasted together. The new dataset should have 12 rows, one for each program. Please use ´aggregate()´ and ´paste()´ to accomplish this. (hint: use the practical script for reference or find help [online](https://stackoverflow.com/questions/61082463/set-collapse-for-paste-function-in-aggregate)).
+Please create a new dataset aggregating all PhD theses' titles by their program. The new dataset should have two columns, one called "program" with the PhD theses program and the other called "titles" with all the titles pasted together. The new dataset should have 12 rows, one for each program. Please use ´aggregate()´ and ´paste()´ to accomplish this. (hint: use the practical script for reference or find help [here](https://stackoverflow.com/questions/61082463/set-collapse-for-paste-function-in-aggregate)).
 
 ```{r, include=FALSE}
 phd_theses_aggregated <- aggregate(phd_theses$title, list(phd_theses$program),
-                                   FUN = paste, collapse= ", ")
+                                   FUN = paste, collapse= ",")
 ```
