@@ -1,0 +1,179 @@
+---
+title: 'Objects, class and data structures'
+subtitle: 'Fundamentals of R Workshop - Homework 1'
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+phd_theses <- readRDS("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamentals_workshop_2023/Lecture_2_homework/phd_theses.rds")
+```
+
+- All materials for the exercises below are available in the homework folder on Moodle.
+- Please submit an R script containing both the code and results.
+- For each question, please do not forget to include the code used to find the answer. 
+- You can #comment out any sentences that are part of your answers but are not R code.
+
+# PhD theses at the Graduate Institute
+
+The Institute has been home thousands of PhD students over time.
+In this homework, we will use a dataset on these PhD theses projects.
+Please download and load the "phd_thesis" dataset from the course Moodle page.
+
+## Question 1
+
+a) How many columns does the dataset have?
+
+```{r, include=FALSE}
+names(phd_theses)
+ncol(phd_theses)
+```
+
+b) How many rows does the dataset have?
+
+```{r, include=FALSE}
+summary(phd_theses)
+nrow(phd_theses)
+```
+
+## Question 2
+
+a) What is the class of the year variable in the dataset?
+
+```{r, include=FALSE}
+class(phd_theses$year)
+```
+
+b) Please convert the year variable to numeric.
+
+```{r, include=FALSE}
+phd_theses$year <- as.numeric(phd_theses$year)
+```
+
+
+## Question 3
+
+a) How many PhD theses were written before the year 2000?
+
+```{r, include=FALSE}
+subset(phd_theses, year < 2000)
+```
+
+b) How many PhD theses were written in and after the year 2000?
+
+```{r, include=FALSE}
+nrow(subset(phd_theses, year >= 2000))
+```
+
+## Question 4
+
+a) What is the mean for year?
+
+```{r, include=FALSE}
+mean(phd_theses$year)
+```
+
+b) What about the median?
+
+```{r, include=FALSE}
+median(phd_theses$year)
+```
+
+c) Is the mean bigger than the median? Please create logical tests comparing the mean and median for year. Please also add a sentence explaining why do you think they differ.
+
+```{r, include=FALSE}
+mean(phd_theses$year) < median(phd_theses$year)
+# The institute grew a lot, therefore, we have more PhD theses in recent years.
+```
+
+## Question 5
+
+a) How many PhD theses were written in the PhD in Anthropology and Sociology program?
+
+```{r, include=FALSE}
+nrow(subset(phd_theses, program == "PhD in Anthropology and Sociology (2013-)"))
+```
+
+b) What is the mean year for PhD theses written in the PhD in Anthropology and Sociology program?
+
+```{r, include=FALSE}
+ANSO <- subset(phd_theses, program == "PhD in Anthropology and Sociology (2013-)")
+mean(ANSO$year)
+```
+
+c) How many PhD theses were written in the PhD in International Relations/Political Science program?
+
+```{r, include=FALSE}
+nrow(subset(phd_theses, program == "PhD in International Relations/Political Science (2012-)"))
+```
+
+d) What is the median year for PhD theses written in the PhD in International Relations/Political Science program?
+
+```{r, include=FALSE}
+IRPS <- subset(phd_theses, program == "PhD in International Relations/Political Science (2012-)")
+mean(IRPS$year)
+```
+
+## Question 6
+
+a) How many PhD theses were written in each program (hint: ´summary()´ and ´factor()´ could help)?
+
+```{r, include=FALSE}
+summary(factor(phd_theses$program))
+```
+
+b) A lot of PhD theses do not have a program specified and are categorized as "No specialisation (1928-2001)". Could you please change this category within the program variable to "Not Available" (hint: brakets can help here or you can find help [online](https://stackoverflow.com/questions/5824173/replace-a-value-in-a-data-frame-based-on-a-conditional-if-statement)).
+
+```{r, include=FALSE}
+phd_theses$program[phd_theses$program == "No specialisation (1928-2001)"] <- "Not Available"
+summary(factor(phd_theses$program))
+```
+
+## Question 6
+
+a) Suppose you wanted to know how many PhD theses were written about development, generally. Please select all the PhD theses that contain the word "development" in their title (hint: ´grep()´ could help you here).
+
+```{r, include=FALSE}
+grep("development", phd_theses$title)
+phd_theses[grep("development", phd_theses$title),]
+```
+
+b) Please create a new variable in the dataset called "about_development" with the value of 1 if the title of the PhD theses contains the word "development" in it or the value 0 if the PhD title does not contain the word "development" in it (hint: ´grepl()´ and ´ifelse()´ can help).
+
+```{r, include=FALSE}
+phd_theses$about_development <- ifelse(grepl("development", phd_theses$title), 1, 0)
+```
+
+c) How many PhD theses that have the word "development" in their title were written before the year 2000? What about after the year 2000 (hint: ´subset()´ accepts multiple conditions)?
+
+```{r, include=FALSE}
+subset(phd_theses, about_development == 1 & year < 2000)
+subset(phd_theses, about_development == 1 & year > 2000)
+```
+
+## Question 7
+
+a) For the PhD theses in the institute, candidates often have the choice of writing multiple essays or a manuscript. Suppose you are interested in their format, how many PhD theses contain the words "essay" or "essays" in their title and were written in the PhD in PhD in International Economics or the PhD in Development Economics programs (hint: you can use ´subset()´ with ´grepl()´)?
+
+```{r, include=FALSE}
+subset(phd_theses, grepl("essay|essays", phd_theses$title) & 
+         grepl("International Economics|Development Economics", phd_theses$program))
+```
+
+b) Please create a new variable called "essays_in_economics" with the value of 1 if a PhD theses contain the words "essay" or "essays" in their title and were written in the PhD in the PhD in International Economics or the PhD in Development Economics programs. Please add the value of 0 for everything else (hint: ´grepl()´ and ´ifelse()´ can help).
+
+```{r, include=FALSE}
+phd_theses$essays_in_economics <-  ifelse(grepl("essay|essays", phd_theses$title) & 
+         grepl("International Economics|Development Economics", phd_theses$program),
+         1, 0)
+```
+
+## Questions 8
+
+Please create a new dataset aggregating all PhD theses' titles by their program. The new dataset should have two columns, one called "program" with the PhD theses program and the other called "titles" with all the titles pasted together. The new dataset should have 12 rows, one for each program. Please use ´aggregate()´ and ´paste()´ to accomplish this. (hint: use the practical script for reference or find help [online](https://stackoverflow.com/questions/61082463/set-collapse-for-paste-function-in-aggregate)).
+
+```{r, include=FALSE}
+phd_theses_aggregated <- aggregate(phd_theses$title, list(phd_theses$program),
+                                   FUN = paste, collapse= ", ")
+```
