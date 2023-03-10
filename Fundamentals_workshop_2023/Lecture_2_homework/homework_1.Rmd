@@ -11,13 +11,13 @@ phd_theses <- readRDS("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamenta
 ```
 
 - All materials for the exercises below are available in the homework folder on Moodle.
-- Please submit an R script containing both the code and results.
+- Please submit an R script containing both the code and results on Moodle.
 - For each question, please do not forget to include the code used to find the answer.
 - You can #comment out any sentences that are part of your answers but are not R code.
 
 # PhD theses at the Graduate Institute
 
-The Institute has been the home for thousands of PhD students over time.
+The Institute has been the home for hundreds of PhD students over time.
 In this homework, we will use a dataset on PhD theses at the Institute.
 Please download and load the "phd_theses" dataset from the course Moodle page.
 
@@ -95,11 +95,11 @@ a) How many PhD theses were written in the PhD in Anthropology and Sociology pro
 nrow(subset(phd_theses, program == "PhD in Anthropology and Sociology (2013-)"))
 ```
 
-b) What is the mean year for PhD theses written in the PhD in Anthropology and Sociology program?
+b) What is the median year for PhD theses written in the PhD in Anthropology and Sociology program?
 
 ```{r, include=FALSE}
 ANSO <- subset(phd_theses, program == "PhD in Anthropology and Sociology (2013-)")
-mean(ANSO$year)
+median(ANSO$year)
 ```
 
 c) How many PhD theses were written in the PhD in International Relations/Political Science program?
@@ -112,7 +112,7 @@ d) What is the median year for PhD theses written in the PhD in International Re
 
 ```{r, include=FALSE}
 IRPS <- subset(phd_theses, program == "PhD in International Relations/Political Science (2012-)")
-mean(IRPS$year)
+median(IRPS$year)
 ```
 
 ## Question 6
@@ -145,7 +145,7 @@ b) Please create a new variable in the dataset called "about_development" with t
 phd_theses$about_development <- ifelse(grepl("development", phd_theses$title), 1, 0)
 ```
 
-c) How many PhD theses that have the word "development" in their title were written before the year 2000? What about after the year 2000 (hint: ´subset()´ accepts multiple conditions)?
+c) How many PhD theses that have the word "development" in their title were written before the year 2000? What about after the year 2000 (hint: ´subset()´ accepts multiple conditions)? Can you interpret these results?
 
 ```{r, include=FALSE}
 subset(phd_theses, about_development == 1 & year < 2000)
