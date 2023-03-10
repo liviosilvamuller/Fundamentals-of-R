@@ -11,7 +11,7 @@
     <script src="lecture2_files/tile-view/tile-view.js"></script>
     <link href="lecture2_files/panelset/panelset.css" rel="stylesheet" />
     <script src="lecture2_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xc034df468fc42cd9436eed24233291e","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x290af5950194fd0bbc4d7f289870110","expires":14}</script>
     <script src="lecture2_files/himalaya/himalaya.js"></script>
     <script src="lecture2_files/js-cookie/js.cookie.js"></script>
     <link href="lecture2_files/editable/editable.css" rel="stylesheet" />
@@ -257,7 +257,7 @@ Sys.Date() # Get the current date
 ```
 
 ```
-#&gt; [1] "2023-03-08"
+#&gt; [1] "2023-03-10"
 ```
 
 ```r
@@ -274,7 +274,7 @@ Sys.Date() - 1
 ```
 
 ```
-#&gt; [1] "2023-03-07"
+#&gt; [1] "2023-03-09"
 ```
 
 Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)
@@ -409,7 +409,7 @@ class: split two
 .pull-left[
 
 ```r
-list &lt;- list(lecturers, age, speaks_portuguese)
+list &lt;- list(lecturers, age, speaks_portuguese, c(1,"two", 3, "four"))
 list
 ```
 
@@ -422,6 +422,9 @@ list
 #&gt; 
 #&gt; [[3]]
 #&gt; [1] TRUE TRUE
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] "1"    "two"  "3"    "four"
 ```
 ]
 
@@ -499,27 +502,24 @@ course$lecturers[1] # first element in vector
 ```
 
 ```r
-course[1,0] # first row in all columns
+course[1,] # first row in all columns
 ```
 
 ```
-#&gt; data frame with 0 columns and 1 row
-```
-
-```r
-course[0,1] # all rows in first column
-```
-
-```
-#&gt; character(0)
+#&gt;   lecturers age speaks_portuguese
+#&gt; 1   Sposito  81              TRUE
 ```
 
 ```r
-course[1, 1] # first value in first column
+course[,1] # all rows in first column
 ```
 
 ```
-#&gt; [1] "Sposito"
+#&gt; [1] "Sposito"      "Silva-Muller"
+```
+
+```r
+#course[1, 1] # first value in first column
 ```
 
 ---
@@ -636,7 +636,7 @@ class: split two
 .pull-left[
 
 ```r
-#install.packages("beepr")
+install.packages("beepr")
 library(beepr)
 beep(8)
 ```
@@ -663,13 +663,6 @@ class: split two
 
 ```r
 summary(course)
-```
-
-```
-#&gt;   lecturers             age            speaks_portuguese      old           
-#&gt;  Length:2           Length:2           Length:2           Length:2          
-#&gt;  Class :character   Class :character   Class :character   Class :character  
-#&gt;  Mode  :character   Mode  :character   Mode  :character   Mode  :character
 ```
 ]
 
@@ -735,8 +728,6 @@ Douglas, A., Ross, D., Mancini, F., Couto, A. &amp; Lusseau, D. (2022). An Intro
 
 Mesquita, E. B., &amp; Fowler, A. (2021). Thinking clearly with data: A guide to quantitative reasoning and
 analysis. Princeton University Press.
-
-NULL
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

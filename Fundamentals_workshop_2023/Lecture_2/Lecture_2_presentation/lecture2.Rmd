@@ -27,22 +27,18 @@ library(xaringanExtra)
 library(RefManageR)
 use_xaringan_extra(c("tile_view", "panelset", "share_again", "editable",
                      "clipboard", "progessbar"))
-use_extra_styles(hover_code_line = TRUE, mute_unhighlighted_code = FALSE)
+use_extra_styles(hover_code_line = TRUE,
+                 mute_unhighlighted_code = FALSE)
 
-options(htmltools.dir.version = FALSE, knitr.table.format = "html", knitr.kable.NA = "")
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.path = "figs/",
-                      fig.width = 7.252, fig.height = 4, comment = "#>",
+options(htmltools.dir.version = FALSE,
+        knitr.table.format = "html",
+        knitr.kable.NA = "")
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE, fig.path = "figs/",
+                      fig.width = 7.252, fig.height = 4,
+                      comment = "#>",
                       fig.retina = 3)
 old <- ggplot2::theme_set(iheiddown::theme_iheid())
-BibOptions(check.entries = FALSE,
-           bib.style = "authoryear", # Bibliography style
-           max.names = 3, # Max author names displayed in bibliography
-           sorting = "nyt", #Name, year, title sorting
-           cite.style = "authoryear", # citation style
-           style = "markdown",
-           hyperlink = FALSE,
-           dashed = FALSE)
-myBib <- ReadBib("assets/myBib.bib", check = FALSE)
 ```
 
 class: split two
@@ -305,7 +301,7 @@ class: split two
 
 .pull-left[
 ```{r}
-list <- list(lecturers, age, speaks_portuguese)
+list <- list(lecturers, age, speaks_portuguese, c(1,"two", 3, "four"))
 list
 ```
 ]
@@ -358,9 +354,9 @@ Brackets make some great friends (run ´?"["´ for help)
 
 ```{r}
 course$lecturers[1] # first element in vector
-course[1,0] # first row in all columns
-course[0,1] # all rows in first column
-course[1, 1] # first value in first column
+course[1,] # first row in all columns
+course[,1] # all rows in first column
+#course[1, 1] # first value in first column
 ```
 
 ---
@@ -430,8 +426,8 @@ class: split two
 # Fun break...
 
 .pull-left[
-```{r}
-#install.packages("beepr")
+```{r, eval=FALSE}
+install.packages("beepr")
 library(beepr)
 beep(8)
 ```
@@ -455,7 +451,7 @@ class: split two
 .pull-left[
 *Henrique*
 
-```{r}
+```{r, eval=FALSE}
 summary(course)
 ```
 ]
@@ -505,7 +501,3 @@ Douglas, A., Ross, D., Mancini, F., Couto, A. & Lusseau, D. (2022). An Introduct
 
 Mesquita, E. B., & Fowler, A. (2021). Thinking clearly with data: A guide to quantitative reasoning and
 analysis. Princeton University Press.
-
-```{r refs, echo=FALSE, results="asis"}
-RefManageR::PrintBibliography(myBib)
-```
