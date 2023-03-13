@@ -1,0 +1,647 @@
+---
+title: "Fundamentals of R"
+subtitle: "Block 2: Cleaning and Wrangling Data"
+author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
+output:
+  xaringan::moon_reader:
+    css: 
+      - "default"
+      - "assets/iheid-xaringan-style.css"
+      - "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      - "ninjutsu"
+    chakra: "https://remarkjs.com/downloads/remark-latest.min.js"
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      beforeInit: "assets/macros.js"
+      countIncrementalSlides: false
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>`
+---
+```{r setup, include=FALSE}
+# don't mind this code chunk, it just sets up a few things for the rest
+# it doesn't appear, because the include argument above is FALSE...
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE)
+knitr::opts_chunk$set(cache=TRUE, autodep = TRUE, fig.retina = 3, message = FALSE, warning = FALSE)
+old <- ggplot2::theme_set(iheiddown::theme_iheid())
+```
+
+```{r, load_refs, include=FALSE, cache=FALSE}
+# Initializes the bibliography
+library(RefManageR)
+BibOptions(check.entries = FALSE,
+           bib.style = "authoryear", # Bibliography style
+           max.names = 3, # Max author names displayed in bibliography
+           sorting = "nyt", #Name, year, title sorting
+           cite.style = "authoryear", # citation style
+           style = "markdown",
+           hyperlink = FALSE,
+           dashed = FALSE)
+myBib <- ReadBib("assets/myBib.bib", check = FALSE)
+# Note: don't forget to clear the knitr cache to account for changes in the
+# bibliography.
+```
+
+class: split two
+
+# What did we learn last week?
+
+--
+
+.pull-left[
+
+Conceptually:
+
+- What are objects?
+
+- What are classes?
+
+- What are data structures?
+
+
+
+]
+
+--
+
+.pull-right[
+
+Practically:
+
+```{r echo=TRUE, eval=FALSE}
+# <- the assign operator
+# $  the extract operator
+# == , !=, =<, >=  logical operators
+# &, /, | conditions
+# [1,3] brackets  
+class()
+dim() 
+length() 
+summary()
+data.frame()
+median()
+mean()
+subset()
+ifelse()
+grepl()
+```
+
+
+]
+
+---
+
+class: split two
+
+# Homework for today
+
+.pull-left[
+
+*Let's start by going through the homework together!*
+
+- Common issues
+
+
+
+- Any other general questions?
+
+]
+
+.pull.right[
+
+![:scale 40%](assets/images/dog.png)
+
+
+
+]
+
+---
+
+class: split two
+
+![:scale 40%](assets/images/roadmap.png)
+.pull-left[
+## Lecture:
+
+  - Tidyverse, tidy-thinking, tidy-data
+  - From untidy to tidy
+  - From tidy to findings
+]
+
+.pull-right[
+## Practical:
+
+  - Cleaning data
+  - Wrangling data
+  - Joining data
+]
+
+---
+
+# What is the tidyverse? (1/2)
+
+
+Universe of tidiness? From the [´{tidyverse}´](https://www.tidyverse.org/) website:
+
+
+> The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+
+
+![:scale 40%](assets/images/tidyverse.png)
+
+---
+
+# What is the tidyverse? (2/2)
+
+## Installing and loading the tidyverse: *be careful!*
+
+```{r, eval = F}
+install.packages("tidyverse")
+```
+
+```{r}
+library(tidyverse)
+```
+
+## What is in the tidyverse? *Eight different packages!*
+
+![:scale 50%](assets/images/core_tidy.png)
+
+---
+
+# Tidy datasets (1/4)
+
+  - What is a tidy dataset?
+    - Each column is one variable.
+    - Each row is one case/observation.
+    - Each cell stores one value.
+![:scale 80%](assets/images/tidy_exam.png)
+
+.fifty[Check: [Hadley Wickham’s dissertation paper that introduced tidy data.]( https://www.jstatsoft.org/article/view/v059i10)]
+
+---
+
+# Tidy datasets (2/4)
+
+
+##Is this tidy?
+
+| Animal | Conversion  |
+| --- | --- | 
+| Domestic dog | 24.0 / 5.10 |
+| Domestic cat | 30.0 / 4.08 |
+| American alligator | 77.0 / 1.59 | 
+| Golden hamster | 3.9 / 31.41 |
+| King penguin | 26.0 /  4.71 |
+
+--
+
+No! Cells in the second column contain two values.
+
+.fifty[Author: [Fabio Votta](https://github.com/favstats)]
+
+---
+
+# Tidy datasets (3/4)
+
+
+##Is this tidy?
+
+| Animal | Type | Value  |
+| --- | --- | --- | 
+| Domestic dog | lifespan | 24.0 |
+| Domestic dog | ratio | 5.10 |
+| Domestic cat | lifespan | 30.0 |
+| Domestic cat | ratio | 4.08 |
+| American alligator | lifespan | 77.0 | 
+| American alligator | ratio | 1.59 |
+
+--
+
+No! The second column contains two variables.
+
+.fifty[Author: [Fabio Votta](https://github.com/favstats)]
+
+---
+
+# Tidy datasets:one last example (4/4)
+
+
+## from untidy...
+
+
+| country | 1999 | 2000  |
+| --- | --- | --- | 
+| Afghanistan | 19987071 | 20595360 |
+| Brazil | 172006362 | 174504898 |
+
+--
+
+##...to tidy!
+
+| country | year | population  |
+| --- | --- | --- | 
+| Afghanistan | 1999 | 19987071 |
+| Afghanistan | 2000 | 20595360 |
+| Brazil | 1999 | 172006362 |
+| Brazil | 2000 | 174504898 |
+---
+
+# So, how we get to a tidy datasets?
+
+## We use [´{tidyr}´](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
+
+- `separate()` separates data by tidying columns with two variables or values (`unite()` does the opposite.)
+
+- `pivot_wider()` pivots data by tidying columns with more than one variable.
+
+- `pivot_longer()` pivots data by tidying rows that contain variables.
+  
+## Let's test this in the following slides.
+
+---
+
+# Here is some untidy data from earlier
+
+
+```{r include=FALSE}
+
+library(readxl)
+untidy_population_dat <- read_excel("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/untidy_dat.xlsx")
+untidy_burgers <- read_excel("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/untidy_dat2.xlsx", 
+    col_types = c("text", "text", "numeric"))
+```
+
+```{r}
+
+untidy_population_dat
+
+```
+
+---
+
+# `separate()` and `unite()`
+
+```{r echo=FALSE}
+
+untidy_population_dat
+
+```
+
+```{r}
+
+tidy_population <- separate (untidy_population_dat, country, sep="-", into=c("country", "region"))
+
+```
+
+--
+
+```{r echo=FALSE}
+
+tidy_population
+
+```
+---
+
+# `pivot_longer()`
+
+- `pivot_longer()` pivots  data by tidying rows that contain variables.
+ - this means more observations, i.e. *longer* dataset.
+
+```{r}
+
+tidy_population <- pivot_longer(tidy_population,cols=c("1999","2000"), names_to="year", values_to = "population")
+
+```
+--
+```{r echo=FALSE}
+
+tidy_population
+
+```
+---
+
+# `pivot_wider()`
+
+- `pivot_wider()` pivots data by tidying columns with more than one variable.
+ - this means more variables, i.e. *wider*.
+
+.pull-left[
+```{r}
+
+untidy_burgers
+
+```
+]
+
+--
+
+.pull-right[
+
+```{r}
+
+tidy_burgers <- pivot_wider(untidy_burgers,names_from=joint, values_from=grade)
+
+```
+
+```{r echo=FALSE}
+
+tidy_burgers
+
+```
+
+]
+
+---
+# Tidy, tidy, tidy...
+
+![:scale 80%](assets/images/tidy.png)
+
+.fifty[Artist: [Allison Horst](https://github.com/allisonhorst)].
+
+---
+class: split two
+
+# ...but, a note of caution:
+
+.pull-left[
+<img src = "https://c.tenor.com/cnIm8CdVodgAAAAC/shark-smile.gif" />
+]
+
+.pull-right[
+
+-Tidy data is great for working with tidy packages.
+
+-Nevertheless, tidying data might take sometime.
+
+-Do you really need to separate first and last name in two columns?
+
+]
+--
+
+##Think about it conceptually before tidying everything!
+
+---
+
+# Now that things are tidy (or tidier), it's time to wrangle
+
+--
+
+By wrangling, we mean manipulating, and for this we use [´{dplyr}´](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
+--
+
+> The dplyr package is a **grammar of data manipulation**, providing a consistent set of verbs that help you solve the most common data manipulation challenges: creating,adding, picking, reducing, and changing variables.
+
+
+```{r include=FALSE}
+
+library(readr)
+
+io_income <- read_csv("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/io_income_rs.csv")
+
+country_region <- read_csv("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 3/Lecture_3_Presentation/assets/data/country_region.csv")
+
+library(dplyr)
+
+```
+
+---
+##Let's work with dataset on the income of international organizations!
+
+```{r}
+head(io_income)
+```
+
+---
+
+# Select (dplyr verbs 1/5)
+
+`select ()` selects variables in the dataframe.
+```{r}
+
+io_income_select <- select(io_income, donor, type_donor)
+
+```
+--
+```{r}
+
+head (io_income_select)
+
+```
+---
+##...glimpse the dataset
+
+```{r echo=FALSE}
+head(io_income)
+```
+---
+# Filter (dplyr verbs 2/5)
+
+`filter ()` subsets data frame by a condition in the observations.
+
+```{r}
+io_income_filter <- filter(io_income, donor=="Switzerland")
+```
+--
+```{r echo=FALSE}
+io_income_filter
+```
+
+---
+##...glimpse the dataset
+
+```{r echo=FALSE}
+head(io_income)
+```
+---
+# Mutate (dplyr verbs 3/5)
+
+`mutate ()` creates new variables.
+
+```{r}
+io_income_mutate <- mutate(io_income,thousands_USD=amount_nominal/1000)
+```
+--
+```{r echo=FALSE}
+io_income_mutate
+```
+
+---
+##...glimpse the dataset
+
+```{r}
+head(io_income)
+```
+---
+# Group_by and Summarise (dplyr verbs 4/5)
+
+`group_by()` groups data based on a characteristic to subsequently perform certain operations.
+`summarise()` creates a new dataframe by combining grouped variables.
+
+
+```{r}
+
+io_income_grouped<- group_by(io_income, type_donor)
+
+io_income_summarised <- summarise(io_income_grouped, amount_nominal = sum(amount_nominal, na.rm = TRUE))
+```
+--
+```{r echo=FALSE}
+io_income_summarised
+```
+---
+# Joining things (dplyr verbs 5/5)
+
+dplyr has a family of functions that help you join multiple datasets: `left_join(), right_join(), inner_join(), full_join() ` ...
+- let's check a random sample of a new dataset (country_region), which contains regions for each country.
+
+```{r}
+sample_n(country_region, 5)
+```
+
+- We can join this to our io_income dataset, and get regions for each country.
+---
+# Joining things (dplyr verbs 5/5)
+```{r echo=FALSE}
+sample_n(io_income, 3)
+```
+
+```{r}
+io_income_regions <- left_join(io_income, country_region)
+```
+
+```{r echo=FALSE}
+
+tail(io_income_regions)
+
+```
+
+.fifty[Check: [This great post on all merging possibilities and details with dplyr.]( https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti)].
+---
+
+# and many others dplyr verbs that we cannot cover here....
+
+```{r echo=TRUE, eval=FALSE}
+
+arrange() #orders row by values
+rename() #renames variables
+distinct() #keep only distinct rows
+slice() #selects rows by position
+count() #counts number of rows with unique values
+...
+
+```
+
+---
+# The Pipe Operator `%>%` (1/3)
+
+- So far, we have been doing *object-oriented programming*.
+
+- This means we assign (<-) the result of an operation to an object.
+
+- We then operate on the newly created object.
+
+```{r}
+io_income_filtered<- filter(io_income, year > "2018")
+
+io_income_grouped2 <- group_by(io_income_filtered, year)
+
+io_income_summarised2 <- summarise(io_income_grouped2, amount_nominal = sum(amount_nominal, na.rm = TRUE))
+```
+--
+```{r echo=FALSE}
+io_income_summarised2
+```
+
+---
+# The Pipe Operator `%>%` (2/3)
+
+- The pipe operator (%>%) changes this logic.
+
+--
+
+- It takes the output of one function and passes it into another function as an argument.
+
+--
+
+- This is why we call it *functional-programming*.
+
+--
+
+```{r}
+
+io_income %>%
+filter(year > "2018") %>%
+group_by(year) %>%
+summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
+
+```
+
+.fifty[Check: [Plumbers, chains, and famous painters: The (updated) history of the pipe operator in R]( http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/)].
+
+---
+class: split two
+
+# The Pipe Operator `%>%` (3/3)
+
+.pull-left[
+
+```{r}
+
+io_income_filtered<- filter(io_income, year > "2018")
+io_income_grouped2 <- group_by(io_income_filtered, year)
+io_income_summarised2 <- summarise(io_income_grouped2, amount_nominal = sum(amount_nominal, na.rm = TRUE))
+io_income_summarised2
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+
+io_income %>%
+filter(year > "2018") %>%
+group_by(year) %>%
+summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
+
+```
+
+]
+
+---
+
+class: split two
+
+# Base vs. Tidy (re-visited)
+
+.pull-left[
+
+- Tidy data and piping are both *intuitive* and *powerful*.
+
+- All packages in the tidyverse are optimized for tidy data and piping.
+
+- Some packages outside the tidyverse were also developed within the tidy paradigm.
+
+- Nevertheless, many *important* packages and other programming softwares operate outside the logic of tidy.
+
+- [While we like tidy, a better programmer knows both. ](https://github.com/matloff/TidyverseSkeptic/)
+
+]
+
+.pull.right[
+
+![:scale 50%](assets/images/problems.png)
+
+]
+
+---
+
+class: center middle
+
+![100%](https://media.giphy.com/media/XHVmD4RyXgSjd8aUMb/giphy-downsized-large.gif)
