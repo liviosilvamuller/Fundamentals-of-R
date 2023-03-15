@@ -22,20 +22,20 @@ setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamentals_workshop_2023
 The Institute has been the home for hundreds of Ph.D. students over time. In this homework, we will use a dataset on Ph.D. theses at the Institute from last week, but we will augment it with new data.
 
 ```{r untidying data, eval=FALSE, include=FALSE}
-dat <- readRDS("phd_theses_homework.rds")
+#dat <- readRDS("phd_theses_homework.rds")
 
-dat<- dat%>%distinct(title, .keep_all = TRUE)%>%
+#dat<- dat%>%distinct(title, .keep_all = TRUE)%>%
         dplyr::mutate(, ID = row_number())
 
-phd_theses <- dat %>% select(title,ID, author,year)
+#phd_theses <- dat %>% select(title,ID, author,year)
 #write_rds(phd_theses,"phd_theses.rds")
 
-department<- dat %>% 
+#department<- dat %>% 
               select(ID, department,language)%>%
               unite("dep_lang",department:language,sep="_")
 #write_csv(department,"department.csv")
 
-topic<- dat %>%
+#topic<- dat %>%
           select(ID,sust_na,gen_na)%>%
           rename(sustainability=sust_na,
                  gen_degree=gen_na)%>%
@@ -83,7 +83,7 @@ department<- department%>%
 
 ## Question 3
 
-The `phd_theses.rds` file contains information on theses' author and year. Merge this dataset to the datasets in question 1 and question 2. The new "phd_theses" dataset should contain the following variables:
+The `phd_theses.rds` file contains information on theses' author and year. Merge this dataset to the datasets from question 1 and question 2. The new "phd_theses" dataset should contain the following variables:
 
 | Name                | Description                                          |
 |:--------------------|:--------------------------------------------------|
