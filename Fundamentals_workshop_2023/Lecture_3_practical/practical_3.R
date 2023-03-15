@@ -79,10 +79,12 @@ gapminder <- dplyr::mutate(gapminder, GDP = pop*gdpPercap)
 # above the 75th percentile:
 
 quantile(gapminder$GDP)
-#Scientific notation is annoying. You can disable it:
+
+#Scientific notation is annoying. You can disable it with:
+
 options(scipen=999)
 
-gapminder <- dplyr::mutate(gapminder, rich_country = ifelse(GDP > 1.057441e+11, 1, 0))
+gapminder <- dplyr::mutate(gapminder, rich_country = ifelse(GDP > 105744100901, 1, 0))
 
 # Do you think this was a good idea? Why?
 # Let's count rich countries by continent now
@@ -246,14 +248,14 @@ emissions %>%
   ggplot2::ggplot(aes(x = pop, y = co2_emissions)) +
   geom_point(aes(color = country)) +
   geom_smooth(se=FALSE, color="black", method="lm") +
-  scale_y_continuous(labels = label_number(suffix = " M", scale = 1e-6)) +
-  scale_x_continuous(labels = label_number(suffix = " M", scale = 1e-6)) +
+  scale_y_continuous(labels = scales::label_number(suffix = " M", scale = 0.000001)) +
+  scale_x_continuous(labels = scales::label_number(suffix = " M", scale = 0.000001)) +
   geom_text(aes(label = country), vjust = -0.5, hjust = 0.5) +
   labs(title = "Total emissions by population for 2007",
        subtitle = "For countries with a population larger than 50 million",
        y = "Total Emissions (in millions of CO2)",
        x = "Population (in millions)") +
-  theme_clean() +
+  theme_bw() +
   theme(legend.position = "none")
 
 # What about we pot emissions in 2007 and mark top emitters per capita?
@@ -267,7 +269,8 @@ emissions %>%
   ggplot(aes(x = reorder(country, co2_emissions),
              y = co2_emissions, fill = as.factor(top_emitters))) +
   geom_col() +
-  scale_y_continuous(labels = label_number(suffix = " M", scale = 1e-6)) +
+  scale_y_continuous(labels = scales::label_number(suffix = " M",
+                                                   scale = 0.000001)) +
   scale_fill_manual(values = c("darkgreen", "red"),
                     labels = c("No", "yes"),
                     name = "Country belongs\nto the top 10%\nfor per capita\nemissions?") +
