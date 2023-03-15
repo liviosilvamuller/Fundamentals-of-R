@@ -19,7 +19,7 @@ setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamentals_workshop_2023
 
 # Ph.D. theses at the Graduate Institute II
 
-The Institute has been the home for hundreds of Ph.D. students over time. In this homework, we will use a dataset on Ph.D. theses at the Institute from last week, but we will augment it with new data.
+The Institute has been the home for hundreds of PhD students over time. In this homework, we will work data to investigate how PhD theses at the Institute relate to gender and sustainability topics.
 
 ```{r untidying data, eval=FALSE, include=FALSE}
 #dat <- readRDS("phd_theses_homework.rds")
@@ -46,7 +46,7 @@ The Institute has been the home for hundreds of Ph.D. students over time. In thi
 
 ## Question 1
 
-The `topic.xlsx` file contains the extent to which Ph.D. theses address topics related to gender and sustainability, but it is messy. Import the dataset and clean it so it contains the following variables:
+The `topic.xlsx` file contains the extent to which PhD theses address topics related to gender and sustainability, but it is messy. Import the dataset and clean it so it contains only the following variables:
 
 | Name         | Description                                           |
 |:-------------|:------------------------------------------------------|
@@ -65,7 +65,7 @@ topic<- topic%>%
 
 ## Question 2
 
-The `department.csv` file contains information on the department and language of a thesis, but it is messy. Import the dataset and clean it so it contains the following variables:
+The `department.csv` file contains information on the department and language of a thesis, but it is messy. Import the dataset and clean it so it only contains the following variables:
 
 | Name                | Description                                 |
 |:--------------------|:--------------------------------------------|
@@ -83,7 +83,7 @@ department<- department%>%
 
 ## Question 3
 
-The `phd_theses.rds` file contains information on theses' author and year. Merge this dataset to the datasets from question 1 and question 2. The new "phd_theses" dataset should contain the following variables:
+The `phd_theses.rds` file contains information on theses' author and year (*attention this is not the same dataset as last week*). Merge this dataset to the topic and departament datasets (from question 1 and question 2 above). The new "phd_theses" dataset should contain the following variables:
 
 | Name                | Description                                          |
 |:--------------------|:--------------------------------------------------|
@@ -107,7 +107,13 @@ phd_theses <- phd_theses %>%
 
 ## Question 4
 
-Inspect the dataset. How many departments are there? In how many languages were theses written? When was the first thesis written?
+Inspect the merged dataset.
+
+a) How many departments are there?
+
+b) In how many languages were theses written?
+
+c) When was the first thesis written?
 
 ```{r, include=FALSE}
 skimr::skim(phd_theses)
@@ -116,7 +122,9 @@ summary(phd_theses)
 
 ## Question 5
 
-How many thesis were submitted in 2019? How many thesis were submitted in 2019 in the IRPS department?
+a) How many thesis were submitted in 2019?
+
+b) How many thesis were submitted in 2019 in the IRPS department?
 
 ```{r, include=FALSE}
 phd_theses%>%
@@ -142,7 +150,7 @@ phd_theses%>%
 
 ## Question 7
 
-The variable `thesis_language` contains other languages than English (en) and French (fr). Change all values that are not English or French to others.
+The variable `thesis_language` contains other languages than English (en) and French (fr). Change all values that are not English or French to "other".
 
 ```{r, include=FALSE}
 unique(phd_theses$thesis_language)
@@ -154,7 +162,7 @@ phd_theses <- phd_theses %>%
 
 ## Question 8
 
-Economics is known for being the most globalized discipline. Which department has the highest share of thesis written in English?
+Which department has the highest share of thesis written in English?
 
 ```{r, include=FALSE}
 phd_theses%>%
@@ -167,7 +175,7 @@ phd_theses%>%
 
 ## Question 9
 
-Subset the dataset for theses submitted between 1991 and 2020. Then, create a new variable called `thesis_decade`, which takes the following values:
+a) Filter the dataset for theses submitted between 1991 and 2020. Then, create a new variable called `thesis_decade`, which takes the following values:
 
 -   "90s" if submitted between 1991 and 2000;
 -   "00s" if submitted between 2001 and 2010;
@@ -175,7 +183,7 @@ Subset the dataset for theses submitted between 1991 and 2020. Then, create a ne
 
 (Tip: you can use `ifelse()`, but take a look at `dplyr::case_when()`.)
 
-Finally, print a table with the number of theses in each department per decade:
+b) Create a table with the number of theses in each department per decade:
 
 | thesis_department | 1990s | 2000s | 2010s |
 |-------------------|-------|-------|-------|
