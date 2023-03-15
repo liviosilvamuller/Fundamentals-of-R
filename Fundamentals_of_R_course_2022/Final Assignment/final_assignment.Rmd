@@ -20,7 +20,7 @@ library(ggplot2)
 options(scipen=999) # removes scientific notation
 
 
-setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Final Assignment")
+setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamentals_of_R_course_2022/Final Assignment")
 co2 <- read_excel("co2_emissions.xlsx")
 country_region <- read_csv("country_region.csv")
 pop_dat <- readRDS("pop_dat.rds")
