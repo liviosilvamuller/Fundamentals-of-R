@@ -50,7 +50,7 @@ dplyr::select(gapminder, country, year, lifeExp, pop)
 dplyr::rename(gapminder, population = pop, life_expectancy = lifeExp)
 
 # Let's get more serious here.
-# What if I would like to retrive information for Switzerland, Germany, and
+# What if I would like to retrieve information for Switzerland, Germany, and
 # France for the first and last rounds of the data, keep only life expectancy
 # and population variables, and change these variable names?
 
@@ -79,6 +79,9 @@ gapminder <- dplyr::mutate(gapminder, GDP = pop*gdpPercap)
 # above the 75th percentile:
 
 quantile(gapminder$GDP)
+#Scientific notation is annoying. You can disable it:
+options(scipen=999)
+
 gapminder <- dplyr::mutate(gapminder, rich_country = ifelse(GDP > 1.057441e+11, 1, 0))
 
 # Do you think this was a good idea? Why?
@@ -129,7 +132,7 @@ gapminder %>%
 # Is this data in wide or long format?
 
 # Say that you would like to change the data format to wide so that each survey 
-# year becomes an variable and get life expectancy.
+# year becomes a variable and get life expectancy.
 
 wide_gapminder <- select(gapminder, country, year, lifeExp) %>%
   tidyr::pivot_wider(names_from = year, values_from = lifeExp)
