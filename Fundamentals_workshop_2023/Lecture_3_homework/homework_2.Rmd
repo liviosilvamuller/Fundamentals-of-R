@@ -47,13 +47,13 @@ The Institute has been the home for hundreds of PhD students over time. In this 
 
 ## Question 1
 
-The `topic.xlsx` file contains the extent to which PhD theses address topics related to gender and sustainability, but it is messy. Import the dataset and clean it so it contains only the following variables:
+The `topic.xlsx` file contains a variable that counts how many words are related to gender(`gen_degree`) and sustainability (`sus_degree`) in a theses abstract, but it is messy. Import the dataset and clean it so it contains only the following variables:
 
-| Name         | Description                                           |
-|:-------------|:------------------------------------------------------|
-| `thesis_ID`  | ID of the Ph.D. thesis.                               |
-| `sus_degree` | Extent to which theses covers sustainaibility topics. |
-| `gen_degree` | Extent to which theses covers gender-related topics.  |
+| Name         | Description                                       |
+|:-------------|:--------------------------------------------------|
+| `thesis_ID`  | ID of the Ph.D. thesis.                           |
+| `sus_degree` | Number of words about sustainability in abstract. |
+| `gen_degree` | Number of words about gender in abstract.         |
 
 ```{r, include=FALSE}
 library(tidyverse)
@@ -87,7 +87,7 @@ department<- department%>%
 The `phd_theses.rds` file contains information on theses' author and year (*attention this is not the same dataset as last week*). Merge this dataset to the topic and departament datasets (from question 1 and question 2 above). The new "phd_theses" dataset should contain the following variables:
 
 | Name                | Description                                          |
-|:----------------------|:-----------------------------------------------|
+|:-----------------------|:-----------------------------------------------|
 | `thesis_title`      | Title of the Ph.D. thesis.                           |
 | `thesis_ID`         | ID of the Ph.D. thesis.                              |
 | `thesis_year`       | The year in which a thesis was submitted.            |
