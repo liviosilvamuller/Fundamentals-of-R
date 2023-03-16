@@ -257,12 +257,9 @@ dem_total %>%
 # Are we experiencing democratic decay in some regions perhaps?
 
 # Are democracies less likely to go to war? ------------------------------------
-# 
-# # Extra stuff for those of you who are interested in peace/conflict
-# 
-# # Since many of you are interested in conflict,
-# # let's try and test democratic peace theory!
-# 
+#
+# # Extra stuff for those of you who are interested in peace/conflict and democracy.
+#
 # # Who knows what democratic peace theory is?
 # # In case you want to read more about "Democratic Peace",
 # # Rosato (2003) is a great reference:
@@ -290,7 +287,6 @@ dem_total %>%
 # # If you downloaded the data folder, please do not forget to unzip it!
 # MIDS <- readr::read_csv("~/Desktop/Dyadic-MIDs-4.02/dyadic_mid_4.02.csv")
 # # Your path will be different, please change accordingly.
-# View(MIDS)
 # 
 # # A big dataset...
 # # Let's look into the codebook and see what we should keep!
@@ -311,7 +307,7 @@ dem_total %>%
 # # (5) created a nested list variable for year
 # # range of a conflict, (6) unnest this variable to long format data,
 # # (7) select out some other variables, and (8) remove any duplicate rows again.
-#
+# 
 # MIDS <- select(MIDS, c(statea, namea, stateb, nameb, strtyr, endyear, war)) %>%
 #   dplyr::filter(war == 1 & strtyr > 1945) %>%
 #   dplyr::distinct() %>%
@@ -323,14 +319,9 @@ dem_total %>%
 # # Let's add a country name and regime type to the MIDS data.
 # 
 # vdem_mids <- dplyr::select(vdem, c(country_name, country_text_id,
-#                               country_id, year, histname, COWcode,
-#                               v2x_regime, v2x_accountability_osp,
-#                               v2x_freexp_altinf, v2x_cspart, v2xlg_legcon)) %>%
-#   dplyr::rename(regime = v2x_regime,
-#                 freedom_expression = v2x_freexp_altinf,
-#                 account_index = v2x_accountability_osp,
-#                 civil_society = v2x_cspart,
-#                 legislative_contrains = v2xlg_legcon) %>%
+#                                    country_id, year, histname, COWcode,
+#                                    v2x_regime)) %>%
+#   dplyr::rename(regime = v2x_regime) %>%
 #   dplyr::filter(year > 1945 & year < 2007) %>%
 #   dplyr::mutate(regime_type = case_when(regime == 0 ~ "Closed Autocracy",
 #                                         regime == 1 ~ "Electoral Autocracy",
@@ -343,7 +334,6 @@ dem_total %>%
 # MIDS_regime <- MIDS %>%
 #   dplyr::rename(country_text_id = namea, COWcode = statea) %>%
 #   dplyr::select(c(COWcode, country_text_id, year))
-# 
 # MIDS_regime2 <- MIDS %>%
 #   dplyr::rename(country_text_id = nameb, COWcode = stateb) %>%
 #   dplyr::select(c(COWcode, country_text_id, year))
@@ -351,48 +341,33 @@ dem_total %>%
 # # Let's join these datasets.
 # 
 # MIDS_regime <- dplyr::left_join(MIDS_regime, vdem_mids)
-# 
 # MIDS_regime2 <- dplyr::left_join(MIDS_regime2, vdem_mids)
 # 
 # # Let's rename variables in MIDS_regime2 and bind datasets.
 # 
 # names(MIDS_regime2) <- paste0(names(MIDS_regime2), "_2")
-# 
 # MIDS_regime <- cbind(MIDS_regime, MIDS_regime2)
 # 
-# View(MIDS_regime)
-# 
-# # Some observations as TAW return NAs, that is, there is no information
+# # Many observations as TAW return NAs, that is, there is no information
 # # for these states in the VDEM data...
+# # Which states do you think we are talking about?
 # 
-# # Let's see how many are these
-# 
-# sum(is.na(MIDS_regime$country_name))
-# # 308 NAs, that is almost half of the data...
-# 
-# # Let's investigate closely what these NAs really are
-# 
-# MIDS_regime %>%
-#   dplyr::filter(is.na(country_name)) %>% # get only NAs for country name
-#   dplyr::group_by(country_text_id) %>% # group by the acronym
-#   dplyr::count() %>% # count grouped by obs
-#   print(n = 23) # printing all obs to console
-# 
-# # Which states do these acronyms refer to? Is our data biased?
+# # # Let's investigate closely what these NAs really are
+# # MIDS_regime %>%
+# #   dplyr::filter(is.na(country_name)) %>% # get only NAs for country name
+# #   dplyr::group_by(country_text_id) %>% # group by the acronym
+# #   dplyr::count() %>% # count grouped by obs
+# #   print(n = 23) # printing all obs to console
+# # # Which states do these acronyms refer to? Is our data biased?
 # 
 # # For now, we will delete these observations since we do not
 # # have VDEM data on them...
-# 
 # # Let's also create a variable for the type of regimes fighting.
 # 
 # MIDS_regime <- na.omit(MIDS_regime) %>% # remove NAs
 #   dplyr::mutate(conflict_regime = paste0(regime_type, "-", regime_type_2)) %>%
 #   # create a regime type var
 #   dplyr::select(c(COWcode, country_text_id, year, country_name, conflict_regime))
-# 
-# # Shall we take a look at our new conflict variable?
-# 
-# summary(as.factor(MIDS_regime$conflict_regime))
 # 
 # # Let's merge this data into the VDEM_mids data.
 # # Let's also re-code conflict regime and regime type to get the "status".
@@ -424,14 +399,13 @@ dem_total %>%
 #                                                   ignore.case = TRUE)
 #                                           ~ "Autocratic Peace"))
 # 
-# # Let's count the status
+# # Let's simply count the status
 # dem_peace %>%
 #   dplyr::group_by(status) %>%
 #   dplyr::count()
 # 
-# # By only looking at this, what are your impressions about democratic peace?
-# 
 # # Let's plot and see how wars have evolved over the years:
+# 
 # dem_peace %>%
 #   group_by(status, year) %>%
 #   dplyr::count() %>%
@@ -446,42 +420,4 @@ dem_total %>%
 # 
 # # Why is autocratic peace decreasing and democratic peace increasing in time?
 # # Do most states transition regimes without wars?
-# 
-# # What if we add some democracy indicators here, just as above.
-# 
-# dem_peace %>%
-#   group_by(status, year) %>% 
-#   # below we multiply the aggregated indicators by count to be able to plot together (scale)
-#   summarise(count = n(),
-#             Aggregated_Mean_Indicators = ((mean(account_index) +
-#                                             mean(freedom_expression) +
-#                                             mean(civil_society))/3)*(2*count)) %>%
-#   ggplot(aes(x = year, y = count)) +
-#   geom_smooth(se = FALSE) +
-#   geom_smooth(aes(y = Aggregated_Mean_Indicators),
-#               color = "black", se = FALSE) +
-#   facet_wrap(~status, ncol=2, scales = "free") +
-#   labs(title = "Do you buy into democratic peace?",
-#        y = "Number of cases",
-#        x = "Year") +
-#   scale_color_manual(name='Legend',
-#                      breaks= c("Number of cases",
-#                                "Democracy indicators (scaled)"),
-#                      values=c("Number of cases" = "blue",
-#                               "Democracy indicators (scaled)" = "black")) +
-#   theme(legend.position = "bottom")
-#
-# # There is an issue with the legend here, black line indicates
-# # the indicators of democracy.
-# # Could help me fix this issue somehow to make the plot more informative?
-# 
-# # What does all of this tells us?
-# 
-# # 1- Peaceful autocracies became more democratic (on average). Why?
-# # 2- Peaceful democracies became more democratic (on average). Why?
-# # 3- Democracies in wars are not as democratic (on average; i.e.
-# # not very accountable, free for expression, and/or with low
-# # levels of civil association). Why?
-# # 4 - Autocracies in war are the least democratic. Why?
-# 
 # # Should we buy into Democratic Peace?
