@@ -13,14 +13,9 @@ skimr::skim(dirty_phd_theses)
 
 #Data cleaning dirty_phd_theses
 
-dirty_phd_theses$language<- detect_language(dirty_phd_theses$abstract) #detect language from abstract
-dirty_phd_theses$language <- ifelse(dirty_phd_theses$language=="ig", detect_language(dirty_phd_theses$title), dirty_phd_theses$language) # package codes NAs as igbo...
-dirty_phd_theses$language <- gsub("sr", "en", dirty_phd_theses$language) #all "sr" are english (manual check)
-
 dirty_phd_theses <- dirty_phd_theses %>%
   mutate(year=replace_na(year,"2022"), # all missing years are actually 2022
          year=as.numeric(year),
-         language=replace_na(language,"en"), # all NAs are actually english
          department= case_when( #harmonizing departments
            program == "PhD in International History and Politics (2021-)" ~  "IPH",
            program == "PhD in International History (2012-2020)" ~  "IPH",
@@ -37,7 +32,16 @@ dirty_phd_theses <- dirty_phd_theses %>%
            complete_series  =ifelse(year>2013, TRUE, FALSE))%>%#establishing the grounds of comparison)%>%
   select(-year2, -program) #getting rid of useless variables
 
-#creating vector of words
+
+#preparing variables for analysis
+
+dirty_phd_theses$language<- detect_language(dirty_phd_theses$abstract) #detect language from abstract
+dirty_phd_theses$language <- ifelse(dirty_phd_theses$language=="ig", detect_language(dirty_phd_theses$title), dirty_phd_theses$language) # package codes NAs as igbo...
+dirty_phd_theses$language <- gsub("sr", "en", dirty_phd_theses$language) #all "sr" are english (manual check)
+
+dirty_phd_theses <- dirty_phd_theses %>%
+  mutate(language=replace_na(language,"en")) # all NAs are actually english
+
 sus_en <- ("sustain| enviro| agric |rural development |clean technologies|
                    climate change| carbon emissions| greenhouse gases| natural disasters|
                    conservation| biodiversity| corporate responsibility| energy|
