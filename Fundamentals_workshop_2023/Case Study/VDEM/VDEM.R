@@ -1,6 +1,4 @@
-# Have democracies become more accountable and free since 1990?-----------------
-
-# Varieties of Democracy (VDEM) - Case Study
+# Varieties of Democracy (VDEM) - Case Study -----------------------------------
 
 # Authors: Henrique Sposito & Livio Silva-Muller
 
@@ -11,17 +9,20 @@ library(ggplot2)
 library(dslabs)
 library(purrr)
 
-# Even though in 2017 more than half of the countries in world are
-# "technically" consider democracies,
-# influential works have theorized about the recent "democratic decay"
-# stretch, or death; specially with the recent(ish) elections
-# of leaders with authoritarian tendencies across several countries.
+# Have democracies become more free and accountable since the 1990s?------------
 
-# What is a democracy to begin with?
+# Background:
+# Since 2017 more than half of the countries in world were
+# "technically" consider democracies, at the same time,
+# influential works have theorized about the recent "democratic decay" and
+# "stretch"; specially with the recent(ish) elections
+# of leaders with authoritarian tendencies across several democracies.
+
+# Food for thought: What is a democracy to begin with?
 # How would you go about studying democratic decay?
 # What might be some issues with comparing democracies across countries?
 
-# Load the data ----------------------------------------------------------------
+# Data ----------------------------------------------------------------
 
 # Let's start by collecting democracy data!
 # Does anyone here knows what VDEM is?
@@ -40,26 +41,28 @@ vdem <- readRDS("~/Desktop/V-Dem-CY-Core_R_v13/V-Dem-CY-Core-v13.rds")
 # Your path is different, please change the code above accordingly!
 
 # This dataset is huge ... how to find what all this means?
-# I these case, it is better to a take a look at the codebook (in folder)!
+# I these case, it is better to a take a look at the codebook (in data folder)!
 # Do you know what a codebook is and what is its function for research?
 
 # Subset the data --------------------------------------------------------------
 
-# What variables we might need?
+# What variables we might need to investigate freedom and accountability in
+# democracies since the 1990s?
 
 # 1- We need to know if a country is democratic and how much...
-# How about we subset based regimes of the world classification ("v2x_regime")?
-# Democratic regimes (information from Codebook):
-# - Electoral democracy: Free and fair multiparty elections ...
-# - Liberal democracy: Free and fair multiparty elections, access to justice,
+# How about we subset based regimes of the world classification
+# (the "v2x_regime" variable in our data)?
+# Democratic regimes in this variable, according to the codebook, are two:
+# - Electoral democracy: with free and fair multiparty elections ...
+# - Liberal democracy: with free and fair multiparty elections, access to justice,
 #   transparent law enforcement, respect for personal liberties, rule of law...
 
-# 2- We also need indicators of democracy. 
+# 2- We also need indicators of democracy...
 # Let's focus on transparency and accountability ("v2x_accountability_osp"),
 # freedom of expression ("v2x_freexp_altinf"),
 # and civil society participation (v2x_cspart).
-# Most of these variables were transformed into scales (e.g. 0-1) from
-# ordinal data from surveys (ordered categorical):
+# These variables were transformed into scales (e.g. 0-1) from
+# ordinal data from surveys (ordered categorical) as follows:
 # - Accountability index: low to high (0-1)
 # - Freedom of expression: low to high (0-1)
 # - Civil society participation: low to high (0-1)
@@ -67,7 +70,8 @@ vdem <- readRDS("~/Desktop/V-Dem-CY-Core_R_v13/V-Dem-CY-Core-v13.rds")
 # Food for thought: Do you think these variables are correlated
 # among themselves (i.e. multicolinearity)?
 
-# Subset the data
+# Let's subset the data for the variables of interest, as well as
+# the time and regimes we are interested in.
 
 dem <- dplyr::select(vdem, c(country_name, country_text_id, year,
                               v2x_regime, v2x_accountability_osp,
@@ -80,7 +84,8 @@ dem <- dplyr::select(vdem, c(country_name, country_text_id, year,
                 account_index = v2x_accountability_osp,
                 civil_society = v2x_cspart) %>% # rename some of these variables
   dplyr::mutate(regime_type = case_when(regime == 2 ~ "Electoral Democracy",
-                                        regime == 3 ~ "Liberal Democracy")) %>% # create a new regime type variable and rename the categories within
+                                        regime == 3 ~ "Liberal Democracy")) %>% 
+  # create a new regime type variable and rename the categories within
   tidyr::drop_na() # drop rows where there is at least one NA obs...
 
 # Food for thought: Does removing NA observations create bias?
@@ -88,8 +93,7 @@ dem <- dplyr::select(vdem, c(country_name, country_text_id, year,
 
 # Investigate the data ---------------------------------------------------------
 
-# Let's see the averages for our democracy indicators related to accountability,
-# freedom of expression, and civil society participation.
+# Let's see the averages for our democracy indicators related to accountability.
 
 # Average accountability (top 10 and bottom 10)
 dem %>% # call data without assigning it
@@ -97,27 +101,25 @@ dem %>% # call data without assigning it
   summarise(mean = mean(account_index)) %>% 
   # summarize grouped accountability variable by mean
   arrange(-mean) %>% # arrange the data by mean, in decreasing order
-  slice_head(n = 10) # get the top 10
-
-# Any surprises here?
 
 dem %>% # call data without assigning it
   group_by(country_name) %>% # group by country name
   summarise(mean = mean(account_index)) %>% 
   # summarize grouped accountability variable by mean
   arrange(-mean) %>% # arrange the data by mean, in decreasing order
-  slice_tail(n = 10) # get the bottom 10
 
 # Any surprises?
 
+# Exercises:
 # Do you think the all of those in the top 10 are liberal democracies?
 # Do you think the all of those in the top 10 are electoral democracies?
-# Could you adapt the code above to find this out?
-# Could you do the same for the other democracy indicators?
+# Could you adapt the code above to find this information out?
+# Could you adapt the code above for the other democracy indicators as
+# freedom of expression and civil society?
 
 # Pathways: from electoral to liberal democracies (and vice-versa) -------------
 
-# Let's see which countries have multiple democratic regimes.
+# Let's see which countries had multiple democratic regimes.
 
 dem %>%
   group_by(country_name, regime_type) %>% # group by country and regime
@@ -130,7 +132,7 @@ dem %>%
   print(n = 54) # tell dplyr to print 54 rows instead of default 10
 
 # Let's look at the average differences for our democracy indicators for
-# countries with multiple regimes.
+# the countries with multiple regimes.
 
 dem %>%
   group_by(country_name, regime_type) %>% # group by country and regime
@@ -168,25 +170,18 @@ dem %>%
        y = "Country",
        x = "Mean Difference")
 
-# Some countries averages for these indicators were worse when they were
-# classified as liberal democracies in comparison to when they were
+# It appears that some countries averages for these indicators were worse when
+# they were classified as liberal democracies in comparison to when they were
 # electoral democracies...
+# Let's plot averages for all indicators together.
 
-# Let's use a join to subset the data for countries which have
-# been classified both electoral and liberal democracies by 
-# VDEM since the 1990s.
-
-subset_transition <- dem %>%
+dem %>%
   group_by(country_name, regime_type) %>% # group by country and regime
   count() %>% # just count obs here
   group_by(country_name) %>% # re-group by country name only 
   mutate(Duplicated = n()) %>% # add duplicated columns for country names
   filter(Duplicated > 1) %>% # keep only duplicate country names
-  select(-c(Duplicated, n)) # remove duplicated variables
-
-# Let's plot all this together!
-
-inner_join(dem, subset_transition) %>% # keep only obs in present in both datasets
+  select(-c(Duplicated, n)) %>%
   mutate(Aggregated_Mean_Indicators = (account_index +
            freedom_expression + civil_society)/3) %>%
   # add rows to form the aggregated indicator
@@ -207,7 +202,7 @@ inner_join(dem, subset_transition) %>% # keep only obs in present in both datase
                                 "Liberal Democracy"))
 
 # Does the classification of countries into liberal vs. electoral
-# democracy seem a bit arbitrary to you?
+# democracy appears a bit arbitrary to you?
 
 # Indicators by region ---------------------------------------------------------
 
@@ -217,10 +212,9 @@ inner_join(dem, subset_transition) %>% # keep only obs in present in both datase
 gapminder <- dslabs::gapminder %>% 
   select(country, continent, region) %>% # select only the variables we want
   distinct() # keeps only distinct rolls (no duplicates)
-
 dem_total <- dplyr::left_join(dem, gapminder, by = c("country_name" = "country")) 
 
-# Let's see the evolution of the aggregated indicators per region!
+# Let's see the evolution of the aggregated indicators per region for 1990 and 2021.
 
 dem_total %>% 
   filter(year == 1990 | year == 2021) %>% # filter for first and last year of data
@@ -244,8 +238,9 @@ dem_total %>%
        y = "Region",
        x = "Mean Difference")
 
-# Are democracies across most regions better off than in 1990?
-# Are we experiencing democratic decay in some regions perhaps?
+# Food for thought: Are democracies across most regions better off than in 1990?
+# Do you think we experiencing democratic decay in some regions/democracies and
+# not in others? Why?
 
 # Are democracies less likely to go to war? ------------------------------------
 #
@@ -391,6 +386,7 @@ dem_total %>%
 #                                           ~ "Autocratic Peace"))
 # 
 # # Let's simply count the status
+#
 # dem_peace %>%
 #   dplyr::group_by(status) %>%
 #   dplyr::count()
@@ -409,6 +405,7 @@ dem_total %>%
 #        y = "Number of cases",
 #        x = "Year")
 # 
-# # Why is autocratic peace decreasing and democratic peace increasing in time?
-# # Do most states transition regimes without wars?
+# # Food for thought: Why is autocratic peace decreasing and democratic
+# # peace increasing in time?
+# # Do most countries transition regimes without wars?
 # # Should we buy into Democratic Peace?
