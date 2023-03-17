@@ -80,14 +80,14 @@ gapminder <- dplyr::mutate(gapminder, GDP = pop*gdpPercap)
 
 quantile(gapminder$GDP)
 
-#Scientific notation is annoying. You can disable it with:
+# Note:: scientific notation is annoying. You can disable it with:
 
 options(scipen=999)
 
 gapminder <- dplyr::mutate(gapminder, rich_country = ifelse(GDP > 105744100901, 1, 0))
 
 # Do you think this was a good idea? Why?
-# Let's count rich countries by continent now
+# Let's take a look at the rich countries outside of Europe
 
 dplyr::filter(gapminder, rich_country == 1, continent != "Europe") %>%
   dplyr::select(country, continent, rich_country) %>%
@@ -95,14 +95,12 @@ dplyr::filter(gapminder, rich_country == 1, continent != "Europe") %>%
   print(n = 35)
 
 # What does this tell you?
-
 # Okay, let's go back and simply count the data by continent:
 
 dplyr::group_by(gapminder, continent) %>%
   dplyr::count()
 
-# We have a lot of data for the African continent, that is interesting!
-
+# We have a lot of data for the African continent, that is interesting! But why?
 # Let's investigate the mean life expectancy for African countries:
 
 gapminder %>%
@@ -148,13 +146,7 @@ wide_gapminder <- select(wide_gapminder, country, '1952', '2007') %>%
   mutate(dif_life_expectancy = last_round - first_round) %>%
   arrange(desc(dif_life_expectancy))
 
-# For the sake of it, let's return this data to a long format...
-
-long_gapminder <- tidyr::pivot_longer(wide_gapminder,
-                                      cols = c(first_round, last_round),
-                                      names_to = "year",
-                                      values_to = "life_expectancy") %>%
-  mutate(year = ifelse(year == "first_round", 1952, 2007))
+# Note: we use pivot long below!
 
 # 5. Joining data --------------------------------------------------------------
 
@@ -174,7 +166,7 @@ summary(co2_emissions)
 
 # Is this data in long or wide format?
 # What should we do here if we want to merge the data?
-# Let's pivot the data long first
+# Let's pivot the data long first:
 
 co2_emissions <- tidyr::pivot_longer(co2_emissions,
                                      cols = '1990':'2021',
@@ -198,7 +190,7 @@ emissions <- dplyr::inner_join(gapminder, co2_emissions,
                                by = c("country", "year"))
 emissions
 
-# Lets see the top 10 in 2007
+# Lets see the top 10 emitters in 2007
 
 emissions %>%
   filter(year == 2007) %>%
@@ -210,8 +202,9 @@ emissions %>%
 emissions <- emissions %>%
   mutate(per_capita_emissions = co2_emissions/pop)
 
+# Let's investigate the top 20 per capita emitters
 emissions %>%
-  group_by(country, rich_country) %>%
+  group_by(country) %>%
   summarise(average_per_capita_emissions = mean(per_capita_emissions)) %>%
   arrange(desc(average_per_capita_emissions)) %>%
   ungroup() %>%
