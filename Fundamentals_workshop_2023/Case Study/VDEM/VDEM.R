@@ -100,13 +100,13 @@ dem %>% # call data without assigning it
   group_by(country_name) %>% # group by country name
   summarise(mean = mean(account_index)) %>% 
   # summarize grouped accountability variable by mean
-  arrange(-mean) %>% # arrange the data by mean, in decreasing order
+  arrange(-mean) # arrange the data by mean, in decreasing order
 
 dem %>% # call data without assigning it
-  group_by(country_name) %>% # group by country name
+  group_by(country_name, regime_type) %>% # group by country name
   summarise(mean = mean(account_index)) %>% 
   # summarize grouped accountability variable by mean
-  arrange(-mean) %>% # arrange the data by mean, in decreasing order
+  arrange(mean) # arrange the data by mean, in decreasing order
 
 # Any surprises?
 
@@ -121,15 +121,16 @@ dem %>% # call data without assigning it
 
 # Let's see which countries had multiple democratic regimes.
 
-dem %>%
+transition_countries <- dem %>% # saving this object to use later
   group_by(country_name, regime_type) %>% # group by country and regime
   count() %>% # count grouped observations
   group_by(country_name) %>% # re-group by country name only 
   mutate(Duplicated = n()) %>% # add duplicated columns for country names
   filter(Duplicated > 1) %>%  # filter for names that appear more than once
-  rename(Years = n, Country = country_name, Regime = regime_type) %>% 
-  # rename for clarity
-  print(n = 54) # tell dplyr to print 54 rows instead of default 10
+  select(-c(Duplicated)) %>% # remove duplicated variables
+  rename(Years = n) # rename for clarity
+
+transition_countries %>% print(n = 54) # print 54 rows instead of default 10
 
 # Let's look at the average differences for our democracy indicators for
 # the countries with multiple regimes.
@@ -173,15 +174,13 @@ dem %>%
 # It appears that some countries averages for these indicators were worse when
 # they were classified as liberal democracies in comparison to when they were
 # electoral democracies...
-# Let's plot averages for all indicators together.
+# Let's try a different approach plot averages for all indicators together
+# in time and by country.
 
-dem %>%
-  group_by(country_name, regime_type) %>% # group by country and regime
-  count() %>% # just count obs here
-  group_by(country_name) %>% # re-group by country name only 
-  mutate(Duplicated = n()) %>% # add duplicated columns for country names
-  filter(Duplicated > 1) %>% # keep only duplicate country names
-  select(-c(Duplicated, n)) %>%
+transition_countries %>% 
+  select(-Years) %>% # remove years
+  inner_join(dem, by = c("country_name", "regime_type"), multiple = "all") %>%
+  # keep only obs in present in both datasets
   mutate(Aggregated_Mean_Indicators = (account_index +
            freedom_expression + civil_society)/3) %>%
   # add rows to form the aggregated indicator
@@ -232,7 +231,7 @@ dem_total %>%
   geom_text(aes(label = year), nudge_y = 0.3) +
   theme_minimal() +
   theme(legend.position="none") +
-  labs(title = "Are democracies better off than in 1990?",
+  labs(title = "Are democracies better off in 2021 than in 1990?",
        subtitle = "Difference aggregated means for indicators of
        accountability, freedom of expression, and civil society indicators",
        y = "Region",
@@ -243,9 +242,9 @@ dem_total %>%
 # not in others? Why?
 
 # Are democracies less likely to go to war? ------------------------------------
-#
+
 # # Extra stuff for those of you who are interested in peace/conflict and democracy.
-#
+# 
 # # Who knows what democratic peace theory is?
 # # In case you want to read more about "Democratic Peace",
 # # Rosato (2003) is a great reference:
@@ -358,7 +357,7 @@ dem_total %>%
 # # Let's merge this data into the VDEM_mids data.
 # # Let's also re-code conflict regime and regime type to get the "status".
 # 
-# dem_peace <- dplyr::left_join(vdem_mids, MIDS_regime) %>%
+# dem_peace <- dplyr::left_join(vdem_mids, MIDS_regime, multiple = "all") %>%
 #   dplyr::filter(!is.na(regime_type)) %>%
 #   dplyr::mutate(conflict_status = ifelse(is.na(conflict_regime),
 #                                          paste0(regime_type, " Peace"),
@@ -386,7 +385,7 @@ dem_total %>%
 #                                           ~ "Autocratic Peace"))
 # 
 # # Let's simply count the status
-#
+# 
 # dem_peace %>%
 #   dplyr::group_by(status) %>%
 #   dplyr::count()
