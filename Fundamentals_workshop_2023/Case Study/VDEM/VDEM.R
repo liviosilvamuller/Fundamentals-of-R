@@ -88,15 +88,6 @@ dem <- dplyr::select(vdem, c(country_name, country_text_id, year,
 
 # Investigate the data ---------------------------------------------------------
 
-# Do we have data from all country and years?
-
-dem %>% 
-  group_by(country_name, regime_type) %>% 
-  # grouping data by country and regime type 
-  count() %>% # counting the number of appearances by each group
-  print(n = 144) # printing 144 rows instead of only 10
-
-# It seems we do not...
 # Let's see the averages for our democracy indicators related to accountability,
 # freedom of expression, and civil society participation.
 
@@ -126,7 +117,7 @@ dem %>% # call data without assigning it
 
 # Pathways: from electoral to liberal democracies (and vice-versa) -------------
 
-# Let's see which countries have multiple regimes.
+# Let's see which countries have multiple democratic regimes.
 
 dem %>%
   group_by(country_name, regime_type) %>% # group by country and regime
