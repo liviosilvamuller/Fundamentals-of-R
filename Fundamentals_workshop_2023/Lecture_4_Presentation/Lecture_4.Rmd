@@ -2,7 +2,6 @@
 title: "Fundamentals of R"
 subtitle: "Block 3: Principles and Practices of Data Visualization"
 author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
-date: "<small>October 15, 2022<small>"
 output:
   xaringan::moon_reader:
     css: 
@@ -93,18 +92,6 @@ left_join() #family of functions to join datasets
 ]
 
 
----
-#Feedback: thanks for answering!
-
-- We will work with datasets within R packages, to facilitate the in class slides and practical.
- 
-- Case studies: everlasting promise?
-  - We will cover a case study today.
-  - Next week class ends at 16:00. For those interested, we will cover a second case study from 16:15 to 17:00 or so.
-  
-- If there are still questions after class, feel free to drop us an e-mail and we can arrange time to meet.
-
- 
 ---
 
 class: split two
@@ -674,7 +661,7 @@ sample_n(gapminder,15) #showing a random sample
 ##Last, ggplot2 works with pipes!
   
   - Just remember the difference between piping (%>%) and layering (+)!
-    - The '%>%' pipes the output of an operation as the first argument of the next one ([here](https://stackoverflow.com/questions/24536154/what-does-mean-in-r/24536653#24536653)).
+    - The '%>%' pipes the output of an operation as the first argument of the next one.
     - The '+', instead, adds layers to a ggplot2 plot ([here](https://stackoverflow.com/questions/35332861/what-is-the-difference-between-the-operator-in-ggplot2-and-the-operato))
   
 .pull-left[
