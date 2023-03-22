@@ -1,5 +1,5 @@
 ---
-title: "Fundamentals of R"
+title: "Fundamentals of R, Block 2 Practical"
 author: "Henrique Sposito and Livio Muller-Silva"
 output:
   html_document: default
@@ -19,17 +19,13 @@ You can embed an R code chunk like this:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE) # knit options
 options(scipen=999) # removes scientific notation
-library(gapminder) # load packages
-library(ggplot2)
-library(dplyr)
-library(ggplot2)
 ```
 
 In the case above, we are just adjusting the setup for the document and loading some packages for our R Markdown document.
 
 This is the best resource for information on [R Markdown](https://bookdown.org/yihui/rmarkdown/)!
 
-Tip: remember to always load the data at the beginning so your rmarkdown will knit properly! Adding your data and Rmd files on the same folder also helps with path issues when knitting.
+Tip: remember to always load the data at the beginning so your Rmarkdown will knit properly! Adding your data and Rmd files on the same folder also helps with path issues when knitting.
 
 ## Some Basics:
 
@@ -61,11 +57,19 @@ When you click the **Knit** button a document in HTML or PDF can be generated th
 
 Lastly, R Markdown can be further used to create presentations in R (as the ones we use in class, see the [xaringan](https://bookdown.org/yihui/rmarkdown/xaringan.html) package) or even to write your Master's thesis (check out [iheidown](https://jhollway.github.io/iheiddown/)).
 
+**If we want to knit this to PDF, we need to download a Latex engine first:**
+
+```{r, eval=FALSE}
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+
 # Visualizations
 
 ## Setting up the Gapminder data
 
 ```{r}
+library(gapminder) # load packages
 gapminder <- gapminder::gapminder # create an object
 summary(gapminder) # summary data
 ```
@@ -81,6 +85,8 @@ To create line plots in ggplot2 we use the [`geom_line()`](https://ggplot2.tidyv
 Let's plot life expectancy in time, for Switzerland!
 
 ```{r}
+library(ggplot2)
+library(dplyr)
 gapminder %>%
   filter(country == "Switzerland") %>% # filter for Switzerland
   ggplot(aes(x = year, y = lifeExp)) + # adds a first ggplot2 layer
@@ -247,11 +253,4 @@ gapminder %>%
        caption = "Source: Gapminder") + # add caption
   scale_x_log10() +
   theme_fivethirtyeight() # add theme from the ggthemes package
-```
-
-**If we want to knit this to PDF, we need to download a Latex engine first:**
-
-```{r, eval=FALSE}
-install.packages("tinytex")
-tinytex::install_tinytex()
 ```

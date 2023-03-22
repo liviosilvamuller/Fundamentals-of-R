@@ -119,15 +119,35 @@ phd_theses %>%
   summarise(count = n()) %>%
   ggplot(aes(x = thesis_date, y = count, fill = thesis_language)) +
   geom_col(position = "dodge")
+
+phd_theses %>%
+  mutate(thesis_date = factor(ifelse(thesis_year < 2000,
+                              "before_2000", "after_2000"),
+                              levels = c("before_2000", "after_2000"))) %>%
+  group_by(thesis_date, thesis_language, thesis_department) %>%
+  summarise(count = n()) %>%
+  ggplot() +
+  geom_boxplot(aes(x = thesis_date, y = count, fill = thesis_language)) +
+  geom_text(aes(x = thesis_date, y = count,
+                label= ifelse(thesis_date == "after_2000" &
+                  thesis_department == "IRPS" & thesis_language == "en",
+                paste0(thesis_department, "_", thesis_language), ""))) +
+  labs(title = "PhD theses lanuage before and after the year 2000",
+       x = "Period",
+       y = "Total number of PhD theses")
+
+
 ```
 
 ## Question 5
 
-Create a scatter plot containing all theses over time that have a sustainability score ('sus_degree') bigger than 0. Please color the points by department ('thesis_department') and size them by their sustainability score ('sus_degree') (Tip: filter brfor plotting). What does the plot tell you?
+Create a scatter plot containing all theses that have a sustainability score ('sus_degree') bigger than 0. Please color the points by department ('thesis_department') and size them by their sustainability score ('sus_degree') (Tip: filter brfor plotting). What does the plot tell you?
 
 ```{r, include=FALSE}
 phd_theses %>%
   filter(sus_degree > 0) %>%
+  group_by(thesis_year, thesis_department) %>%
+  summarise(sus_degree = sum(sus_degree)) %>%
   ggplot(aes(x = thesis_year, y = sus_degree, fill = thesis_department)) +
   geom_point(aes(color = thesis_department, size = sus_degree))
 ```
