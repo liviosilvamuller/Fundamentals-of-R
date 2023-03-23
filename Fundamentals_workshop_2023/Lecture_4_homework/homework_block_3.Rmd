@@ -35,6 +35,8 @@ The Institute has been the home for hundreds of PhD students over time. In this 
 | `sus_degree`        | Extent to which theses covers sustainability topics. |
 | `gen_degree`        | Extent to which theses covers gender-related topics. |
 
+**Attention this is not the same dataset as previous weeks, please download the data from the correct Moodle folder**
+
 ## Question 1
 
 a) Plot a histogram showing the distribution of PHD thesis over time (Tip: you could use base R here, see `?hist`). Why do you think we have so few thesis defenses in 2020?
