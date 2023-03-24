@@ -684,3 +684,26 @@ plot
 ```
 
 ]
+---
+
+## Repository: replace_na
+
+- `tidyr::replace_na()` replaces NAs with specified values.
+ 
+```{r eval=FALSE, message=TRUE, warning=TRUE, include=TRUE, paged.print=TRUE}
+io_income_rs %>% 
+  mutate(donor=replace_na(donor,"individuals")) 
+#all NAs in donor are now "individuals"
+
+io_income_rs$donor %>% 
+  replace_na("individual") 
+#all NAs in donor are now "individuals"
+
+io_income_rs %>% 
+  replace_na(list(donor="individuals",amount_nominal=0)) 
+#all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
+
+io_income_rs%>% 
+  replace_na(list(0)) 
+#all NAs in the dataset are now 0
+```

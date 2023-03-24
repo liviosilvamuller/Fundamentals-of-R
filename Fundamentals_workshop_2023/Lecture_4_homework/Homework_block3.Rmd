@@ -31,7 +31,7 @@ The 'io_income_rs.csv' dataset contains a non-random sample from funding data fr
 
 : The Financial Underpinnings of IOs
 
-Please load the dataset, we will be working with it today.
+Please load the dataset and get acquainted with it. We will be working with it in this homework.
 
 ```{r include=FALSE}
 library(dplyr)
@@ -192,6 +192,7 @@ io_income_rs %>%
              alpha=.5) +  
   # alpha makes the points transparent.
   geom_smooth(method = "lm", color="red") +
+  facet_wrap(~type_donor)+
   scale_y_log10(labels=scales::dollar) +
   labs(x = NULL, y = NULL, #removing redundant info from x and y axis
        title = "Donations to issues areay by year per type since 2000", 

@@ -28,3 +28,4 @@ unnamed-chunk-26	purp4
 unnamed-chunk-27	data	gapminder	library	sample_n
 unnamed-chunk-28	%>%	==	aes	country	filter	gapminder	geom_line	ggplot	pop	year
 unnamed-chunk-29	options	plot
+unnamed-chunk-30	%>%	$	donor	io_income_rs	list	mutate	replace_na

@@ -672,6 +672,30 @@ plot &lt;- gapminder %&gt;%
 &lt;img src="Lecture_4_files/figure-html/unnamed-chunk-29-1.png" width="50%" /&gt;
 
 ]
+---
+
+## Repository: replace_na
+
+- `tidyr::replace_na()` replaces NAs with specified values.
+ 
+
+```r
+io_income_rs %&gt;% 
+  mutate(donor=replace_na(donor,"individuals")) 
+#all NAs in donor are now "individuals"
+
+io_income_rs$donor %&gt;% 
+  replace_na("individual") 
+#all NAs in donor are now "individuals"
+
+io_income_rs %&gt;% 
+  replace_na(list(donor="individuals",amount_nominal=0)) 
+#all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
+
+io_income_rs%&gt;% 
+  replace_na(list(0)) 
+#all NAs in the dataset are now 0
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
