@@ -25,9 +25,9 @@ In the case above, we are just adjusting the setup for the document and loading 
 
 This is the best resource for information on [R Markdown](https://bookdown.org/yihui/rmarkdown/)!
 
-Tip: remember to always load the data at the beginning so your Rmarkdown will knit properly! Adding your data and Rmd files on the same folder also helps with path issues when knitting.
+*Tip: remember to always load the data at the beginning so your Rmarkdown will knit properly! Adding your data and Rmd files on the same folder also helps with path issues when knitting.*
 
-## Some Basics:
+Basics:
 
 Section headers work with #:
 
@@ -119,6 +119,7 @@ gapminder %>%
        y = "Average life expectation", # add lable for y axis
        caption = "Source: Gapminder") + # add caption
   theme_classic() # add theme
+# What if I wanted to add a line for the average here, as above?
 ```
 
 Could you make the same line plots for GDP per capita across continents in time?
