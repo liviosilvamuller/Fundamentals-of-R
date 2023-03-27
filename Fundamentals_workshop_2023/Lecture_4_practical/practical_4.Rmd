@@ -1,9 +1,10 @@
 ---
-title: "Fundamentals of R, Block 2 Practical"
+title: "Fundamentals of R, Block 3 Practical"
 author: "Henrique Sposito and Livio Muller-Silva"
 output:
+  pdf_document: default
   html_document: default
-subtitle: Block 3 - Practical Visualizations
+subtitle: "Block 3 - Practical Visualizations"
 ---
 
 # R Markdown: another way to store code
@@ -17,7 +18,8 @@ Markdown allows you to mix chunks of code (in light grey) with text and export a
 You can embed an R code chunk like this:
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE) # knit options
+knitr::opts_chunk$set(echo = FALSE)
+ # knit options
 options(scipen=999) # removes scientific notation
 ```
 
@@ -47,7 +49,7 @@ For changing text styles use *:
 
 For inserting R code click on the **C** button above or use Cmd + Option + I on MAC (for Windows: Ctrl + Alt + I).
 
-```{r, eval=FALSE, echo=FALSE, include=FALSE}
+```{r character, echo=TRUE}
 as.character("R Markdown is awesome")
 ```
 
@@ -108,17 +110,18 @@ gapminder %>%
 
 Do you think that life expectancy increased for across all continents in time?
 
-```{r, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 gapminder %>%
   group_by(continent, year) %>% # group by year and country
   summarise(Avg_life_expectancy = mean(lifeExp)) %>%  #  mean life expectancy
-  ggplot(aes(x = year, y = Avg_life_expectancy)) + # map
-  geom_line(aes(color = continent)) + #here we are mapping color by continent at the geom_level
+  ggplot(aes(x = year, y = Avg_life_expectancy, aes(color = continent))) + # map
+  geom_line(aes(color = continent)) +
+  geom_point(aes(color = continent)) + #here we are mapping color by continent at the geom_level
   labs(title = "Life expectancy by continent from 1957 to 2007", # add title
        x = "Year", # add
        y = "Average life expectation", # add lable for y axis
        caption = "Source: Gapminder") + # add caption
-  theme_classic() # add theme
+  theme_minimal() # add theme
 # What if I wanted to add a line for the average here, as above?
 ```
 
@@ -171,8 +174,8 @@ gapminder %>% # select data
        x = "Country", # add a label for x axis
        y = "Life Expectancy", # add a label for y axis
        fill = "Year") + # sub legend for fill
-  scale_fill_manual(values = c("gray", "darkgreen")) + # manually set colors
-  theme_classic() 
+  scale_fill_manual(values = c("darkgreen", "grey")) + # manually set colors
+  theme(title = element_text(color= "gold")) 
   # adds a theme; theme_classic is a "clean" theme that removes unnecessary stuff
 ```
 
@@ -253,5 +256,5 @@ gapminder %>%
        y = "Life expectation",
        caption = "Source: Gapminder") + # add caption
   scale_x_log10() +
-  theme_fivethirtyeight() # add theme from the ggthemes package
+  theme_stata() # add theme from the ggthemes package
 ```
