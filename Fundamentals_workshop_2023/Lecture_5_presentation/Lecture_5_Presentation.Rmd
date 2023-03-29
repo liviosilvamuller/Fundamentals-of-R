@@ -1,6 +1,6 @@
 ---
 title: "Fundamentals of R"
-subtitle: "Lecture 5: Exchanging with the community"
+subtitle: "Exchanging with the community"
 author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
 output:
   xaringan::moon_reader:
@@ -9,6 +9,7 @@ output:
       - "assets/iheid-xaringan-style.css"
       - "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
       - "ninjutsu"
+      - "animate.css"
     chakra: "https://remarkjs.com/downloads/remark-latest.min.js"
     nature:
       ratio: '16:9'
@@ -22,146 +23,24 @@ output:
           </div>
         </div>`
 ---
-
 ```{r setup, include=FALSE}
-# don't mind this code chunk, it just sets up a few things for the rest
-# it doesn't appear, because the include argument above is FALSE...
-options(htmltools.dir.version = FALSE, servr.daemon = TRUE)
-knitr::opts_chunk$set(cache=TRUE, autodep = TRUE, fig.retina = 3, message = FALSE, warning = FALSE)
-```
-class: split two
-
-## General issues: slice_ (1/4)
-
-```{r include=FALSE}
-library(dplyr)
-library(readr)
-library(tidyr)
-io_income_rs <- read_csv("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Lecture 5/Lecture_5_Presentation/assets/data/io_income_rs.csv")
-```
-
-.pull-left[
-```{r echo=TRUE}
-io_income_rs %>%
-  drop_na(donor)%>%
-  group_by(donor, type_donor)%>%
-  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
-  arrange(desc(amount_nominal))%>%
-  slice_head(n=5)
-```
-]
-
---
-.pull-right[
-```{r echo=TRUE}
-io_income_rs %>%
-  drop_na(donor)%>%
-  group_by(donor, type_donor)%>%
-  summarize(amount_nominal = sum(amount_nominal, na.rm = TRUE)) %>% 
-  arrange(desc(amount_nominal))%>%
-  ungroup()%>% 
-  #group by two variables requires ungrouping before slicing...
-  slice_head(n=5)
-```
-]
-
----
-## General issues: case_when (2/4)
-
-- `dplyr::case_when()` and `base::ifelse()` can help you return values based on tests.
-
---
-
-- Different from `ifelse()`, `case_when()` can **more** easily return more than two values based on more than one test.
-  
---
-
-- Let's say we want a new variable called un_sg (UN Secretary General):
-  - kofi_annan, if years are between 1997 and 2006;
-  - ban_kimoon, if years are between 2007 and 2016;
-  - antonio_guterres, if years are between 2016 and present.
-
----
-class: split two
-
-## General issues: case_when (2/4)
-
-```{r include=FALSE}
-io_income_rs <- io_income_rs%>%
-  filter(type_donor=="public")%>%
-  drop_na(donor)
+library(xaringanExtra)
+library(RefManageR)
+use_xaringan_extra(c("tile_view", "panelset", "share_again", "editable",
+                     "clipboard", "progessbar", "animate_css"))
+use_extra_styles(hover_code_line = TRUE,
+                 mute_unhighlighted_code = FALSE)
+options(htmltools.dir.version = FALSE,
+        knitr.table.format = "html",
+        knitr.kable.NA = "")
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE, fig.path = "figs/",
+                      fig.width = 7.252, fig.height = 4,
+                      comment = "#>",
+                      fig.retina = 3)
+old <- ggplot2::theme_set(iheiddown::theme_iheid())
 ```
 
-.pull-left[
-```{r echo=TRUE}
-io_income_rs%>%
-  mutate(un_sg= 
-    ifelse (year<2006, "kofi_annan", 
-      ifelse(year>=2016,
-        "antonio_guterres", "ban_kimoon")))%>%
-  slice_sample(n=9)%>%
-  select(year, donor,un_sg)
-```
-]
-
---
-
-.pull-right[
-```{r echo=TRUE}
-io_income_rs%>%
-  mutate(un_sg= case_when(
-      year < 2006 ~ "kofi_annan",
-      year < 2016 ~ "ban_kimoon",
-      year >= 2016 ~"antonio_guterres"))%>% #case_when respects order!
-  slice_sample(n=9)%>%
-  select(year, donor,un_sg)
-```
-]
-
----
-
-## General issues: replace_na (3/4)
-
-- `tidyr::replace_na()` replaces NAs with specified values.
- 
-```{r eval=FALSE, message=TRUE, warning=TRUE, include=TRUE, paged.print=TRUE}
-io_income_rs %>% 
-  mutate(donor=replace_na(donor,"individuals")) 
-#all NAs in donor are now "individuals"
-
-io_income_rs$donor %>% 
-  replace_na("individual") 
-#all NAs in donor are now "individuals"
-
-io_income_rs %>% 
-  replace_na(list(donor="individuals",amount_nominal=0 )) 
-#all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
-
-io_income_rs%>% 
-  replace_na(list(0)) 
-#all NAs in the dataset are now 0
-```
-
----
-class: split two
-## Other (smaller) issues...(4/4)
-
-  - Scientific notation is a bit hard to interpret: 2.5e2 =250
-    - Run (include) `options(scipen=999)` to the top of your script(markdown) remove it completely.
-  
---
-
-  - The family of `scale_()` functions in ggplot2 require specifications.
-    - `scale_fill_brewer()` works on the aesthetic *fill*.
-    - `scale_color_brewer()` works on the aesthetic *color*.
-    - `scale_x_log10()` will scale *x* in log 10.
-    - `scale_y_log10()` will scale *y* in log 10.
---
-
-  - Remember: there are many characteristics you can change on plots (size, color, fill, alpha,...)
-    - If you include characteristics inside the `mapping=aes()`, you are mapping a variable to an aesthetic and *a legend will appear*.
-    - If you include characteristics outside the `mapping=aes()`, you are setting it and *no legend appears*.
----
 class: split two
 
 # What did we learn last week?
@@ -213,11 +92,13 @@ class: split two
 
 ## Lecture:
 
-  - R Markdown  
+  - R Markdown (a bit more) 
   
   - Minimal reproducible examples
   
   - The ethics of data
+  
+  - Where to go from here?
  
 ]
 
@@ -225,25 +106,25 @@ class: split two
 
 ## Case Study:
 
-*How the Brazilian Amazon has been constructed as a problem in transnational presidential discourses?*
+*American Rappers*
+
+![30%](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjU5M2QzY2Q4NTk1NTEyMzJmZWNmZjViZWE3YjJkNWZiMWMzNWI1MiZjdD1n/R7AyztbtXo4Te/giphy.gif)
 
 ]
 
-**We will also discuss the final assignment**
-
 ---
 
-# R Markdown, a one-stop shop (Rmd 1/5)
+# R Markdown, a one-stop shop (rmd 1/5)
 
 - Write your text, execute code, and produce high quality (reproducible) reports in [one place](https://rmarkdown.rstudio.com/gallery.html)!
 
 - [Made for R, free, and with lots of support](https://bookdown.org/yihui/rmarkdown/)
 
-- [Do not underestimate R Markdown's potential or flexibility cause it is ugly!](https://towardsdatascience.com/ten-awesome-r-markdown-tricks-56ef6d41098)
+- [Do not underestimate R Markdown's potential or flexibility cause it is ugly](https://towardsdatascience.com/ten-awesome-r-markdown-tricks-56ef6d41098)
 
 ---
 
-# R Markdown options (Rmd 2/5)
+# R Markdown options (rmd 2/5)
 
 - [Code chunk options:](https://rmarkdown.rstudio.com/lesson-15.html)
 
@@ -254,7 +135,7 @@ class: split two
   - message
   - fig.cap
 
-- Global options: apply to every code chunk if used in setup!
+- Global options: apply to every code chunk if used in setup
 
 ```{r, eval=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
@@ -262,28 +143,21 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 ---
 
-# Common Issues (Rmd 3/5)
+# Common Issues (rmd 3/5)
 
 - Adding data (just like a script)
 
-- Latex engines (for PDF rendering)
-
-```{r, eval=FALSE}
-install.packages("tinytex")
-tinytex::install_tinytex()
-```
+- Latex engines (for PDF rendering mostly in Windows)
 
 - [Figures and tables in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
 
 - Try to keep code lines in code chunks under 80 characters (marked line)
 
-- Other specific R Markdown issues you had? 
-
-- Please remember to use the Moodle forum for questions!
+- Other specific R Markdown issues you had?
 
 ---
 
-# From R Markdown with care (Rmd 4/5)
+# From R Markdown with care (rmd 4/5)
 
 - [Articles](https://resulumit.com/teaching/rmd_workshop.html#44)
 
@@ -297,9 +171,11 @@ tinytex::install_tinytex()
 
 - And more [cool stuff](https://slides.yihui.org/2019-dahshu-rmarkdown#22) ...
 
+**Write your IHEID thesis with [IHEIDDOWN](https://jhollway.github.io/iheiddown/articles/thesis.html)**
+
 ---
 
-# Quarto, the future? (Rmd 5/5)
+# Is Quarto the future? (rmd 5/5)
 
 - [Quarto is handy for users of multiple programming languages, but is it really necessary for R users?](https://yihui.org/en/2022/04/quarto-r-markdown/)
 
@@ -307,11 +183,25 @@ tinytex::install_tinytex()
 
 - R Studio's, or shall I say ["Posit"](https://www.infoworld.com/article/3668252/rstudio-changes-name-to-posit-expands-focus-to-include-python-and-vs-code.html#:~:text=RStudio%20is%20changing%20its%20corporate,user%20conference%20in%20Washington%2C%20D.C.), attempt to become a more flexible platform
 
+- If you know a bit of Rmarkdown, getting started with Quarto is relatively easy, see this [video](https://www.youtube.com/watch?v=shVSmYna3GM&list=PLPwprT5wdzX7NVDl4oYQ7c2_6ox0_1fyr)
+
 **Attention, Quarto requires the latest version of R Studio...**
 
 ---
 
-# Exchanging with the community (Reprex 1/9)
+# Github, worth more than this one mention...
+
+- [The worlds biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
+
+- Make your research available online (just like [Livio](https://github.com/liviosilvamuller) and [I](https://github.com/henriquesposito))
+
+- From hosting your websites and applications, to other types of online collaborative [work](https://happygitwithr.com/big-picture.html)
+
+*If you are interested on how we work with GitHub to build, store, version, and release R packages, check out the [messydates](https://github.com/globalgov/messydates) GitHub site. If you are having issues with dates in R, see [how messydates can help you](https://globalgov.github.io/messydates/index.html).*
+
+---
+
+# Exchanging with the community (reprex 1/9)
 
 - [Reproducibility](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example) of an error is the key
 
@@ -323,7 +213,7 @@ tinytex::install_tinytex()
 
 ---
 
-# The question (Reprex 2/9)
+# The question (reprex 2/9)
 
 "Dear R friends,
 
@@ -339,7 +229,7 @@ Thank you in advance for your time and consideration!"
 
 ---
 
-# The data (Reprex 3/9)
+# The data (reprex 3/9)
 
 [`set.seed()`](https://r-coder.com/set-seed-r/) orders random processes
 
@@ -355,7 +245,7 @@ Using R datasets (e.g. `USArrests`, `mtcars`, `iris`) is also very handy!
 
 ---
 
-# The error (Reprex 4/9)
+# The error (reprex 4/9)
 
 If you are doing this manually, copy the exact error somewhere in the post!
 
@@ -366,7 +256,7 @@ mean(my.df$col2, na.rm = TRUE)
 
 ---
 
-# The sytem (Reprex 5/9)
+# The system (reprex 5/9)
 
 Sometimes system info can be important...
 
@@ -379,7 +269,7 @@ R.Version()$version.string
 
 ---
 
-# The post (Reprex 6/9)
+# The post (reprex 6/9)
 
 *Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, code, and sytem info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
 
@@ -399,7 +289,7 @@ mean(my.df$col2, na.rm = TRUE)
 
 ---
 
-#  Reprex, the package (Reprex 7/9)
+#  Reprex, the package (reprex 7/9)
 
 - Writing a reprex often helps you debug!
 
@@ -420,11 +310,9 @@ reprex::reprex({
 })
 ```
 
-***Help us help you by applying these principles when you post questions on the Moodle forum***
-
 ---
 
-# Reprex for R Markdown, more or less the same (Reprex 8/9)
+# Reprex for R Markdown, more or less the same (reprex 8/9)
 
 ***Rules-of-thumb:***
 
@@ -436,25 +324,15 @@ reprex::reprex({
 
 ---
 
-# Stack overflow (Reprex 9/9)
+# Stack overflow, one last time (reprex 9/9)
 
 - You can find virtually anything about an [R issue](https://stackoverflow.com/questions/tagged/r)
 
 - [R community can sometimes be annoying, so ask well](https://www.r-bloggers.com/2011/01/three-tips-for-posting-good-questions-to-r-help-and-stack-overflow/)
 
-- If anything, remember the golden rule of copy and paste
+- If anything, remember the golden rule of copy and paste (i.e. others need to be able to copy and paste your code and reproduce the error)
 
 **[R bloggers](https://www.r-bloggers.com/), [Community R](https://community.rstudio.com/), [Twitter](https://twitter.com/search?q=%23rstats), and even [Reddit](https://www.reddit.com/r/rstats/), if that is your thing**
-
----
-
-# Github, worth more than this one mention...
-
-- [The worlds biggest code hosting platform for collaborations](https://www.youtube.com/watch?v=w3jLJU7DT5E)
-
-- Make your research available online (just like [Livio](https://github.com/liviosilvamuller) and [I](https://github.com/henriquesposito))
-
-- From hosting your websites and applications, to other types of online collaborative [work](https://happygitwithr.com/big-picture.html)
 
 ---
 
@@ -489,6 +367,64 @@ class: center
 # The ethics of big data (Ethics 2/2)
 
 <iframe width="800" height="450" src="https://www.youtube.com/embed/heQzqX35c9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+
+# Where to go from here (future 1/3)
+
+- As everything else in R, there are soo much material available online to keep on learning!
+
+- The steepest part of the R learning curve should be behind you (if you took this course serious).
+
+- The big secret to learning R is:
+
+---
+
+class: split two
+
+**There is no secret... you will have to try, try, and try some more.**
+
+.pull-left[
+
+- Hopefully, this course has made it easier for you to understand R code and errors, think through data, and find help online for your specific needs
+
+- But there are some other courses and summer schools that can help as well
+]
+
+.pull-right[
+
+![100%](https://media.giphy.com/media/hj8eOHrXqoLntsCyWz/giphy.gif)
+
+]
+
+---
+
+# Courses (future 2/3)
+
+- [Datacamp](https://www.datacamp.com/learn/r) is not free, but it is good!
+
+- For more on data wrangling check out [Kelsey Gonzalez'](https://www.youtube.com/@KelseyGonzalez) course; for more on data science check [Dave Langer's](https://www.youtube.com/playlist?list=PLTJTBoU5HOCRrTs3cJK-PbHM39cwCU0PF) course; for more on modelling and regression see this
+[Stanford](https://www.youtube.com/watch?v=LvySJGj-88U&list=PLoROMvodv4rOzrYsAxzQyHb8n_RWNuS1e&index=1) course
+
+- Several free courses available from various universities as [Harvard](https://pll.harvard.edu/subject/r), for example, and [Coursera](https://www.coursera.org/learn/r-programming#syllabus) which are free to audit
+
+- Learn R on your own within R with the "swirl" package
+
+```{r, eval=FALSE}
+install.packages('swirl') 
+library(swirl) 
+swirl()
+```
+
+---
+
+# Summer methods schools (future 3/3)
+
+- Expensive and often very specific, but worth it if you can afford (or get a scholarship)
+
+- [GSERM](https://gserm.org/), we cannot recommend enough!
+
+- A lot more out there in person and online ([ECPR](https://ecpr.eu/SummerSchool), [USI](https://www.usi.ch/it/formazione/apprendimento-permanente/summer-winter-school/ssm/workshops), and more)
 
 ---
 
