@@ -12,7 +12,7 @@
     <link href="Lecture_5_Presentation_files/animate.css/animate.xaringan.css" rel="stylesheet" />
     <link href="Lecture_5_Presentation_files/panelset/panelset.css" rel="stylesheet" />
     <script src="Lecture_5_Presentation_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x860fce9054648409765f064a2e6dfda","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xd3c455c1fe243809543b3f87e6009a6","expires":14}</script>
     <script src="Lecture_5_Presentation_files/himalaya/himalaya.js"></script>
     <script src="Lecture_5_Presentation_files/js-cookie/js.cookie.js"></script>
     <link href="Lecture_5_Presentation_files/editable/editable.css" rel="stylesheet" />
@@ -47,6 +47,34 @@ class: center, middle, inverse, title-slide
 ---
 
 
+
+# Housekeeping
+
+- All the homework answers are now available online on Moodle
+
+- If you have any specific questions about the course, R code used, or would like to get some feedback on your homework assignments, please send us an email!
+
+![50%](https://media.giphy.com/media/4FSnesRNfozle/giphy.gif)
+
+---
+
+# Common Homework issues with R markdown
+
+- Latex engines (for PDF rendering in Windows)
+
+- The "yaml" header can sometimes be annoying about spaces and unrecognized symbols...
+
+- The setup chunk (load data, packages, and options for the whole document)
+
+![:scale 40%](assets/images/setup_chunk.png)
+
+*Remember data and RMD file should ideally be in the same folder!*
+
+- More on PDF knitting, figures, and tables [here](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
+
+- Other specific R Markdown issues you had?
+
+---
 
 class: split two
 
@@ -122,7 +150,7 @@ class: split two
 
 ---
 
-# R Markdown, a one-stop shop (rmd 1/5)
+# R Markdown, a one-stop shop (rmd 1/4)
 
 - Write your text, execute code, and produce high quality (reproducible) reports in [one place](https://rmarkdown.rstudio.com/gallery.html)!
 
@@ -132,7 +160,7 @@ class: split two
 
 ---
 
-# R Markdown options (rmd 2/5)
+# R Markdown options (rmd 2/4)
 
 - [Code chunk options:](https://rmarkdown.rstudio.com/lesson-15.html)
 
@@ -152,21 +180,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 ---
 
-# Common Issues (rmd 3/5)
-
-- Adding data (just like a script)
-
-- Latex engines (for PDF rendering mostly in Windows)
-
-- [Figures and tables in PDF](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
-
-- Try to keep code lines in code chunks under 80 characters (marked line)
-
-- Other specific R Markdown issues you had?
-
----
-
-# From R Markdown with care (rmd 4/5)
+# From R Markdown with care (rmd 3/4)
 
 - [Articles](https://resulumit.com/teaching/rmd_workshop.html#44)
 
@@ -184,7 +198,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 ---
 
-# Is Quarto the future? (rmd 5/5)
+# Is Quarto the future? (rmd 4/4)
 
 - [Quarto is handy for users of multiple programming languages, but is it really necessary for R users?](https://yihui.org/en/2022/04/quarto-r-markdown/)
 
@@ -218,7 +232,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 - The better the question, the better the [answer](https://data.library.virginia.edu/ask-better-code-questions-and-get-better-answers-with-reprex/)
 
-- You do not need any package to make a minimal reproducible example, but the [reprex](https://reprex.tidyverse.org/) package can help!
+- Writing a reprex often helps you debug!
 
 ---
 
@@ -240,7 +254,7 @@ Thank you in advance for your time and consideration!"
 
 # The data (reprex 3/9)
 
-[`set.seed()`](https://r-coder.com/set-seed-r/) orders random processes
+[`set.seed()`](https://r-coder.com/set-seed-r/) orders random processes, see `?set.seed()`
 
 
 ```r
@@ -323,15 +337,18 @@ mean(my.df$col2, na.rm = TRUE)
 
 #  Reprex, the package (reprex 7/9)
 
-- Writing a reprex often helps you debug!
+You do not need any package to make a minimal reproducible example, but the [reprex](https://reprex.tidyverse.org/) package can help!
 
-- It may not look like much, but ... 
+- It may not look like much but, in practice, allows you to copy and paste the code directly to post so that the error can be reproduced by others!
 
-- In practice, allows you to copy and paste to post.
+---
 
+.panelset[
+.panel[.panel-name[Reprex code]
 
 ```r
-install.packages("reprex")
+#install.packages("reprex")
+library(reprex)
 reprex::reprex({
   R.Version()$version.string
   search()
@@ -342,6 +359,11 @@ reprex::reprex({
   mean(my.df$col2, na.rm = TRUE)
 })
 ```
+]
+.panel[.panel-name[Reprex output]
+![:scale 60%](assets/images/reprex.png)
+]
+]
 
 ---
 
@@ -349,11 +371,13 @@ reprex::reprex({
 
 ***Rules-of-thumb:***
 
-  - If issue is within a code chunk, make a normal reprex
+  - If issue is within a code chunk (code issue), make a normal reprex
   
-  - If issue is with knitting, copy the document (yaml) header and all code chunks until the one that fails to knit or displays the issue (the rest is the same)
+  - If issue is with knitting, copy the document (yaml) header and the code chunk(s) that fails to knit or displays the issue
   
-  - If you want to improve the knitting itself, post a (minimal) R Markdown document and the knitted document
+  - The rest is the same but remember to try and keep it minimal...
+  
+  - If you want to improve the knitting itself, post a (minimal) version of the RMD file with what you want to improve and the knitted PDF/HTML document
 
 ---
 
@@ -405,30 +429,21 @@ class: center
 
 # Where to go from here (future 1/3)
 
-- As everything else in R, there are soo much material available online to keep on learning!
+- As everything else in R, there are lots of free material available online to keep on learning!
 
 - The steepest part of the R learning curve should be behind you (if you took this course serious).
 
-- The big secret to learning R is:
+- Keep on taking advantage of the slides and the syllabus from now onwards
+
+- Finally, the big secret to learning R is:
 
 ---
 
-class: split two
+**There is no secret... you will have to try, try, and try some more...**
 
-**There is no secret... you will have to try, try, and try some more.**
+![60%](https://media.giphy.com/media/hj8eOHrXqoLntsCyWz/giphy.gif)
 
-.pull-left[
-
-- Hopefully, this course has made it easier for you to understand R code and errors, think through data, and find help online for your specific needs
-
-- But there are some other courses and summer schools that can help as well
-]
-
-.pull-right[
-
-![100%](https://media.giphy.com/media/hj8eOHrXqoLntsCyWz/giphy.gif)
-
-]
+Hopefully, this course has made it easier for you to understand R code and errors, think through data, and find help online for your specific needs!
 
 ---
 
@@ -454,11 +469,13 @@ swirl()
 
 # Summer methods schools (future 3/3)
 
-- Expensive and often very specific, but worth it if you can afford (or get a scholarship)
+- Can be expensive and often very specific, but worth it if you can afford (or get a scholarship)
 
 - [GSERM](https://gserm.org/), we cannot recommend enough!
 
-- A lot more out there in person and online ([ECPR](https://ecpr.eu/SummerSchool), [USI](https://www.usi.ch/it/formazione/apprendimento-permanente/summer-winter-school/ssm/workshops), and more)
+- A lot more out there in person and online (see [ECPR](https://ecpr.eu/SummerSchool) and the [USI](https://www.usi.ch/it/formazione/apprendimento-permanente/summer-winter-school/ssm/workshops) for instance)
+
+- Last but not least, the [DS3](https://ds3.ai/summerschool.html) is a summer online with several R courses pre-recorded online and available for free!
 
 ---
 
@@ -471,7 +488,7 @@ class: split two middle
 ]
 
 .pull-right[
-![100%](https://media.giphy.com/media/hmVVRM1uV7vYA/giphy.gif)
+![120%](https://media.giphy.com/media/hmVVRM1uV7vYA/giphy.gif)
 ]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
