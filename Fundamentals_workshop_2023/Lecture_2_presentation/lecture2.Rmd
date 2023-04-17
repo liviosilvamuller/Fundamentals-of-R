@@ -139,7 +139,8 @@ Can be anything, as long as it is assigned...
 
 ```{r}
 "Am I an object?"
-object <- "Or I am an object?"
+object_1 <- "Or I am an object?"
+object_1
 ```
 
 ---
@@ -163,10 +164,10 @@ But we are only talking about a few basic ones today...
 Just text...
 
 ```{r}
-object1 <- "Or I am an object?"
-class(object1)
+object_character <- "Or I am an object?"
+class(object_character)
 # What can we do with character objects?
-paste(object1, object1, sep = " - ")
+paste(object_character, object_character, sep = " - ")
 ```
 
 ---
@@ -175,10 +176,10 @@ paste(object1, object1, sep = " - ")
 Some classes allow for arithmetic operations
 
 ```{r}
-object2 <- 3
-class(object2)
+object_numeric <- 3
+class(object_numeric)
 # Can we operate on numeric objects?
-(object2*object2)/(object2+object2)
+(object_numeric*object_numeric)/(object_numeric+object_numeric)
 # Remember, parenthesis are important for the order of operations!
 ```
 
@@ -188,9 +189,9 @@ class(object2)
 Either TRUE or FALSE
 
 ```{r}
-true <- TRUE
-class(true)
-isTRUE(true) # Logical check
+object_logical <- TRUE
+class(object_logical)
+isTRUE(object_logical) # Logical check
 ```
 
 ---
@@ -200,17 +201,17 @@ Dates in R can be annoying, specially if you are using base R...
 
 ```{r}
 Sys.Date() # Get the current date
-date <- Sys.Date()
-class(date) # What can we do with data?
+object_date <- Sys.Date()
+class(object_date) # What can we do with data?
 Sys.Date() - 1
 ```
 
 Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)
 
 ---
-# Wait, what is that about "type"? (class 6/6)
+# Beware: object $\neq$  type
 
-Object class is often not the same as the object type...
+.pull-left[
 
 Type refers to how the data is stored; the 5 basic types in R are double, integer, complex, logical, character
 
@@ -220,35 +221,43 @@ typeof(1)
 ```
 
 **But if this is confusing to you, do not worry about it ...**
-
----
-# Fun(ish) break
-
-.pull-left[
-
-*Class matters?*
-
-```{r}
-as.numeric(as.Date("1970-01-01"))
-```
-
-- [pre-1900 dates in Excell](https://en.wikipedia.org/wiki/Year_1900_problem)
-
 ]
-
 .pull-right[
 
 ![100%](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjNjMDk0ZDhiZWI2MDRmY2YyMzhlM2M5ZjU3NzkxN2MyZDgzNjExNyZjdD1n/APqEbxBsVlkWSuFpth/giphy-downsized-large.gif)
 ]
 
-[Are you paying attention to class right now?](https://connorrothschild.github.io/what-are-you-doing/)
+[Paying attention to class right now?](https://connorrothschild.github.io/what-are-you-doing/)
+---
+# So far...
+
+--
+
+ We create objects by assigning things.
+
+--
+
+Objects have a class, which defines what sort of operations I can do with objects.
+
+--
+
+Class is different than type.
+
+--
+
+Now let's learn about data structures: 
+- vectors,
+- matrices,
+- dataframes,
+- and lists.
 
 ---
+
 class: split two
 
 # Vectors (data structures 1/4)
 
-*Vector*: one-dimensional with one type of data
+*Vector*: one-dimensional with one class of data
 
 .pull-left[
 
@@ -276,15 +285,12 @@ class: split two
 .pull-left[
 
 ```{r}
-matrix <- matrix(0, ncol = 2, nrow = 2)
-matrix
-dim(matrix) # get dimensions
-# Names are vector attributes
-# row.names(matrix) <- c("Henrique", "Livio") # set names
-# dimnames(matrix) # get all names
+matrix_1 <- matrix(0, ncol = 2, nrow = 2)
+matrix_1
+dim(matrix_1)
 ```
 
-There is also *arrays* but...
+There are also *arrays*, three or more dimensional objects of one class, but do not worry about it now.
 
 ]
 
@@ -295,32 +301,14 @@ There is also *arrays* but...
 ---
 class: split two
 
-# Lists (data structures 3/4)
+# Data Frames (data structures 3/4)
 
-*Lists*: group together R objects of diverse classes or dimensions
-
-.pull-left[
-```{r}
-list <- list(lecturers, age, speaks_portuguese, c(1,"two", 3, "four"))
-list
-```
-]
-
-.pull-right[
-![:scale 100%](assets/images/list.png)
-]
-
----
-class: split two
-
-# Data Frames (data structures 4/4)
-
-As lists, *data frames* objects can have multiple possible classes but a fixed number of rows and columns
+*Data frames* objects can have multiple possible classes but a fixed number of rows and columns
 
 .pull-left[
 ```{r}
 course <- data.frame(cbind(lecturers, age, speaks_portuguese))
-course 
+course
 # cbind() binds columns, rbind() binds rows
 ```
 ]
@@ -330,7 +318,27 @@ course
 ]
 
 ---
-# You can navigate (through data) if you have $ (functions 1/6)
+class: split two
+
+# Lists (data structures 4/4)
+
+*Lists*: group together R objects of diverse classes or dimensions.
+
+.pull-left[
+```{r}
+list <- list(lecturers, age, speaks_portuguese, 3,course)
+```
+![:scale 80%](assets/images/list.png)
+]
+
+.pull-right[
+```{r}
+list 
+```
+]
+
+---
+# You can navigate (through data) if you have $ (functions 1/5)
 
 --
 
@@ -346,7 +354,7 @@ course$lecturers <- c("Sposito", "Silva-Muller")
 **An operator in R is a function that can be written without parentheses...**
 
 ---
-# If you do not have $, friends can help :[] (functions 2/6)
+# If you do not have $, friends can help :[] (functions 2/5)
 
 --
 
@@ -360,17 +368,7 @@ course[,1] # all rows in first column
 ```
 
 ---
-# Factors (functions 3/6)
-
-*Factor* in R refers to categories in variables
-
-```{r}
-course$lecturers <- factor(course$lecturers, levels = c("Silva-Muller", "Sposito"))
-course$lecturers
-```
-
----
-# Logical operators (functions 4/6)
+# Logical operators (functions 3/5)
 
 - "=="/"!=" are values equal/different?
 - is bigger/bigger or equal ">"/">="  than?
@@ -378,7 +376,9 @@ course$lecturers
 
 ```{r}
 course$lecturers[1] == course$lecturers[2]
+
 course$age[2] < course$age[1]
+
 ```
 
 --
@@ -390,7 +390,7 @@ course$lecturers[1] != course$lecturers[2] & course$age[2] < course$age[1]
 ```
 
 ---
-# If it is true, then yes! (functions 5/6)
+# If it is true, then yes! (functions 4/5)
 
 We function ´ifelse()´ works with conditional element selection... (wait what?)
 
@@ -403,12 +403,12 @@ ifelse(test, yes, no)
 --
 
 ```{r}
-course$old = ifelse(course$age > 30, "old", "young")
+course$old <- ifelse(course$age > 30, "old", "young")
 course
 ```
 
 ---
-# GREP (Grammar of Regular Expressions) (functions 6/6)
+# GREP (Grammar of Regular Expressions) (functions 5/5)
 
 Functions to find, match and replace strings!
 
@@ -440,6 +440,30 @@ beep(8)
 --
 
 Gotcha you!
+
+--
+
+One last thing: factors!
+
+---
+# Factors (class 6/6)
+
+*Factor* in R refers to a variables that have a fixed and known set of possible values(days of the week, months, possible survey responses, years, age...)
+
+Anything can be a treated as a factor, if you want:
+--
+
+```{r}
+course$age <- factor(course$age, levels = c(0:122))
+course$age
+```
+
+--
+
+```{r}
+course$lecturers <- factor(course$lecturers, levels = c("Sposito","Awesome-Muller","Yildiz"))
+course$lecturers
+```
 
 ---
 class: split two
@@ -481,9 +505,51 @@ median(c(18, 81, 28))
 - [Above all, teaching base R facilitates comprehension of how R, as a software and programming language, works for beginners](https://github.com/matloff/TidyverseSkeptic/)
 
 ---
+# Summing Up!
+
+- You can create objects as long as you assign it.
+
+--
+
+- Objects have a class (character, numeric, logical, factor, etc...) and also a type (but do not worry about this now).
+
+--
+
+- Depending on dimensions and class, combined objects become datastructures: vectors, matrices, dataframes, lists, etc...
+
+--
+
+- The datastructure we will use the most are dataframes, which stores vectors of different classes but same lenght.
+
+--
+
+- You can navigate through data structures and do operations in it.
+
+---
 # Housekeeping
 
 ![:scale 100%](assets/images/homework.png)
+
+---
+# Summing Up!
+
+- You can create objects as long as you assign it.
+
+--
+
+- Objects have a class (character, numeric, logical, factor, etc...) and also a type (but do not worry about this now).
+
+--
+
+- Depending on dimensions and class, combined objects become datastructures: vectors, matrices, dataframes, lists, etc...
+
+--
+
+- The datastructure we will use the most are dataframes, which stores vectors of different classes but same length.
+
+--
+
+- You can navigate through data structures and do operations in it.
 
 ---
 
