@@ -11,7 +11,7 @@
     <script src="lecture2_files/tile-view/tile-view.js"></script>
     <link href="lecture2_files/panelset/panelset.css" rel="stylesheet" />
     <script src="lecture2_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"e340d25a46524e18a04ef7856db2d834","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"d5db65ad53354c46a53a9e5f6d178a51","expires":14}</script>
     <script src="lecture2_files/himalaya/himalaya.js"></script>
     <script src="lecture2_files/js-cookie/js.cookie.js"></script>
     <link href="lecture2_files/editable/editable.css" rel="stylesheet" />
@@ -262,7 +262,7 @@ Sys.Date() # Get the current date
 ```
 
 ```
-#&gt; [1] "2023-04-17"
+#&gt; [1] "2023-04-18"
 ```
 
 ```r
@@ -279,7 +279,7 @@ Sys.Date() - 1
 ```
 
 ```
-#&gt; [1] "2023-04-16"
+#&gt; [1] "2023-04-17"
 ```
 
 Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)
@@ -321,7 +321,7 @@ typeof(1)
 
 --
 
-Okay... we create objects by assigning things.
+ We create objects by assigning things.
 
 --
 
@@ -345,7 +345,7 @@ class: split two
 
 # Vectors (data structures 1/4)
 
-*Vector*: one-dimensional with one type of data
+*Vector*: one-dimensional with one class of data
 
 .pull-left[
 
@@ -649,7 +649,7 @@ Gotcha you!
 One last thing: factors!
 
 ---
-# Factors
+# Factors (class 6/6)
 
 *Factor* in R refers to a variables that have a fixed and known set of possible values(days of the week, months, possible survey responses, years, age...)
 
@@ -762,27 +762,6 @@ median(c(18, 81, 28))
 # Housekeeping
 
 ![:scale 100%](assets/images/homework.png)
-
----
-# Summing Up!
-
-- You can create objects as long as you assign it.
-
---
-
-- Objects have a class (character, numeric, logical, factor, etc...) and also a type (but do not worry about this now).
-
---
-
-- Depending on dimensions and class, combined objects become datastructures: vectors, matrices, dataframes, lists, etc...
-
---
-
-- The datastructure we will use the most are dataframes, which stores vectors of different classes but same lenght.
-
---
-
-- You can navigate through data structures and do operations in it.
 
 ---
 

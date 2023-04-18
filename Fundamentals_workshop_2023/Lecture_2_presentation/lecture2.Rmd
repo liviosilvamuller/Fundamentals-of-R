@@ -531,27 +531,6 @@ median(c(18, 81, 28))
 ![:scale 100%](assets/images/homework.png)
 
 ---
-# Summing Up!
-
-- You can create objects as long as you assign it.
-
---
-
-- Objects have a class (character, numeric, logical, factor, etc...) and also a type (but do not worry about this now).
-
---
-
-- Depending on dimensions and class, combined objects become datastructures: vectors, matrices, dataframes, lists, etc...
-
---
-
-- The datastructure we will use the most are dataframes, which stores vectors of different classes but same length.
-
---
-
-- You can navigate through data structures and do operations in it.
-
----
 
 class: center middle
 
