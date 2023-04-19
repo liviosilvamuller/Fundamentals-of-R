@@ -11,7 +11,7 @@
     <script src="lecture2_files/tile-view/tile-view.js"></script>
     <link href="lecture2_files/panelset/panelset.css" rel="stylesheet" />
     <script src="lecture2_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"d5db65ad53354c46a53a9e5f6d178a51","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x214b9b9989249dfae6022c354b00ed8","expires":14}</script>
     <script src="lecture2_files/himalaya/himalaya.js"></script>
     <script src="lecture2_files/js-cookie/js.cookie.js"></script>
     <link href="lecture2_files/editable/editable.css" rel="stylesheet" />
@@ -262,7 +262,7 @@ Sys.Date() # Get the current date
 ```
 
 ```
-#&gt; [1] "2023-04-18"
+#&gt; [1] "2023-04-19"
 ```
 
 ```r
@@ -279,7 +279,7 @@ Sys.Date() - 1
 ```
 
 ```
-#&gt; [1] "2023-04-17"
+#&gt; [1] "2023-04-18"
 ```
 
 Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)
@@ -651,11 +651,9 @@ One last thing: factors!
 ---
 # Factors (class 6/6)
 
-*Factor* in R refers to a variables that have a fixed and known set of possible values(days of the week, months, possible survey responses, years, age...)
-
-Anything can be a treated as a factor, if you want:
 --
-
+*Factor* in R refers to a variables that have a fixed and known set of possible values(days of the week, months, possible survey responses,...). *Anything can be a treated as a factor, if you want*:
+--
 
 ```r
 course$age &lt;- factor(course$age, levels = c(0:122))
@@ -666,20 +664,29 @@ course$age
 #&gt; [1] 81 18
 #&gt; 123 Levels: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 ... 122
 ```
+--
 
+
+```r
+summary(course$lecturers)
+```
+
+```
+#&gt;    Length     Class      Mode 
+#&gt;         2 character character
+```
 --
 
 
 ```r
 course$lecturers &lt;- factor(course$lecturers, levels = c("Sposito","Awesome-Muller","Yildiz"))
-course$lecturers
+summary(course$lecturers)
 ```
 
 ```
-#&gt; [1] Sposito        Awesome-Muller
-#&gt; Levels: Sposito Awesome-Muller Yildiz
+#&gt;        Sposito Awesome-Muller         Yildiz 
+#&gt;              1              1              0
 ```
-
 ---
 class: split two
 
@@ -723,7 +730,15 @@ mean(c(18, 81, 28))
 ```
 
 ```r
-median(c(18, 81, 28))
+median(c(18, 81, 28, NA))
+```
+
+```
+#&gt; [1] NA
+```
+
+```r
+median(c(18, 81, 28, NA), na.rm=TRUE)
 ```
 
 ```

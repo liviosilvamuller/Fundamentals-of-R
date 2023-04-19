@@ -448,23 +448,24 @@ One last thing: factors!
 ---
 # Factors (class 6/6)
 
-*Factor* in R refers to a variables that have a fixed and known set of possible values(days of the week, months, possible survey responses, years, age...)
-
-Anything can be a treated as a factor, if you want:
 --
-
+*Factor* in R refers to a variables that have a fixed and known set of possible values(days of the week, months, possible survey responses,...). *Anything can be a treated as a factor, if you want*:
+--
 ```{r}
 course$age <- factor(course$age, levels = c(0:122))
 course$age
 ```
+--
 
+```{r}
+summary(course$lecturers)
+```
 --
 
 ```{r}
 course$lecturers <- factor(course$lecturers, levels = c("Sposito","Awesome-Muller","Yildiz"))
-course$lecturers
+summary(course$lecturers)
 ```
-
 ---
 class: split two
 
@@ -486,7 +487,7 @@ summary(course)
 *Livio*
 
 ```{r}
-unique(c(1, 2, 2, 3, 3, 4, 5))
+unique(c(2, 2, 2, "three", "three",TRUE))
 ```
 ]
 
@@ -494,7 +495,8 @@ unique(c(1, 2, 2, 3, 3, 4, 5))
 
 ```{r}
 mean(c(18, 81, 28))
-median(c(18, 81, 28))
+median(c(18, 81, 28, NA))
+median(c(18, 81, 28, NA), na.rm=TRUE)
 ```
 
 ---
