@@ -5,6 +5,9 @@
 # Mind the GAP, with GAPMINDER
 # Do you know them?
 # https://www.gapminder.org/
+# Gapminder helps offering reliable global data on important global
+# trends and misconceptions! 
+
 
 # 1 Load the data---------------------------------------------------------------
 
@@ -12,114 +15,116 @@
 # One of these is gapminder, let's download, load, and see the data
 # available in the package.
 
-# install.packages("gapminder")
+#install.packages("gapminder")
 library(gapminder)
 
 # But we are not sure what the package really is, are we?
-# We can use the "?" here or, better, find the package manual!
+# We can use the "?" here.
 ?gapminder
 
 # If you cannot find help locally with "?" before package or function,
 # please try with "??" before package name or function.
 # "?" searches documentation, "??" search the help system.
-# want to find more about the difference? Run: ´?'?'´ and ´?'??'´.
+# If want to find more about the difference try running: ´?'?'´ and ´?'??'´.
 # The ´´ "delimits" code.
 # That is, commands you can/should run in your console.
 # Please remember to run the code without ´´ though...
 
 # All CRAN packages have a detailed manual, that you can find on google
 # It may be enough to go through the function index in the help page.
+# For example, the gapminder documentation can be found in the link below:
+# https://cran.r-project.org/web/packages/gapminder/gapminder.pdf
 
 # Load internal package data.
 data("gapminder")
 View(gapminder)
 
 # 2 Let's go on and investigate the data a bit.---------------------------------
+
+# A data summary is always helpful!
 summary(gapminder)
- 
-#install.package("skimr")
-
-#skimr::
-
-# The '::' specifies the package (skimr) and, therefore, can be used to:
-# 1- specify the package function without loading the whole package
-# 2- hit tab after '::'browse through the package functions and data interactively
-# For more info: ´?'::'´
-
 dim(gapminder)
 length(gapminder)
 
-#there are different ways to navigate dataframes...
+#install.package("skimr")
+#skimr::
+# The '::' specifies the package (in this case skimr) and, therefore,
+# can be used to:
+# 1- specify the package function without loading the whole package
+# 2- browse through the package functions and data interactively
+# For more info run: ´?'::'´
 
+# There are different ways to navigate data frames with brackets, try ?"["...
 gapminder[3,1] # for value in the third row in the first column
 gapminder[1,] # for values in the first row but all columns
-gapminder[,1] # for values in the first column but all rows 
-gapminder[1704,] # for values the last row but all columns
-#see ?"["
+gapminder[,1] # for values in the first column but all rows
 
-# We can use the "$" operator access variables in a dataframe.
+# Or, we can use the "$" operator access variables in a dataframe!
 gapminder$country
-
-# Country and year data...
 
 # Do you think we have data for all countries all years?
 summary(gapminder$country)
-summary(gapminder$year) #year is being understood as numeric, but is it numeric?
-summary(as.factor(gapminder$year))
+summary(gapminder$year) # Should year variable be numeric?
+summary(as.factor(gapminder$year)) # This is a very helpful tip!
 
 # Yes, all countries appear 12 times, all years appear 142 times!
 
 # 3 Let's manipulate the data---------------------------------------------------
 
-#we start by creating three objects that contains the life expectancy of Germany,
-#Switzerland, and France in 2007
+# Start by creating three objects that contains the life expectancy of Germany,
+# Switzerland, and France in 2007
 
 gapminder[gapminder$country == "Switzerland",]
-gapminder[gapminder$country == "France",4]
-gapminder[gapminder$country == "Germany",3:4]
+gapminder[gapminder$country == "France", 4]
+gapminder[gapminder$country == "Germany", 3:4]
 
+# Is there a better way to do this? YES!
+gapminder[gapminder$country == "Switzerland" & gapminder$year == "2007",]
+gapminder[gapminder$country == "France" & gapminder$year == "2007", 4]
+gapminder[gapminder$country == "Germany"  & gapminder$year == "2007", 3:4]
+
+# Create observations:
 life_exp_ch <- 81.7
 life_exp_fr <- 80.7
 life_exp_gr<-79.4
 
+# Run a logical test, just for the sake of it:
 life_exp_ch == life_exp_fr #this is a logical test
 life_exp_ch < life_exp_fr #this is a logical test
 
-#what about this: 
+# Would the code below work? Why
+# life_exp_ch = life_exp_fr
 
-#life_exp_ch = life_exp_fr
-
-#  "=" in R is a synonym  of "<-", 
-# so the life above assigned the value of life_exp_fr to life_exp_ch
+# In R, "=" is a synonym  of "<-", so the case above, we would be assigning
+# the value of life_exp_fr to life_exp_ch ...
 # In general, however, you should stick to "<-" not to confuse yourself.
 
-# let's create a vector
-
+# Let's create a vector
 lifeExp <- c(life_exp_ch,life_exp_fr,life_exp_gr)
 
+# Let's get the mean and median for vector and for data:
 mean(lifeExp)
 median(lifeExp)
-
 mean(gapminder$lifeExp)
 median(gapminder$lifeExp)
 
-#we can also try to add new information to our vector
-
+# Add more information to our vector:
 lifeExp$date<-"2007" # what happened here? R created a list.
 lifeExp <- as.data.frame(lifeExp)
 lifeExp$date<- "2007"
 
-mean(lifeExp) #what is this error about?
+mean(lifeExp) # Why are we getting an error?
 
-class(lifeExp$date) #why is 2007 a character?
-mean(lifeExp$date)
-
-lifeExp$date<- 2007 #this substitutes the previous date variable
+# Investigate class:
 class(lifeExp$date)
 mean(lifeExp$date)
 
-#now let's create a new variable in the dataset
+# Let's make these changee in the data:
+lifeExp$date<- 2007
+class(lifeExp$date)
+mean(lifeExp$date)
 
+# Let's create a new variable in the dataset:
 gapminder$republic <- ifelse(grepl("Rep.", gapminder$country), 
                                  "Republic", "Not a Republic")
 
@@ -135,7 +140,6 @@ AM
 # Let's get the mean (average) and median life expectancy for the Americas.
 meanAM <- mean(AM$lifeExp)
 meanAM
-
 medianAM <- median(AM$lifeExp)
 medianAM
 
@@ -146,7 +150,8 @@ medianEU <- median(EU$lifeExp)
 
 # Let's subtract to find out their differences!
 meanEU - meanAM
-# Around 7 years of difference, in average!
+# Around 7 years of difference, on average!
+
 medianEU - medianAM
 # Around 5 years of difference... Why is it different?
 
@@ -163,7 +168,6 @@ EU_AM
 # (and other class that allows for operations).
 
 EU_AM$difference <- EU_AM$Median.Life.Expectancy - EU_AM$Mean.Life.Expectancy
-
 EU_AM
 
 # What does a mean smaller than a median means?
@@ -176,34 +180,31 @@ EU_AM
 
 # How about we plot the distributions of observations for
 # Europe and for Americas in terms of life expectancy and GDP?
-# First thing we need to do here, before ploting,
-# is to reshape the data.
+# First thing we need to do here, before ploting, is to reshape the data.
 
 # Let's subset only the continents we are interested in.
 subset_AMEU <- subset(gapminder, continent == "Americas"|continent == "Europe")
 subset_AMEU
 
-# Now let's get the mean of life expectancy and GDP per capita in all years, for
-# each country
-# aggregate() is a pretty awesome function.
-# The help file for it is very detailed as well,
-# I suggest you read it!
+# Now let's get the mean of life expectancy and GDP per capita in all years,
+# for each country.
+# aggregate() is a pretty awesome function!
+# The help file for it is very detailed as well, I suggest you read it!
 
 aggregate(gdpPercap ~ country,
-          data = subset_AMEU, fun=mean) #this gives you gdpPercap
+          data = subset_AMEU, FUN = mean) #this gives you gdpPercap
 
 aggregate(cbind(lifeExp, gdpPercap) ~ country,
-          data = subset_AMEU, mean) #this gives you gdpPercap and lifeExp
+          data = subset_AMEU, FUN = mean) #this gives you gdpPercap and lifeExp
 
-lifeexp_gdp <- aggregate(cbind(lifeExp, gdpPercap) ~ country+continent,
-                     data = subset_AMEU, mean) 
-
+lifeexp_gdp <- aggregate(cbind(lifeExp, gdpPercap) ~ country + continent,
+                     data = subset_AMEU, FUN = mean)
 #this gives you gdpPercap and lifeExp while retaining continent
-
 lifeexp_gdp
 
-# A simple histogram can tell us the distribution of means BTW!
+# A simple histogram can tell us the distribution of means:
 hist(lifeexp_gdp$lifeExp)
+
 # Most countries in the Americas and Europe sample have average life
 # expectancy from 65 to 75 years!
 # Do you think most of these countries, with an average life
