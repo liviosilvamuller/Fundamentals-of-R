@@ -27,7 +27,7 @@ phd_theses <- readRDS("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamenta
 
 # PhD theses at the Graduate Institute
 
-The Institute has been the home for hundreds of PhD students over time. In this homework, we will data about PhD theses at the Institute. Please download and load the "phd_theses" from the course Moodle page. It looks like this:
+The Institute has been the home for hundreds of PhD students over time. In this homework, we will work with data about PhD theses at the Institute. Please download and load the "phd_theses" from the course Moodle page. It contains the following variables:
 
 | Name                | Description                                                                                          |
 |:------------------------|:----------------------------------------------|
@@ -85,7 +85,7 @@ phd_theses$year <- as.numeric(phd_theses$year)
 a)  How many PhD theses were written in 1930?
 
 ```{r, include=FALSE}
-subset(phd_theses, year ==2015)
+subset(phd_theses, year ==1930)
 ```
 
 b)  Did World War II (1939-1945) affect the number of theses written? Calculate the difference between the number of theses written in the seven years before the war and the seven years during the war.
