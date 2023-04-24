@@ -78,7 +78,7 @@ gapminder <- dplyr::mutate(gapminder, GDP = pop*gdpPercap)
 # Let's create a new variable for rich countries if their GDP is
 # above the 75th percentile:
 
-quantile(gapminder$GDP)
+quantile(gapminder$GDP) # what's the problem with this?
 
 # Note:: scientific notation is annoying. You can disable it with:
 
