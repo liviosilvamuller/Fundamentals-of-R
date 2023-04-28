@@ -1,0 +1,247 @@
+---
+title: 'Cleaning and wrangling data'
+subtitle: 'Fundamentals of R - Homework'
+date: "April 2023"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+- All materials for the exercises below are available in the homework folder.
+- Please submit an R script file containing the code and results.
+- You can #comment out any sentences written answers.
+
+# Courses at the Graduate Institute
+
+The Graduate Institute offers courses in spring and autumn.
+The datasets `autumn_21.csv` and `spring_22.csv`contain information on all courses offered by the Graduate Institute in the academic year 2021-2022.
+
+```{r eval=FALSE, include=FALSE}
+library(dplyr)
+library(tidyr)
+library(readr)
+setwd("~/Documents/GitHub/Fundamentals_of_R_IHEID2022/Fundamentals_workshop_2023/Lecture_3_homework/_2")
+autumn_21 <- read_csv("autumn_21.csv")
+spring_22 <- read_csv("spring_22.csv")
+
+```
+
+
+## Question 1
+
+Open the `spring_22.csv` data and create a variable called "Department" with the department acronym for each course. (Tip: you have all the information necessary in the various dummy variables for department, you just need to pivot the data and remove the NAs.)
+
+```{r eval=FALSE, include=FALSE}
+spring_22 <- spring_22 %>% 
+  select(-'...1') %>% 
+  pivot_longer(ANSO:RISP, names_to = "department", values_to = "Count") %>%
+  filter(!is.na(Count)) %>% 
+  select(-Count)
+```
+
+
+## Question 2
+
+Open the `autumn_21.csv` data and create a variable called "Department" with the department acronym for each course. (Tip: here you will have to separate the acronyms for departments from the course code)
+
+```{r eval=FALSE, include=FALSE}
+autumn_21 <- autumn_21 %>%
+  separate(code, c("department", "code"), sep = "-")
+```
+
+## Question 3
+
+Join the two datasets into one dataset called "academic_year".
+(Tip: remember to rename variables consistently across before joining data for best results).
+
+The "academic_year" dataset should contain the following variables:
+
+--------------------------------------------------------------------------------
+ Name                 Description
+ -------------------- ----------------------------------------------------------
+ `title_course`       Title of the course
+ 
+ `department`         Department that offers the course (MINT, EI, RISP, HPI, DI...)
+ 
+ `language`           Language in which the course is instructed (French or English)
+ 
+ `ECTS`               How many ECTS you can get for the course.
+ 
+ `semester`           Takes the categories autumn or spring.
+ 
+  `type`              Type of course(compulsory, elective, or workshop)
+  
+  `topic`             A broad category that summarizes the topic
+-----------------------------------------------------------------------------------
+
+```{r eval=FALSE, include=FALSE}
+spring_22 <- rename(spring_22, course  = class)
+academic_year <- full_join(autumn_21, spring_22) %>% 
+  select(-code) %>% 
+  rename(course_title = course)
+```
+
+## Question 4
+
+Do you have any duplicated rows in the "academic_year" dataset? If so, remove them.
+
+```{r eval=FALSE, include=FALSE}
+academic_year %>%
+  group_by(course_title) %>% 
+  count() %>% 
+  filter(n > 1)
+
+academic_year <- dplyr::distinct(academic_year)
+```
+
+
+## Question 5
+
+In the academic year, how many courses were offered in French at IHEID?
+
+```{r eval=FALSE, include=FALSE}
+academic_year %>% filter(language == "french") # 11 courses in french
+```
+
+
+## Question 6
+
+In the academic year, how many courses were offered in the autumn semester and in English at IHEID?
+
+```{r eval=FALSE, include=FALSE}
+academic_year %>%
+  select(course_title, semester, language) %>% 
+  filter(semester == "Autumn" & language == "english")
+
+# one of your solutions with base
+# count(academic_year, language, semester)
+```
+
+ 
+## Question 7
+
+Rank the departments by the number of courses offered in each semester.
+
+```{r eval=FALSE, include=FALSE}
+academic_year %>% 
+  group_by(department, semester) %>% 
+  count() %>% 
+  arrange(-n) %>% 
+  ungroup()%>%
+  rename("Number of courses" = n)
+
+```
+
+
+## Question 8
+
+Which department offers a higher share of courses in the spring semester?
+(Tip: after filtering and grouping, you need to divide the number of courses in each department by the total number of courses in the spring semester).
+
+```{r eval=FALSE, include=FALSE}
+# spring has 124 courses
+academic_year %>% 
+  filter(semester == "Spring") %>% 
+  group_by(department) %>% 
+  count() %>% 
+  mutate(share = (n/124)*100) %>% 
+  arrange(-share) %>% 
+  rename("Courses in spring semester" = n)
+```
+
+## Question 9
+
+List the three favorite topics overall.
+
+```{r eval=FALSE, include=FALSE}
+academic_year %>% 
+  group_by(topic) %>% 
+  count() %>% 
+  arrange(-n)
+```
+
+## Question 10 
+
+List the three favorite topics of each department.
+(Tip: group and slice).
+
+```{r eval=FALSE, include=FALSE}
+academic_year %>% 
+  group_by(department) %>% 
+  count(topic) %>% 
+  ungroup() %>% 
+  arrange(-n) %>% 
+  slice(1:10)
+```
+
+## Question 11
+
+One of the categories of `type` is "workshop".
+Workshops are normally about skills,
+but in the dataset, workshops miss values for `topic`.
+Assign the category "skills" at the `topic` variable for all workshops.
+
+```{r eval=FALSE, include=FALSE}
+academic_year %>% 
+  filter(type == "workshop")
+
+academic_year <- academic_year %>% 
+  mutate(topic = ifelse(type == "workshop", "skills", topic))
+```
+
+
+## Question 12
+
+What is are the favorite topics for compulsory courses in all departments?
+
+```{r eval=FALSE, include=FALSE}
+academic_year %>% 
+  filter(type == "compulsory") %>% 
+  group_by(topic) %>% 
+  count() %>% 
+  arrange(-n)
+```
+
+## Question 13
+
+Create a new dummy variable called "comp_type".
+The variable should take the value of 1 if a course is compulsory and about theory or methods; or take the value of 0 if a course is not compulsory or is compulsory but not about theory or methods.
+
+```{r eval=FALSE, include=FALSE}
+academic_year <- academic_year %>% 
+  mutate(comp_type = ifelse(type == "compulsory" & topic == "theory" | 
+                              topic == "methods", 1, 0))
+
+
+
+# solution with case_when for those asking( you'll need to change NA for 0 afterwards)
+
+#academic_year <- dplyr::mutate(`academic_year` , comp_type = 
+#                                case_when( type == "compulsory" & topic == "theory" ~ 1,
+#                                          type == "compulsory" & topic == "methods" ~ 1, 
+#                                         FALSE ~ 0)) 
+```
+
+## Question 14
+
+The `faculty_n.xlsx` dataset contains the number of faculty per department.
+In which department, faculty teaches more ECTs on average?
+Notice that faculty number for departments DE and IA are missing.
+(Tip: divide the total ects per department by the number of faculty).
+
+```{r eval=FALSE, include=FALSE}
+t_ects <- academic_year %>% 
+  group_by(department) %>%
+  summarise(total_ects = sum(ects))
+
+library(readxl)
+faculty_n <- read_excel("faculty_n.xlsx")
+
+
+ects_per_faculty <- inner_join(t_ects, faculty_n) %>% 
+  mutate(ects_per_faculty = total_ects/faculty_n) %>% 
+  arrange(-ects_per_faculty)
+ects_per_faculty
+```
