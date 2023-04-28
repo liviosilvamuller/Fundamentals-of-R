@@ -1,37 +1,40 @@
 refs	
 unnamed-chunk-1	
 unnamed-chunk-2	
-unnamed-chunk-3	
-unnamed-chunk-4	untidy_burgers	untidy_population_dat
-unnamed-chunk-5	
+unnamed-chunk-3	untidy_population
+unnamed-chunk-4	
+unnamed-chunk-5	tidy_population
 unnamed-chunk-6	
-unnamed-chunk-7	tidy_population
-unnamed-chunk-8	
-unnamed-chunk-9	tidy_population
+unnamed-chunk-7	
+unnamed-chunk-8	untidy_burgers
+unnamed-chunk-9	
 unnamed-chunk-10	
-unnamed-chunk-11	
-unnamed-chunk-12	tidy_burgers
+unnamed-chunk-11	country_region	io_income
+unnamed-chunk-12	
 unnamed-chunk-13	
-unnamed-chunk-14	country_region	io_income
+unnamed-chunk-14	
 unnamed-chunk-15	
-unnamed-chunk-16	io_income_select
-unnamed-chunk-17	
+unnamed-chunk-16	
+unnamed-chunk-17	io_income_mutate
 unnamed-chunk-18	
-unnamed-chunk-19	io_income_filter
-unnamed-chunk-20	
+unnamed-chunk-19	
+unnamed-chunk-20	io_income_grouped
 unnamed-chunk-21	
-unnamed-chunk-22	io_income_mutate
+unnamed-chunk-22	
 unnamed-chunk-23	
 unnamed-chunk-24	
-unnamed-chunk-25	io_income_grouped	io_income_summarised
-unnamed-chunk-26	
+unnamed-chunk-25	
+unnamed-chunk-26	io_income_filtered	io_income_grouped	io_income_summarised
 unnamed-chunk-27	
-unnamed-chunk-28	
-unnamed-chunk-29	io_income_regions
-unnamed-chunk-30	
+unnamed-chunk-28	io_income_filtered	io_income_grouped2	io_income_summarised2
+unnamed-chunk-29	
+unnamed-chunk-30	io_income_filtered	io_income_grouped2	io_income_summarised2
 unnamed-chunk-31	
-unnamed-chunk-32	io_income_filtered	io_income_grouped2	io_income_summarised2
-unnamed-chunk-33	
+unnamed-chunk-32	
+unnamed-chunk-33	io_income_filtered	io_income_grouped2	io_income_summarised2
 unnamed-chunk-34	
-unnamed-chunk-35	io_income_filtered	io_income_grouped2	io_income_summarised2
-unnamed-chunk-36	
+unnamed-chunk-35	
+unnamed-chunk-36	io_income_filtered	io_income_grouped2	io_income_summarised2
+setup	old
+unnamed-chunk-37	
+unnamed-chunk-38	

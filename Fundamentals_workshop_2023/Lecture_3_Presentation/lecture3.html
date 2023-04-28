@@ -90,8 +90,6 @@ class: split two
 
 - Common issues
 
-
-
 - Any other general questions?
 
 ]
@@ -99,8 +97,6 @@ class: split two
 .pull.right[
 
 ![:scale 40%](assets/images/dog.png)
-
-
 
 ]
 
@@ -110,72 +106,84 @@ class: split two
 
 ![:scale 40%](assets/images/roadmap.png)
 .pull-left[
+
 ## Lecture:
 
-  - Tidyverse, tidy-thinking, tidy-data
-  - From untidy to tidy
-  - From tidy to findings
+  - Tidy verse and thinking
+  
+  - From untidy to tidy data
+  
+  - From tidy data to findings
 ]
 
 .pull-right[
+
 ## Practical:
 
   - Cleaning data
+  
   - Wrangling data
+  
   - Joining data
 ]
 
 ---
 
-# What is the tidyverse? (1/2)
+class: split two
 
+# Tidyverse? (1/2)
 
-Universe of tidiness? From the [´{tidyverse}´](https://www.tidyverse.org/) website:
+.pull-left[
 
+The universe of tidiness?
+
+From the [tidyverse](https://www.tidyverse.org/) website:
 
 &gt; The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
 
+]
 
-![:scale 40%](assets/images/tidyverse.png)
+.pull-right[
+
+![:scale 100%](assets/images/tidyverse.png)
+
+]
 
 ---
 
-# What is the tidyverse? (2/2)
+# Tidyverse? (2/2)
 
-## Installing and loading the tidyverse: *be careful!*
+Installing and loading the tidyverse: *be careful!*
 
 
 ```r
 install.packages("tidyverse")
-```
-
-
-```r
 library(tidyverse)
 ```
 
-## What is in the tidyverse? *Eight different packages!*
+The tidyverse is actually *eight* different packages!
 
 ![:scale 50%](assets/images/core_tidy.png)
 
 ---
 
-# Tidy datasets (1/4)
+# Tidy data (1/4)
 
   - What is a tidy dataset?
-    - Each column is one variable.
-    - Each row is one case/observation.
-    - Each cell stores one value.
+  
+    - Each column is one variable
+    - Each row is one case/observation
+    - Each cell stores one value
+    
 ![:scale 80%](assets/images/tidy_exam.png)
 
 .fifty[Check: [Hadley Wickham’s dissertation paper that introduced tidy data.]( https://www.jstatsoft.org/article/view/v059i10)]
 
 ---
 
-# Tidy datasets (2/4)
+# Tidy data (2/4)
 
-
-##Is this tidy?
+Is this tidy?
 
 | Animal | Conversion  |
 | --- | --- | 
@@ -189,14 +197,16 @@ library(tidyverse)
 
 No! Cells in the second column contain two values.
 
+--
+
 .fifty[Author: [Fabio Votta](https://github.com/favstats)]
 
 ---
 
-# Tidy datasets (3/4)
+# Tidy data (3/4)
 
 
-##Is this tidy?
+Is this tidy?
 
 | Animal | Type | Value  |
 | --- | --- | --- | 
@@ -211,15 +221,19 @@ No! Cells in the second column contain two values.
 
 No! The second column contains two variables.
 
+--
+
 .fifty[Author: [Fabio Votta](https://github.com/favstats)]
 
 ---
 
-# Tidy datasets:one last example (4/4)
+# Tidy data (4/4)
 
+One last example:
 
-## from untidy...
+--
 
+from untidy...
 
 | country | 1999 | 2000  |
 | --- | --- | --- | 
@@ -228,7 +242,7 @@ No! The second column contains two variables.
 
 --
 
-##...to tidy!
+to tidy!
 
 | country | year | population  |
 | --- | --- | --- | 
@@ -236,11 +250,25 @@ No! The second column contains two variables.
 | Afghanistan | 2000 | 20595360 |
 | Brazil | 1999 | 172006362 |
 | Brazil | 2000 | 174504898 |
+
 ---
 
-# So, how we get to a tidy datasets?
+class: split two
 
-## We use [´{tidyr}´](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
+# Tidying (1/6)
+
+
+.pull-left[
+
+[tidyr](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf) can help getting from untidy to tidy data in R!
+
+]
+
+.pull-right[
+
+![:scale 20%](assets/images/tidyr.png)
+
+]
 
 - `separate()` separates data by tidying columns with two variables or values (`unite()` does the opposite.)
 
@@ -248,246 +276,285 @@ No! The second column contains two variables.
 
 - `pivot_longer()` pivots data by tidying rows that contain variables.
   
-## Let's test this in the following slides.
+Let's see how this works in the following slides...
 
 ---
 
-# Here is some untidy data from earlier
+# Tidying (2/6)
 
-
-
+Is this tidy or untidy data?
 
 
 ```r
-untidy_population_dat
+untidy_population &lt;- data.frame("Country" = c("Afghanistan-middle east",
+                                            "Brazil-south america",
+                                            "China-eastern asia"),
+                                "year_1999" = c(19987071, 172006362, 1272915272),
+                                "year_2000" = c(20595360, 174504898, 1280428583))
+untidy_population
 ```
 
 ```
-## # A tibble: 3 × 3
-##   country                     `1999`     `2000`
-##   &lt;chr&gt;                        &lt;dbl&gt;      &lt;dbl&gt;
+##                   Country  year_1999  year_2000
 ## 1 Afghanistan-middle east   19987071   20595360
-## 2 Brazil-south america     172006362  174504898
-## 3 China-eastern asia      1272915272 1280428583
+## 2    Brazil-south america  172006362  174504898
+## 3      China-eastern asia 1272915272 1280428583
 ```
+
+--
+
+How to make this data tidy?
 
 ---
 
-# `separate()` and `unite()`
+# Tidying (3/6)
 
-
-```
-## # A tibble: 3 × 3
-##   country                     `1999`     `2000`
-##   &lt;chr&gt;                        &lt;dbl&gt;      &lt;dbl&gt;
-## 1 Afghanistan-middle east   19987071   20595360
-## 2 Brazil-south america     172006362  174504898
-## 3 China-eastern asia      1272915272 1280428583
-```
+Let's `separate()` columns
 
 
 ```r
-tidy_population &lt;- separate (untidy_population_dat, country, sep="-", into=c("country", "region"))
+tidy_population &lt;- separate(untidy_population, Country,
+                            sep="-", into=c("country", "region"))
+tidy_population
 ```
 
 --
 
 
 ```
-## # A tibble: 3 × 4
-##   country     region            `1999`     `2000`
-##   &lt;chr&gt;       &lt;chr&gt;              &lt;dbl&gt;      &lt;dbl&gt;
-## 1 Afghanistan middle east     19987071   20595360
-## 2 Brazil      south america  172006362  174504898
-## 3 China       eastern asia  1272915272 1280428583
+##       country        region  year_1999  year_2000
+## 1 Afghanistan   middle east   19987071   20595360
+## 2      Brazil south america  172006362  174504898
+## 3       China  eastern asia 1272915272 1280428583
 ```
+
+--
+
+What else could we do to make this even tidier?
+
 ---
 
-# `pivot_longer()`
+# Tidying (4/6)
 
-- `pivot_longer()` pivots  data by tidying rows that contain variables.
- - this means more observations, i.e. *longer* dataset.
+Let's pivot the data long
+
+- `pivot_longer()` pivots  data by tidying rows that contain variables (i.e. means more observations, a *longer* dataset)
+
+--
 
 
 ```r
-tidy_population &lt;- pivot_longer(tidy_population,cols=c("1999","2000"), names_to="year", values_to = "population")
+pivot_longer(tidy_population,
+             cols = c("year_1999","year_2000"),
+             names_to = "year",
+             values_to = "population")
 ```
+
 --
+
 
 ```
 ## # A tibble: 6 × 4
-##   country     region        year  population
-##   &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt;
-## 1 Afghanistan middle east   1999    19987071
-## 2 Afghanistan middle east   2000    20595360
-## 3 Brazil      south america 1999   172006362
-## 4 Brazil      south america 2000   174504898
-## 5 China       eastern asia  1999  1272915272
-## 6 China       eastern asia  2000  1280428583
+##   country     region        year      population
+##   &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;          &lt;dbl&gt;
+## 1 Afghanistan middle east   year_1999   19987071
+## 2 Afghanistan middle east   year_2000   20595360
+## 3 Brazil      south america year_1999  172006362
+## 4 Brazil      south america year_2000  174504898
+## 5 China       eastern asia  year_1999 1272915272
+## 6 China       eastern asia  year_2000 1280428583
 ```
+
 ---
 
-# `pivot_wider()`
+# Tidying (5/6)
 
-- `pivot_wider()` pivots data by tidying columns with more than one variable.
- - this means more variables, i.e. *wider*.
+Another untidy example
 
-.pull-left[
 
 ```r
+untidy_burgers &lt;- data.frame(Lecturer = c("Henrique", "Livio",
+                                          "Henrique", "Livio",
+                                          "Henrique", "Livio"),
+                             Burger_joint = c("Inglewoods", "Inglewoods",
+                                              "H. Foundation", "H. Foundation",
+                                              "Holy Cow", "Holy Cow"),
+                             Grade = c(7, 10, 5, 5, 9, 7))
 untidy_burgers
 ```
 
 ```
-## # A tibble: 6 × 3
-##   lecturer joint      grade
-##   &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
-## 1 henrique inglewoods     7
-## 2 livio    inglewoods    10
-## 3 henrique foundation     5
-## 4 livio    foundation     5
-## 5 henrique holycow        9
-## 6 livio    holycow        7
+##   Lecturer  Burger_joint Grade
+## 1 Henrique    Inglewoods     7
+## 2    Livio    Inglewoods    10
+## 3 Henrique H. Foundation     5
+## 4    Livio H. Foundation     5
+## 5 Henrique      Holy Cow     9
+## 6    Livio      Holy Cow     7
 ```
-]
+
+How to make this data tidier?
+
+---
+
+# Tidying (6/6)
+
+Let's pivot this data wide
+
+- `pivot_wider()` pivots data by tidying columns with more than one variable (i.e. this means more variables, a *wider* dataset)
 
 --
 
-.pull-right[
-
 
 ```r
-tidy_burgers &lt;- pivot_wider(untidy_burgers,names_from=joint, values_from=grade)
+pivot_wider(untidy_burgers,
+            names_from = Burger_joint,
+            values_from = Grade)
 ```
+
+--
 
 
 ```
 ## # A tibble: 2 × 4
-##   lecturer inglewoods foundation holycow
-##   &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
-## 1 henrique          7          5       9
-## 2 livio            10          5       7
+##   Lecturer Inglewoods `H. Foundation` `Holy Cow`
+##   &lt;chr&gt;         &lt;dbl&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Henrique          7               5          9
+## 2 Livio            10               5          7
 ```
 
-]
-
 ---
-# Tidy, tidy, tidy...
+
+# ... but, a note of caution:
 
 ![:scale 80%](assets/images/tidy.png)
 
 .fifty[Artist: [Allison Horst](https://github.com/allisonhorst)].
 
 ---
+
 class: split two
 
-# ...but, a note of caution:
+# ... but, another note of caution:
 
 .pull-left[
-&lt;img src = "https://c.tenor.com/cnIm8CdVodgAAAAC/shark-smile.gif" /&gt;
+
+- Tidy data is great for working with tidy packages but ...
+
+- Tidying data takes time (i.e. do you really need to separate first and last name in two columns?)
+
 ]
 
 .pull-right[
 
--Tidy data is great for working with tidy packages.
-
--Nevertheless, tidying data might take sometime.
-
--Do you really need to separate first and last name in two columns?
+&lt;img src = "https://c.tenor.com/cnIm8CdVodgAAAAC/shark-smile.gif" /&gt;
 
 ]
+
 --
 
-##Think about it conceptually before tidying everything!
+## Tidyvice: 
+
+*Think about it conceptually before tidying everything!*
 
 ---
 
-# Now that things are tidy (or tidier), it's time to wrangle
+class: split two
+
+# Wrangling (1/8)
+
+Now that things are tidier, it's time to wrangle data!
 
 --
 
-By wrangling, we mean manipulating, and for this we use [´{dplyr}´](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
---
+.pull-left[
+
+By wrangling, we mean manipulating data, and for this we usually use the [dplyr](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf) package!
+
+]
+
+.pull-right[
+![:scale 20%](assets/images/dplyr.png)
+]
 
 &gt; The dplyr package is a **grammar of data manipulation**, providing a consistent set of verbs that help you solve the most common data manipulation challenges: creating,adding, picking, reducing, and changing variables.
 
 
 
-
 ---
-##Let's work with dataset on the income of international organizations!
+
+# Wrangling (2/8)
+
+Let's load some data on the income of international organizations
 
 
 ```r
-head(io_income)
+library(dplyr)
+slice_head(io_income, n = 10)
 ```
 
 ```
-## # A tibble: 6 × 4
-##    year donor      type_donor amount_nominal
-##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
-## 1  2000 Maldives   public              1057.
-## 2  2000 Estonia    public             18192.
-## 3  2000 Burundi    public              2082.
-## 4  2000 Mozambique public              1057.
-## 5  2000 Morocco    public             43350.
-## 6  2000 Mozambique public              3580
+## # A tibble: 10 × 4
+##     year donor                                  type_donor amount_nominal
+##    &lt;dbl&gt; &lt;chr&gt;                                  &lt;chr&gt;               &lt;dbl&gt;
+##  1  2000 Maldives                               public              1057.
+##  2  2000 Estonia                                public             18192.
+##  3  2000 Burundi                                public              2082.
+##  4  2000 Mozambique                             public              1057.
+##  5  2000 Morocco                                public             43350.
+##  6  2000 Mozambique                             public              3580 
+##  7  2000 Sasakawa Endowment Fund Interest (JPN) private           105000 
+##  8  2000 China                                  public           1052019.
+##  9  2000 New Zealand                            public             70848 
+## 10  2000 Mc Henry Tichenor (USA)                private            25000
 ```
 
 ---
 
-# Select (dplyr verbs 1/5)
+# Wrangling (3/8)
 
-`select ()` selects variables in the dataframe.
+Let's `select()` some variables
+
 
 ```r
-io_income_select &lt;- select(io_income, donor, type_donor)
+select(io_income, donor, type_donor)
 ```
+
 --
 
-```r
-head (io_income_select)
-```
 
 ```
-## # A tibble: 6 × 2
-##   donor      type_donor
-##   &lt;chr&gt;      &lt;chr&gt;     
-## 1 Maldives   public    
-## 2 Estonia    public    
-## 3 Burundi    public    
-## 4 Mozambique public    
-## 5 Morocco    public    
-## 6 Mozambique public
+## # A tibble: 10 × 2
+##    donor                                  type_donor
+##    &lt;chr&gt;                                  &lt;chr&gt;     
+##  1 Maldives                               public    
+##  2 Estonia                                public    
+##  3 Burundi                                public    
+##  4 Mozambique                             public    
+##  5 Morocco                                public    
+##  6 Mozambique                             public    
+##  7 Sasakawa Endowment Fund Interest (JPN) private   
+##  8 China                                  public    
+##  9 New Zealand                            public    
+## 10 Mc Henry Tichenor (USA)                private
 ```
+
 ---
-##...glimpse the dataset
 
+# Wrangling (4/8)
 
-```
-## # A tibble: 6 × 4
-##    year donor      type_donor amount_nominal
-##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
-## 1  2000 Maldives   public              1057.
-## 2  2000 Estonia    public             18192.
-## 3  2000 Burundi    public              2082.
-## 4  2000 Mozambique public              1057.
-## 5  2000 Morocco    public             43350.
-## 6  2000 Mozambique public              3580
-```
----
-# Filter (dplyr verbs 2/5)
-
-`filter ()` subsets data frame by a condition in the observations.
+`filter ()` subsets data by a condition in the observations
 
 
 ```r
-io_income_filter &lt;- filter(io_income, donor=="Switzerland")
+filter(io_income, donor == "Switzerland")
 ```
+
 --
 
+
 ```
-## # A tibble: 89 × 4
+## # A tibble: 10 × 4
 ##     year donor       type_donor amount_nominal
 ##    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt;
 ##  1  2000 Switzerland public           320345. 
@@ -499,87 +566,59 @@ io_income_filter &lt;- filter(io_income, donor=="Switzerland")
 ##  7  2002 Switzerland public               64.2
 ##  8  2002 Switzerland public           599408  
 ##  9  2002 Switzerland public              128. 
-## 10  2002 Switzerland public         57295239. 
-## # … with 79 more rows
+## 10  2002 Switzerland public         57295239.
 ```
 
 ---
-##...glimpse the dataset
 
+# Wrangling (5/8)
 
-```
-## # A tibble: 6 × 4
-##    year donor      type_donor amount_nominal
-##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
-## 1  2000 Maldives   public              1057.
-## 2  2000 Estonia    public             18192.
-## 3  2000 Burundi    public              2082.
-## 4  2000 Mozambique public              1057.
-## 5  2000 Morocco    public             43350.
-## 6  2000 Mozambique public              3580
-```
----
-# Mutate (dplyr verbs 3/5)
-
-`mutate ()` creates new variables.
+`mutate ()` creates new variables, often with new values, from other variables
 
 
 ```r
-io_income_mutate &lt;- mutate(io_income,thousands_USD=amount_nominal/1000)
+io_income_mutate &lt;- mutate(io_income,
+                           thousands_USD = amount_nominal/1000)
 ```
+
 --
 
+
 ```
-## # A tibble: 4,386 × 5
-##     year donor                                  type_donor amount_nomi…¹ thous…²
-##    &lt;dbl&gt; &lt;chr&gt;                                  &lt;chr&gt;              &lt;dbl&gt;   &lt;dbl&gt;
-##  1  2000 Maldives                               public             1057.    1.06
-##  2  2000 Estonia                                public            18192.   18.2 
-##  3  2000 Burundi                                public             2082.    2.08
-##  4  2000 Mozambique                             public             1057.    1.06
-##  5  2000 Morocco                                public            43350.   43.3 
-##  6  2000 Mozambique                             public             3580     3.58
-##  7  2000 Sasakawa Endowment Fund Interest (JPN) private          105000   105   
-##  8  2000 China                                  public          1052019. 1052.  
-##  9  2000 New Zealand                            public            70848    70.8 
-## 10  2000 Mc Henry Tichenor (USA)                private           25000    25   
-## # … with 4,376 more rows, and abbreviated variable names ¹​amount_nominal,
-## #   ²​thousands_USD
+## # A tibble: 10 × 5
+##     year donor                     type_donor amount_nominal thousands_USD
+##    &lt;dbl&gt; &lt;chr&gt;                     &lt;chr&gt;               &lt;dbl&gt;         &lt;dbl&gt;
+##  1  2000 Maldives                  public              1057.          1.06
+##  2  2000 Estonia                   public             18192.         18.2 
+##  3  2000 Burundi                   public              2082.          2.08
+##  4  2000 Mozambique                public              1057.          1.06
+##  5  2000 Morocco                   public             43350.         43.3 
+##  6  2000 Mozambique                public              3580           3.58
+##  7  2000 Sasakawa Endowment Fund … private           105000         105   
+##  8  2000 China                     public           1052019.       1052.  
+##  9  2000 New Zealand               public             70848          70.8 
+## 10  2000 Mc Henry Tichenor (USA)   private            25000          25
 ```
 
 ---
-##...glimpse the dataset
+
+# Wrangling (6/8)
+
+Grouping and summarizing are powerful tidy tools!
+
+- `group_by()` groups data based on a characteristic to subsequently perform certain operations
+
+- `summarise()` creates a new dataframe by combining grouped variables.
 
 
 ```r
-head(io_income)
+io_income_grouped &lt;- group_by(io_income, type_donor)
+summarise(io_income_grouped, amount_nominal = sum(amount_nominal,
+                                                  na.rm = TRUE))
 ```
 
-```
-## # A tibble: 6 × 4
-##    year donor      type_donor amount_nominal
-##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
-## 1  2000 Maldives   public              1057.
-## 2  2000 Estonia    public             18192.
-## 3  2000 Burundi    public              2082.
-## 4  2000 Mozambique public              1057.
-## 5  2000 Morocco    public             43350.
-## 6  2000 Mozambique public              3580
-```
----
-# Group_by and Summarise (dplyr verbs 4/5)
-
-`group_by()` groups data based on a characteristic to subsequently perform certain operations.
-`summarise()` creates a new dataframe by combining grouped variables.
-
-
-
-```r
-io_income_grouped&lt;- group_by(io_income, type_donor)
-
-io_income_summarised &lt;- summarise(io_income_grouped, amount_nominal = sum(amount_nominal, na.rm = TRUE))
-```
 --
+
 
 ```
 ## # A tibble: 3 × 2
@@ -589,11 +628,18 @@ io_income_summarised &lt;- summarise(io_income_grouped, amount_nominal = sum(amo
 ## 2 public       35524020021.
 ## 3 &lt;NA&gt;           341116650.
 ```
+
 ---
-# Joining things (dplyr verbs 5/5)
+
+# Wrangling (7/8)
 
 dplyr has a family of functions that help you join multiple datasets: `left_join(), right_join(), inner_join(), full_join() ` ...
-- let's check a random sample of a new dataset (country_region), which contains regions for each country.
+
+- [This great post on all merging possibilities and details with dplyr.]( https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti)
+
+--
+
+Let's get a new dataset which contains regions for each country to see these joins work!
 
 
 ```r
@@ -602,100 +648,112 @@ sample_n(country_region, 5)
 
 ```
 ## # A tibble: 5 × 2
-##   donor       region       
-##   &lt;chr&gt;       &lt;chr&gt;        
-## 1 Saint Lucia Latin America
-## 2 Ireland     Europe       
-## 3 Suriname    Latin America
-## 4 Nigeria     Africa       
-## 5 Belize      Latin America
+##   donor      region       
+##   &lt;chr&gt;      &lt;chr&gt;        
+## 1 Israel     Middle East  
+## 2 Lithuania  Europe       
+## 3 Cuba       Latin America
+## 4 Azerbaijan Asia         
+## 5 Greece     Europe
 ```
 
-- We can join this to our io_income dataset, and get regions for each country.
 ---
-# Joining things (dplyr verbs 5/5)
 
-```
-## # A tibble: 3 × 4
-##    year donor                                 type_donor amount_nominal
-##   &lt;dbl&gt; &lt;chr&gt;                                 &lt;chr&gt;               &lt;dbl&gt;
-## 1  2009 Switzerland                           public            184765.
-## 2  2010 France                                public           1358596.
-## 3  2010 Democratic People's Republic of Korea public              2732.
-```
+# Wrangling (8/8)
+
+If I wanted to add a region column in the income of international organizations data, which join should I use?
+
+--
 
 
 ```r
-io_income_regions &lt;- left_join(io_income, country_region)
+left_join(io_income, country_region)
 ```
 
-
 ```
-## # A tibble: 6 × 5
-##    year donor            type_donor amount_nominal region
-##   &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt; 
-## 1  2020 Maldives         public              3034. Asia  
-## 2  2020 Gates Foundation private         66250000  &lt;NA&gt;  
-## 3  2020 Slovenia         public            216946. Europe
-## 4  2020 UN               public            277500  &lt;NA&gt;  
-## 5  2020 Estonia          public             23203. Europe
-## 6  2020 Luxembourg       public            900000  Europe
+## # A tibble: 4,386 × 5
+##     year donor                            type_donor amount_nominal region
+##    &lt;dbl&gt; &lt;chr&gt;                            &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt; 
+##  1  2000 Maldives                         public              1057. Asia  
+##  2  2000 Estonia                          public             18192. Europe
+##  3  2000 Burundi                          public              2082. Africa
+##  4  2000 Mozambique                       public              1057. Africa
+##  5  2000 Morocco                          public             43350. Africa
+##  6  2000 Mozambique                       public              3580  Africa
+##  7  2000 Sasakawa Endowment Fund Interes… private           105000  &lt;NA&gt;  
+##  8  2000 China                            public           1052019. Asia  
+##  9  2000 New Zealand                      public             70848  Ocean…
+## 10  2000 Mc Henry Tichenor (USA)          private            25000  &lt;NA&gt;  
+## # ℹ 4,376 more rows
 ```
 
-.fifty[Check: [This great post on all merging possibilities and details with dplyr.]( https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti)].
 ---
 
-# and many others dplyr verbs that we cannot cover here....
+# There are many others dplyr verbs that we did cover here....
 
 
 ```r
-arrange() #orders row by values
-rename() #renames variables
-distinct() #keep only distinct rows
-slice() #selects rows by position
-count() #counts number of rows with unique values
-...
+arrange() # orders row by values
+rename() # renames variables
+distinct() # keep only distinct rows
+slice() # selects rows by position
+count() # counts number of rows with unique values
 ```
 
+[And much more...](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
 ---
-# The Pipe Operator `%&gt;%` (1/3)
 
-- So far, we have been doing *object-oriented programming*.
+class: split two
 
-- This means we assign (&lt;-) the result of an operation to an object.
+# The Pipe Operator %&gt;%  (1/3)
 
-- We then operate on the newly created object.
+.pull-left[
+
+- So far, we have been doing *object-oriented programming*
+
+- This means we assign (&lt;-) the result of an operation to an object
+
+- And, then, operate on the newly created object
+
+]
+
+.pull-right[
+
+![:scale 100%](assets/images/pipe.jpeg)
+
+]
+
+--
 
 
 ```r
 io_income_filtered&lt;- filter(io_income, year &gt; "2018")
-
-io_income_grouped2 &lt;- group_by(io_income_filtered, year)
-
-io_income_summarised2 &lt;- summarise(io_income_grouped2, amount_nominal = sum(amount_nominal, na.rm = TRUE))
-```
---
-
-```
-## # A tibble: 2 × 2
-##    year amount_nominal
-##   &lt;dbl&gt;          &lt;dbl&gt;
-## 1  2019    4332215887.
-## 2  2020    2921693184.
+io_income_grouped &lt;- group_by(io_income_filtered, year)
+io_income_summarised &lt;- summarise(io_income_grouped2,
+                                  amount_nominal = sum(amount_nominal, 
+                                                       na.rm = TRUE))
 ```
 
 ---
-# The Pipe Operator `%&gt;%` (2/3)
 
-- The pipe operator (%&gt;%) changes this logic.
+class: split two
 
---
+# The Pipe Operator %&gt;%  (2/3)
 
-- It takes the output of one function and passes it into another function as an argument.
+.pull-left[
 
---
+- The pipe operator (%&gt;%) changes the object-oriented logic, it takes the output of one function and passes it into another function as an argument!
 
-- This is why we call it *functional-programming*.
+- This is why we call it *functional-programming*!
+
+]
+
+.pull-right[
+
+![:scale 40%](assets/images/pipe2.png)
+
+]
 
 --
 
@@ -707,29 +765,23 @@ group_by(year) %&gt;%
 summarise(amount_nominal = sum(amount_nominal, na.rm = TRUE))
 ```
 
-```
-## # A tibble: 2 × 2
-##    year amount_nominal
-##   &lt;dbl&gt;          &lt;dbl&gt;
-## 1  2019    4332215887.
-## 2  2020    2921693184.
-```
-
 .fifty[Check: [Plumbers, chains, and famous painters: The (updated) history of the pipe operator in R]( http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/)].
 
 ---
 class: split two
 
-# The Pipe Operator `%&gt;%` (3/3)
+# The Pipe Operator %&gt;%  (3/3)
 
 .pull-left[
 
 
 ```r
 io_income_filtered&lt;- filter(io_income, year &gt; "2018")
-io_income_grouped2 &lt;- group_by(io_income_filtered, year)
-io_income_summarised2 &lt;- summarise(io_income_grouped2, amount_nominal = sum(amount_nominal, na.rm = TRUE))
-io_income_summarised2
+io_income_grouped &lt;- group_by(io_income_filtered, year)
+io_income_summarised &lt;- summarise(io_income_grouped2,
+                                  amount_nominal = sum(amount_nominal,
+                                                       na.rm = TRUE))
+io_income_summarised
 ```
 
 ```
@@ -770,15 +822,15 @@ class: split two
 
 .pull-left[
 
-- Tidy data and piping are both *intuitive* and *powerful*.
+- Tidy data and piping are both *intuitive* and *powerful*
 
-- All packages in the tidyverse are optimized for tidy data and piping.
+- All packages in the tidyverse are optimized for tidy data and piping
 
-- Some packages outside the tidyverse were also developed within the tidy paradigm.
+- Some packages outside the tidyverse were also developed within the tidy paradigm
 
-- Nevertheless, many *important* packages and other programming softwares operate outside the logic of tidy.
+- Nevertheless, many *important* R packages and other programming software operate outside the logic of tidy
 
-- [While we like tidy, a better programmer knows both. ](https://github.com/matloff/TidyverseSkeptic/)
+- [While you may like tidy, a better programmer knows both! ](https://github.com/matloff/TidyverseSkeptic/)
 
 ]
 
