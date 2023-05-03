@@ -4,9 +4,6 @@ subtitle: 'Fundamentals of R - Homework'
 date: "2023"
 output:
   pdf_document: default
-  html_document:
-    df_print: paged
-  word_document: default
 ---
 
 -   All materials for the exercises below are available on Moodle.
