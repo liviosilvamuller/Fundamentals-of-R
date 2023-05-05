@@ -49,7 +49,7 @@ For changing text styles use *:
 
 For inserting R code click on the **C** button above or use Cmd + Option + I on MAC (for Windows: Ctrl + Alt + I).
 
-```{r character, echo=TRUE}
+```{r character}
 as.character("R Markdown is awesome")
 ```
 
