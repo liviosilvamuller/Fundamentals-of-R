@@ -29,3 +29,33 @@ unnamed-chunk-27	data	gapminder	library	sample_n
 unnamed-chunk-28	%>%	==	aes	country	filter	gapminder	geom_line	ggplot	pop	year
 unnamed-chunk-29	options	plot
 unnamed-chunk-30	%>%	$	donor	io_income_rs	list	mutate	replace_na
+unnamed-chunk-60	count	filter	group_by	left_join	mutate	pivot_long	pivot_wide	select	separate	summarize	unite
+unnamed-chunk-61	display.brewer.all	library
+unnamed-chunk-62	data	gapminder	library	sample_n
+unnamed-chunk-63	aes	gapminder	gdpPercap	ggplot	library	lifeExp
+unnamed-chunk-64	p
+unnamed-chunk-65	geom_point
+unnamed-chunk-66	p
+unnamed-chunk-67	geom_smooth
+unnamed-chunk-68	p
+unnamed-chunk-69	::	scale_x_log10
+unnamed-chunk-70	p
+unnamed-chunk-71	labs
+unnamed-chunk-72	p
+unnamed-chunk-73	element_text	theme
+unnamed-chunk-74	p
+unnamed-chunk-75	::	aes	element_text	gapminder	gdpPercap	geom_point	geom_smooth	ggplot	labs	lifeExp	scale_x_log10	theme
+unnamed-chunk-76	::	aes	gapminder	gdpPercap	geom_point	ggplot	lifeExp	scale_x_log10
+unnamed-chunk-77	purp
+unnamed-chunk-78	::	aes	gapminder	gdpPercap	geom_point	ggplot	lifeExp	scale_x_log10
+unnamed-chunk-79	purp2
+unnamed-chunk-80	::	aes	continent	gapminder	gdpPercap	geom_point	ggplot	lifeExp	scale_x_log10
+unnamed-chunk-81	purp3
+unnamed-chunk-82	::	aes	continent	gapminder	gdpPercap	geom_point	ggplot	lifeExp	scale_x_log10
+unnamed-chunk-83	purp5
+unnamed-chunk-84	::	aes	gapminder	gdpPercap	geom_point	ggplot	lifeExp	pop	scale_x_log10	theme
+unnamed-chunk-85	purp4
+unnamed-chunk-86	data	gapminder	library	sample_n
+unnamed-chunk-87	%>%	==	aes	country	filter	gapminder	geom_line	ggplot	pop	year
+unnamed-chunk-88	options	plot
+unnamed-chunk-89	%>%	$	donor	io_income_rs	list	mutate	replace_na

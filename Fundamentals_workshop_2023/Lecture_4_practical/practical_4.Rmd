@@ -49,8 +49,12 @@ For changing text styles use *:
 
 For inserting R code click on the **C** button above or use Cmd + Option + I on MAC (for Windows: Ctrl + Alt + I).
 
-```{r character}
+```{r echo=FALSE}
 as.character("R Markdown is awesome")
+```
+
+```{r echo=TRUE}
+print("hello")
 ```
 
 Code chunks can be evaluated (should code be run?), included (should the code displayed in knitted document?), and much more. [rmarkdown](https://rmarkdown.rstudio.com/), as a [tidyverse](https://www.tidyverse.org/) package, also has a [cheat sheet](https://www.rstudio.com/resources/cheatsheets/)!
@@ -101,7 +105,7 @@ How can we improve this?
 gapminder %>%
   filter(country == "Switzerland") %>% # filter for Switzerland
   ggplot(aes(x = year, y = lifeExp)) + # adds a first ggplot2 layer
-  geom_line() + # add a line
+  geom_line()+ # add a line
   labs(title = "Life expectancy in Switzerland from 1957 to 2007", # add title
        x = "Year",  # add label for x axis
        y = "Life expectation", # add label for y axis
@@ -110,18 +114,17 @@ gapminder %>%
 
 Do you think that life expectancy increased for across all continents in time?
 
-```{r message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 gapminder %>%
   group_by(continent, year) %>% # group by year and country
   summarise(Avg_life_expectancy = mean(lifeExp)) %>%  #  mean life expectancy
-  ggplot(aes(x = year, y = Avg_life_expectancy, aes(color = continent))) + # map
+  ggplot(aes(x = year, y = Avg_life_expectancy)) + # map
   geom_line(aes(color = continent)) +
   geom_point(aes(color = continent)) + #here we are mapping color by continent at the geom_level
   labs(title = "Life expectancy by continent from 1957 to 2007", # add title
        x = "Year", # add
        y = "Average life expectation", # add lable for y axis
-       caption = "Source: Gapminder") + # add caption
-  theme_minimal() # add theme
+       caption = "Source: Gapminder") +
 # What if I wanted to add a line for the average here, as above?
 ```
 
@@ -188,8 +191,8 @@ gapminder %>% # select data
   summarise(Avg_life_expectancy = mean(lifeExp)) %>% # get the means by the groups
   ggplot(aes(x = continent, # map continent in the x axis
              y = Avg_life_expectancy, # map average life expectancy in the y axis
-             fill = as.factor(year))) + # fill mapping by year
-  geom_col(position = "dodge") + # defining the position of stat in bars
+             color = as.factor(year))) + # fill mapping by year
+  geom_point() + # defining the position of stat in bars
   labs(title = "Life expectancy from 1957 to 2007", # add a title
        x = "Continent", # add a label for x axis
        y = "Average Life Expectancy", # add a label for y axis
