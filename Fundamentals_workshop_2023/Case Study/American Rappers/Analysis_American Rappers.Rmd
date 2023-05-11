@@ -6,7 +6,6 @@ output:
   pdf_document: default
   html_document: default
 ---
-
 # Data
 
 ## Loading data
@@ -381,31 +380,6 @@ Kanye_West <- american_rappers %>%
                                    year >2019  ~ "After Kim"))
 ```
 
-```{r kim effect, message=FALSE, warning=FALSE}
-Kanye_West %>%
-  pivot_longer(6:7, names_to="topic", values_to = "word_count") %>%
-  group_by(year) %>%
-  mutate(songs_per_year = n()) %>%
-  group_by(songs_per_year, topic, kim_kardashian) %>%
-  summarise(word_count = sum(word_count, na.rm = TRUE))%>%
-  mutate(normalized_word_count = word_count/songs_per_year)%>%
-  ggplot(., aes(x=kim_kardashian, y=normalized_word_count, fill=topic)) +
-  geom_bar(stat="identity", position="dodge") +
-  labs(x = "", y = "Average swearing per song",
-       title = " The Kardashian Effect?",
-       subtitle= "214 songs in 13 albums since 2004.")+
-  theme(panel.background = element_rect("white", "black", .5, "solid"),
-        panel.grid.major = element_line(color = "grey", size = 0.3,
-                                        linetype = "solid"),
-        axis.text = element_text(color = "black", size = 10),
-        title = element_text(color = "black", size = 10, face = "bold"),
-        legend.title = element_blank(),
-        plot.subtitle = element_text(color = "black", size = 9, face = "plain"),
-        legend.position = "bottom")
-```
-
-But this is a weird categorical ordering, no? We can change this!
-
 ```{r kim effect reordered, message=FALSE, warning=FALSE}
 Kanye_West$kim_kardashian <- factor(Kanye_West$kim_kardashian,                      
                                     levels = c("Before Kim",
@@ -435,8 +409,9 @@ Kanye_West %>%
 
 ## Lamar's Repertoire in words
 
-```{r lamar cleaning, include=FALSE, message=FALSE, warning=FALSE}
+Let's do a basic word frequency analysis.
 
+```{r lamar cleaning, include=FALSE, message=FALSE, warning=FALSE}
 # The function "function()" creates a function; in this case, our function cleans the text in multiple ways, by applying already existing functions from tm.
 
 cleanCorpus<-function(corpus, customStopwords){
@@ -454,13 +429,13 @@ stops <- c(stopwords('SMART'), "dont", "youre")
 Kendrick_Lamar <- american_rappers %>%
   filter(rapper=="Kendrick Lamar") # creating a dataset only for Kendrick
   
-# the next few lines perform a few operations to create a dataset counting appearances of words in all songs.
+# The next few lines perform a few operations to create a dataset counting appearances of words in all songs.
 lamarCorpus_t <- VCorpus(VectorSource(Kendrick_Lamar$lyrics))
 lamarCorpus_t <- cleanCorpus(lamarCorpus_t, stops)
 LamarTDM_t  <- TermDocumentMatrix(lamarCorpus_t)
 lamar_dtm_t  <- DocumentTermMatrix(lamarCorpus_t)
-# create a document term matrix
 
+# create a document term matrix
 LamarTDMm_t <- as.matrix(LamarTDM_t)
 LamarSums_t <- rowSums(LamarTDMm_t)
 LamarFreq_t <- data.frame(word=names(LamarSums_t),frequency=LamarSums_t)
@@ -488,3 +463,7 @@ ggplot(topWords_t, aes(x=word, y=log(frequency))) +
         plot.subtitle = element_text(color="black", size=9, face= "plain"),
         legend.position = "bottom")
 ```
+
+Is our sample of swear/religious word bias?
+
+Do you think this is the same for the other rappers in the sample?
