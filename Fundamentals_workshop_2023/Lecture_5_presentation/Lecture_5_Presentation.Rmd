@@ -215,7 +215,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 ---
 
-# Exchanging with the community (reprex 1/9)
+# Exchanging with the community (reprex 1/8)
 
 - [Reproducibility](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example) of an error is the key
 
@@ -227,7 +227,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 ---
 
-# The question (reprex 2/9)
+# The question (reprex 2/8)
 
 "Dear R friends,
 
@@ -243,23 +243,25 @@ Thank you in advance for your time and consideration!"
 
 ---
 
-# The data (reprex 3/9)
+# The data (reprex 3/8)
 
-[`set.seed()`](https://r-coder.com/set-seed-r/) orders random processes, see `?set.seed()`
+A small sample of the data...
 
 ```{r}
-set.seed(1234)
 my.df <- data.frame(col1 = sample(c(1,2), 5, replace = TRUE),
-                    col2 = as.factor(sample(5)), col3 = letters[1:5],
+                    col2 = as.factor(sample(5)),
+                    col3 = letters[1:5],
                     col4 = sample(c(TRUE, FALSE), 5, replace = TRUE))
 my.df
 ```
 
 Using R datasets (e.g. `USArrests`, `mtcars`, `iris`) is also very handy!
 
+*[`set.seed()`](https://r-coder.com/set-seed-r/) orders random processes, see `?set.seed()`*
+
 ---
 
-# The error (reprex 4/9)
+# The error (reprex 4/8)
 
 If you are doing this manually, copy the exact error somewhere in the post!
 
@@ -270,7 +272,7 @@ mean(my.df$col2, na.rm = TRUE)
 
 ---
 
-# The system (reprex 5/9)
+# The system (reprex 5/8)
 
 Sometimes system info can be important...
 
@@ -283,7 +285,7 @@ R.Version()$version.string
 
 ---
 
-# The post (reprex 6/9)
+# The post (reprex 6/8)
 
 *Dear R friends, I am having issues getting the mean for a variable in my dataset in R. As you see, the code returns "NA", even though I am removing NAs to calculate the mean. Below, you will find a sample of my data, code, and sytem info so that you can reproduce the issue. Could you please help me? Thank you in advance for your time and consideration!*
 
@@ -303,7 +305,7 @@ mean(my.df$col2, na.rm = TRUE)
 
 ---
 
-#  Reprex, the package (reprex 7/9)
+#  Reprex, the package (reprex 7/8)
 
 You do not need any package to make a minimal reproducible example, but the [reprex](https://reprex.tidyverse.org/) package can help!
 
@@ -334,7 +336,7 @@ reprex::reprex({
 
 ---
 
-# Reprex for R Markdown, more or less the same (reprex 8/9)
+# Reprex for R Markdown, more or less the same (reprex 8/8)
 
 ***Rules-of-thumb:***
 
@@ -348,7 +350,7 @@ reprex::reprex({
 
 ---
 
-# Stack overflow, one last time (reprex 9/9)
+# Stack overflow, one last time
 
 - You can find virtually anything about an [R issue](https://stackoverflow.com/questions/tagged/r)
 
