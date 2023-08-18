@@ -1,6 +1,6 @@
 # Fundametals of R
 
-This is a public repository containing class materials for Fundamentals of R course!
+This is a public repository containing class materials for Fundamentals of R course.
 
 ## Instructors 
 
@@ -17,15 +17,13 @@ Livio holds a bachelor’s degree in International Affairs from the University o
 R is a programming language and open-source software that allows users to import,
 transform, and analyse diverse types of data. Academics, governments, and industry use R data collection, data visualisation, and data analysis. This summer school is a hands-on introduction to R, starting from scratch. In separate blocks, the summer school covers fundamental tasks in R such as how to import different types of data; how to clean and manipulate objects; how to create beautiful visualisations; and how to export reports and high-resolution figures. Each block is matched with a topical case studies aimed at illustrating a practical application of the fundamentals of R to cover key social science questions related to the environment, conflict, and democracies.
 
-By the end of this course, participants should be able to (1) perform simple data
-analysis, (2) communicate findings with visualisations, and (3) produce integrated reports using R.
+By the end of this course, participants should be able to (1) perform simple data analysis, (2) communicate findings with visualisations, and (3) produce integrated reports using R.
 
 ## Course Outline
 
 ### Lecture 1: Introduction to R
 
-We start by understanding what R is, how to install and open the
-software, and a few basic concepts.
+We start by understanding what R is, how to install and open the software, and a few basic concepts.
 
 - What is R language and software?
 - What is R used for?
@@ -70,7 +68,7 @@ variables might not match (e.g. USA, US, United States), observations are missin
 
 ## Lecture 4: Principles and Practices of Data Visualization
 
-Visualising your data is the bread and butter of any analysis you will perform. In this lecture, we will learn the principles of good data visualisation with the ggplot2 package. We introduce how to create different types of plots in R as well as how to customise plots with trends, annotations, and labels to make them “tell a story”.
+Visualizing your data is the bread and butter of any analysis you will perform. In this lecture, we will learn the principles of good data visualization with the ggplot2 package. We introduce how to create different types of plots in R as well as how to customize plots with trends, annotations, and labels to make them “tell a story”.
 
 - How to create bar charts, scatter plots, box plots, and line trends?
 - How to quickly visualise variation using facets?
