@@ -14,8 +14,7 @@ Livio holds a bachelor’s degree in International Affairs from the University o
 
 ## Course Description
 
-R is a programming language and open-source software that allows users to import,
-transform, and analyse diverse types of data. Academics, governments, and industry use R data collection, data visualisation, and data analysis. This summer school is a hands-on introduction to R, starting from scratch. In separate blocks, the summer school covers fundamental tasks in R such as how to import different types of data; how to clean and manipulate objects; how to create beautiful visualisations; and how to export reports and high-resolution figures. Each block is matched with a topical case studies aimed at illustrating a practical application of the fundamentals of R to cover key social science questions related to the environment, conflict, and democracies.
+R is a programming language and open-source software that allows users to import, transform, and analyse diverse types of data. Academics, governments, and industry use R data collection, data visualisation, and data analysis. This summer school is a hands-on introduction to R, starting from scratch. In separate lectures, this course  covers fundamental tasks in R such as how to import different types of data; how to clean and manipulate objects; and how to create beautiful visualisations. Each lecture is matched with a topical case studies aimed at illustrating a practical application of the fundamentals of R to cover key social science questions related to the environment, conflict, and democracies.
 
 By the end of this course, participants should be able to (1) perform simple data analysis, (2) communicate findings with visualisations, and (3) produce integrated reports using R.
 
