@@ -1,0 +1,550 @@
+---
+title: "Fundamentals of R"
+subtitle: "Objects, Class, and Data Structures"
+author: "<large>Henrique Sposito and Livio Silva-Muller</large>"
+output:
+  xaringan::moon_reader:
+    css: 
+      - "default"
+      - "assets/iheid-xaringan-style.css"
+      - "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      - "ninjutsu"
+    chakra: "https://remarkjs.com/downloads/remark-latest.min.js"
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      beforeInit: "assets/macros.js"
+      countIncrementalSlides: false
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>`
+---
+```{r setup, include=FALSE}
+library(xaringanExtra)
+library(RefManageR)
+use_xaringan_extra(c("tile_view", "panelset", "share_again", "editable",
+                     "clipboard", "progessbar"))
+use_extra_styles(hover_code_line = TRUE,
+                 mute_unhighlighted_code = FALSE)
+
+options(htmltools.dir.version = FALSE,
+        knitr.table.format = "html",
+        knitr.kable.NA = "")
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE, fig.path = "figs/",
+                      fig.width = 7.252, fig.height = 4,
+                      comment = "#>",
+                      fig.retina = 3)
+old <- ggplot2::theme_set(iheiddown::theme_iheid())
+```
+
+class: split two
+
+# What did we learn online?
+
+--
+
+.pull-left[
+
+Conceptually:
+
+- What is R?
+
+- Why R?
+
+- The R panes
+
+- How to get help online
+
+- *Clear conceptual thinking with data is important in R!*
+
+]
+
+--
+
+.pull-right[
+
+Practically:
+
+```{r echo=TRUE, eval=FALSE}
+setwd()
+install.packages()
+library()
+read_csv()
+View()
+# +, -, *, / arithmetic operations.
+# ? asking for help.
+# <- the assign operator.
+```
+
+- *R messages, warnings, and error are informative, read them!*
+
+]
+
+---
+class: split two
+
+# Failure is another stepping stone to greatness, in R at least...
+
+.pull-left[
+
+- Questions about the online exercises or the videos?
+
+]
+
+.pull.right[
+
+![](https://media.giphy.com/media/11kEuHSQAXXiGQ/giphy.gif)
+
+]
+
+---
+class: split two
+
+![:scale 40%](assets/images/roadmap.png)
+
+.pull-left[
+## Lecture:
+
+  - R basics (objects and classes)
+  - Data (from vector to data frames)
+  - First wrangling steps (with base R)
+]
+
+.pull-right[
+## Practical:
+
+  - Download, load, and explore data
+  - Grouping and subsetting data
+  - Mind the gap with **GAPMINDER**
+]
+
+---
+# R Basics
+
+*"All I know is what I have words for” - Ludwig Wittgenstein*
+
+--
+
+## Objects
+
+- What are objects in R?
+
+--
+
+Can be anything, as long as it is assigned...
+
+```{r}
+"Am I an object?"
+object_1 <- "Or I am an object?"
+object_1
+```
+
+---
+# The rules of the game (class 1/6)
+
+*Object class is the grouping of objects that can be described in terms of the attributes its members have in common.*
+
+Can anything be a class?
+
+--
+
+Yes, as long as the rules of the game are set as methods and are coherent!
+
+--
+
+But we are only talking about a few basic ones today...
+
+---
+# Character (class 2/6)
+
+Just text...
+
+```{r}
+object_character <- "Or I am an object?"
+class(object_character)
+# What can we do with character objects?
+paste(object_character, object_character, sep = " - ")
+```
+
+---
+# Numeric (class 3/6)
+
+Some classes allow for arithmetic operations
+
+```{r}
+object_numeric <- 3
+class(object_numeric)
+# Can we operate on numeric objects?
+(object_numeric*object_numeric)/(object_numeric+object_numeric)
+# Remember, parenthesis are important for the order of operations!
+```
+
+---
+# Logical (class 4/6)
+
+Either TRUE or FALSE
+
+```{r}
+object_logical <- TRUE
+class(object_logical)
+isTRUE(object_logical) # Logical check
+```
+
+---
+# Dates (class 5/6)
+
+Dates in R can be annoying, specially if you are using base R...
+
+```{r}
+Sys.Date() # Get the current date
+object_date <- Sys.Date()
+class(object_date) # What can we do with data?
+Sys.Date() - 1
+```
+
+Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)
+
+---
+# Beware: object $\neq$  type
+
+.pull-left[
+
+Type refers to how the data is stored; the 5 basic types in R are double, integer, complex, logical, character
+
+```{r}
+class(1)
+typeof(1)
+```
+
+**But if this is confusing to you, do not worry about it ...**
+]
+.pull-right[
+
+![100%](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjNjMDk0ZDhiZWI2MDRmY2YyMzhlM2M5ZjU3NzkxN2MyZDgzNjExNyZjdD1n/APqEbxBsVlkWSuFpth/giphy-downsized-large.gif)
+]
+
+[Paying attention to class right now?](https://connorrothschild.github.io/what-are-you-doing/)
+---
+# So far...
+
+--
+
+ We create objects by assigning things.
+
+--
+
+Objects have a class, which defines what sort of operations I can do with objects.
+
+--
+
+Class is different than type.
+
+--
+
+Now let's learn about data structures: 
+- vectors,
+- matrices,
+- dataframes,
+- and lists.
+
+---
+
+class: split two
+
+# Vectors (data structures 1/4)
+
+*Vector*: one-dimensional with one class of data
+
+.pull-left[
+
+```{r}
+lecturers <- c("Henrique", "Livio") # character
+age <- c(81, 18) # numeric
+speaks_portuguese <- c(TRUE, TRUE) # logical
+```
+
+]
+
+.pull-right[
+
+![:scale 40%](assets/images/vector.png)
+
+]
+
+---
+class: split two
+
+# Matrixes (data structures 2/4)
+
+*Matrix*: two dimensional objects with one class and a fixed number of rows/columns
+
+.pull-left[
+
+```{r}
+matrix_1 <- matrix(0, ncol = 2, nrow = 2)
+matrix_1
+dim(matrix_1)
+```
+
+There are also *arrays*, three or more dimensional objects of one class, but do not worry about it now.
+
+]
+
+.pull-right[
+![:scale 100%](assets/images/matrix.png)
+]
+
+---
+class: split two
+
+# Data Frames (data structures 3/4)
+
+*Data frames* objects can have multiple possible classes but a fixed number of rows and columns
+
+.pull-left[
+```{r}
+course <- data.frame(cbind(lecturers, age, speaks_portuguese))
+course
+# cbind() binds columns, rbind() binds rows
+```
+]
+
+.pull-right[
+![:scale 100%](assets/images/df.png)
+]
+
+---
+class: split two
+
+# Lists (data structures 4/4)
+
+*Lists*: group together R objects of diverse classes or dimensions.
+
+.pull-left[
+```{r}
+list <- list(lecturers, age, speaks_portuguese, 3,course)
+```
+![:scale 80%](assets/images/list.png)
+]
+
+.pull-right[
+```{r}
+list 
+```
+]
+
+---
+# You can navigate (through data) if you have $ (functions 1/5)
+
+--
+
+Is the "$" operator a function in R? (Hint: see ´?"$"´)
+
+```{r}
+# The $ operator can be used to extract part from an object:
+course$lecturers
+# Or replace parts of an object:
+course$lecturers <- c("Sposito", "Silva-Muller")
+```
+
+**An operator in R is a function that can be written without parentheses...**
+
+---
+# If you do not have $, friends can help :[] (functions 2/5)
+
+--
+
+Brackets make some great friends (run ´?"["´ for help)
+
+```{r}
+course$lecturers[1] # first element in vector
+course[1,] # first row in all columns
+course[,1] # all rows in first column
+#course[1, 1] # first value in first column
+```
+
+---
+# Logical operators (functions 3/5)
+
+- "=="/"!=" are values equal/different?
+- is bigger/bigger or equal ">"/">="  than?
+- is smaller/smaller or equal "<"/"<=" than?
+
+```{r}
+course$lecturers[1] == course$lecturers[2]
+
+course$age[2] < course$age[1]
+
+```
+
+--
+
+**For multiple conditions, use "&"/"|" (and/or)**
+
+```{r}
+course$lecturers[1] != course$lecturers[2] & course$age[2] < course$age[1]
+```
+
+---
+# If it is true, then yes! (functions 4/5)
+
+We function ´ifelse()´ works with conditional element selection... (wait what?)
+
+--
+
+```{r, eval=FALSE}
+ifelse(test, yes, no)
+```
+
+--
+
+```{r}
+course$old <- ifelse(course$age > 30, "old", "young")
+course
+```
+
+---
+# GREP (Grammar of Regular Expressions) (functions 5/5)
+
+Functions to find, match and replace strings!
+
+```{r}
+# Can we find if there is an "silva" in a variable?
+grepl("silva", course$lecturers, ignore.case = TRUE)
+# What if we want to replace it?
+course$lecturers <- gsub("Silva", "Awesome", course$lecturers)
+course
+```
+
+---
+class: split two
+
+# Fun break...
+
+.pull-left[
+```{r, eval=FALSE}
+install.packages("beepr")
+library(beepr)
+beep(8)
+```
+]
+
+.pull-right[
+![100](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTUyYjI0NGVjN2M5MzRjNWJmNmQyZTk3MThhNDcxN2UxMDNkZWU2YyZjdD1n/lPF1CyJXXcTZmUrP2J/giphy.gif)
+]
+
+--
+
+Gotcha you!
+
+--
+
+One last thing: factors!
+
+---
+# Factors (class 6/6)
+
+--
+*Factor* in R refers to a variables that have a fixed and known set of possible values(days of the week, months, possible survey responses,...). *Anything can be a treated as a factor, if you want*:
+--
+```{r}
+course$age <- factor(course$age, levels = c(0:122))
+course$age
+```
+--
+
+```{r}
+summary(course$lecturers)
+```
+--
+
+```{r}
+course$lecturers <- factor(course$lecturers, levels = c("Sposito","Awesome-Muller","Yildiz"))
+summary(course$lecturers)
+```
+---
+class: split two
+
+# Other useful functions we forgot?
+
+--
+
+.pull-left[
+*Henrique*
+
+```{r, eval=FALSE}
+summary(course)
+```
+]
+
+--
+
+.pull-right[
+*Livio*
+
+```{r}
+unique(c(2, 2, 2, "three", "three",TRUE))
+```
+]
+
+--
+
+```{r}
+mean(c(18, 81, 28))
+median(c(18, 81, 28, NA))
+median(c(18, 81, 28, NA), na.rm=TRUE)
+```
+
+---
+# Base R
+
+- All operators we cover today are base R
+
+- [Above all, teaching base R facilitates comprehension of how R, as a software and programming language, works for beginners](https://github.com/matloff/TidyverseSkeptic/)
+
+---
+# Summing Up!
+
+- You can create objects as long as you assign it.
+
+--
+
+- Objects have a class (character, numeric, logical, factor, etc...) and also a type (but do not worry about this now).
+
+--
+
+- Depending on dimensions and class, combined objects become datastructures: vectors, matrices, dataframes, lists, etc...
+
+--
+
+- The datastructure we will use the most are dataframes, which stores vectors of different classes but same lenght.
+
+--
+
+- You can navigate through data structures and do operations in it.
+
+---
+# Housekeeping
+
+![:scale 100%](assets/images/homework.png)
+
+---
+
+class: center middle
+
+![100%](https://media.giphy.com/media/XHVmD4RyXgSjd8aUMb/giphy-downsized-large.gif)
+
+---
+
+# References
+
+For more cool and informative slides about R stuff, see [favstats](https://favstats.github.io/ds3_r_intro/#1)
+
+Douglas, A., Ross, D., Mancini, F., Couto, A. & Lusseau, D. (2022). An Introduction to R
+
+Mesquita, E. B., & Fowler, A. (2021). Thinking clearly with data: A guide to quantitative reasoning and
+analysis. Princeton University Press.

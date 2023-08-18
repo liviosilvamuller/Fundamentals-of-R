@@ -1,3 +1,5 @@
 # Fundametals of R
 
-Repository containing class materials for Fundamentals of R course!
+This is a public repository containing class materials for Fundamentals of R course!
+
+
