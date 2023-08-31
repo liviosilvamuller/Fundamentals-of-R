@@ -11,7 +11,7 @@
     <script src="lecture_2_files/tile-view/tile-view.js"></script>
     <link href="lecture_2_files/panelset/panelset.css" rel="stylesheet" />
     <script src="lecture_2_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x2ead2e30f234f5ea703ea6fa11e017e","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xaaf56730c274914a0e7506088045015","expires":14}</script>
     <script src="lecture_2_files/himalaya/himalaya.js"></script>
     <script src="lecture_2_files/js-cookie/js.cookie.js"></script>
     <link href="lecture_2_files/editable/editable.css" rel="stylesheet" />
@@ -129,13 +129,11 @@ class: split two
 ]
 
 ---
-# R Basics
+# R Basics: Objects
 
 *"All I know is what I have words for” - Ludwig Wittgenstein*
 
 --
-
-## Objects
 
 - What are objects in R?
 
@@ -151,6 +149,9 @@ Can be anything, as long as it is assigned...
 ```
 #&gt; [1] "Am I an object?"
 ```
+
+--
+
 
 ```r
 object_1 &lt;- "Or I am an object?"
@@ -190,6 +191,9 @@ class(object_character)
 ```
 #&gt; [1] "character"
 ```
+
+--
+
 
 ```r
 # What can we do with character objects?
@@ -262,7 +266,7 @@ Sys.Date() # Get the current date
 ```
 
 ```
-#&gt; [1] "2023-08-18"
+#&gt; [1] "2023-08-31"
 ```
 
 ```r
@@ -279,7 +283,7 @@ Sys.Date() - 1
 ```
 
 ```
-#&gt; [1] "2023-08-17"
+#&gt; [1] "2023-08-30"
 ```
 
 Some R packages are excellent for this though [´{lubridate}´](https://www.jstatsoft.org/article/view/v040i03) and [´{messydates}´](https://globalgov.github.io/messydates/)

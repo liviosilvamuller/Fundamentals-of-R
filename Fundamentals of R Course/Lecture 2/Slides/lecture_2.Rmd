@@ -123,13 +123,11 @@ class: split two
 ]
 
 ---
-# R Basics
+# R Basics: Objects
 
 *"All I know is what I have words for” - Ludwig Wittgenstein*
 
 --
-
-## Objects
 
 - What are objects in R?
 
@@ -139,6 +137,11 @@ Can be anything, as long as it is assigned...
 
 ```{r}
 "Am I an object?"
+```
+
+--
+
+```{r}
 object_1 <- "Or I am an object?"
 object_1
 ```
@@ -166,6 +169,11 @@ Just text...
 ```{r}
 object_character <- "Or I am an object?"
 class(object_character)
+```
+
+--
+
+```{r}
 # What can we do with character objects?
 paste(object_character, object_character, sep = " - ")
 ```
@@ -178,6 +186,11 @@ Some classes allow for arithmetic operations
 ```{r}
 object_numeric <- 3
 class(object_numeric)
+```
+
+--
+
+```{r}
 # Can we operate on numeric objects?
 (object_numeric*object_numeric)/(object_numeric+object_numeric)
 # Remember, parenthesis are important for the order of operations!
@@ -191,6 +204,11 @@ Either TRUE or FALSE
 ```{r}
 object_logical <- TRUE
 class(object_logical)
+```
+
+--
+
+```{r}
 isTRUE(object_logical) # Logical check
 ```
 
@@ -237,7 +255,7 @@ typeof(1)
 
 --
 
-Objects have a class, which defines what sort of operations I can do with objects.
+Objects have a class, which defines what sort of operations we can do with objects.
 
 --
 
