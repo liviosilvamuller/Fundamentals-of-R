@@ -119,7 +119,7 @@ class: split two
 
 ## Lecture:
 
-  - Tidy verse and thinking
+  - Tidy verse and tidy thinking
   
   - From untidy to tidy data
   
@@ -713,3 +713,79 @@ class: split two
 class: center middle
 
 ![100%](https://media.giphy.com/media/XHVmD4RyXgSjd8aUMb/giphy-downsized-large.gif)
+
+---
+# Repository I: replace_na()
+
+- `tidyr::replace_na()` replaces NAs with specified values.
+ 
+```{r eval=FALSE, message=TRUE, warning=TRUE, include=TRUE, paged.print=TRUE}
+io_income %>% 
+  mutate(donor=replace_na(donor,"individuals")) 
+#all NAs in donor are now "individuals"
+
+io_income$donor %>% 
+  replace_na("individual") 
+#all NAs in donor are now "individuals"
+
+io_income %>% 
+  replace_na(list(donor="individuals",amount_nominal=0)) 
+#all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
+
+io_income%>% 
+  replace_na(list(0)) 
+#all NAs in the dataset are now 0
+```
+
+---
+# Repository II: case_when()
+
+- `dplyr::case_when()` and `base::ifelse()` can help you return values based on tests.
+
+--
+
+- Different from `ifelse()`, `case_when()` can **more** easily return more than two values based on more than one test.
+  
+--
+
+- Let's say we want a new variable called un_sg (UN Secretary General):
+  - kofi_annan, if years are between 1997 and 2006;
+  - ban_kimoon, if years are between 2007 and 2016;
+  - antonio_guterres, if years are between 2016 and present.
+
+---
+class: split two
+
+# Repository II: case_when()
+
+```{r include=FALSE}
+io_income <- io_income%>%
+  filter(type_donor=="public")%>%
+  drop_na(donor)
+```
+
+.pull-left[
+```{r echo=TRUE}
+io_income%>%
+  mutate(un_sg= 
+    ifelse (year<2006, "kofi_annan", 
+      ifelse(year>=2016,
+        "antonio_guterres", "ban_kimoon")))%>%
+  slice_sample(n=9)%>%
+  select(year, donor,un_sg)
+```
+]
+
+--
+
+.pull-right[
+```{r echo=TRUE}
+io_income%>%
+  mutate(un_sg= case_when(
+      year < 2006 ~ "kofi_annan",
+      year < 2016 ~ "ban_kimoon",
+      year >= 2016 ~"antonio_guterres"))%>% #case_when respects order!
+  slice_sample(n=9)%>%
+  select(year, donor,un_sg)
+```
+]
