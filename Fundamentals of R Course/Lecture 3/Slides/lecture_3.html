@@ -11,7 +11,7 @@
     <script src="lecture_3_files/tile-view/tile-view.js"></script>
     <link href="lecture_3_files/panelset/panelset.css" rel="stylesheet" />
     <script src="lecture_3_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"ae380c6f57dd44f6a3a19ea1d1f606df","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xed8e94424354d3db7ab8c651789466c","expires":14}</script>
     <script src="lecture_3_files/himalaya/himalaya.js"></script>
     <script src="lecture_3_files/js-cookie/js.cookie.js"></script>
     <link href="lecture_3_files/editable/editable.css" rel="stylesheet" />
@@ -666,13 +666,13 @@ sample_n(country_region, 5)
 
 ```
 #&gt; # A tibble: 5 × 2
-#&gt;   donor            region       
-#&gt;   &lt;chr&gt;            &lt;chr&gt;        
-#&gt; 1 Israel           Middle East  
-#&gt; 2 Peru             Latin America
-#&gt; 3 Macao, China     Asia         
-#&gt; 4 Marshall Islands Oceania      
-#&gt; 5 Algeria          Africa
+#&gt;   donor           region       
+#&gt;   &lt;chr&gt;           &lt;chr&gt;        
+#&gt; 1 Macao, China    Asia         
+#&gt; 2 Hong Kong       Asia         
+#&gt; 3 Uruguay         Latin America
+#&gt; 4 Belize          Latin America
+#&gt; 5 Solomon Islands Oceania
 ```
 
 ---
@@ -919,23 +919,19 @@ io_income%&gt;%
     ifelse (year&lt;2006, "kofi_annan", 
       ifelse(year&gt;=2016,
         "antonio_guterres", "ban_kimoon")))%&gt;%
-  slice_sample(n=9)%&gt;%
+  slice_sample(n=5)%&gt;%
   select(year, donor,un_sg)
 ```
 
 ```
-#&gt; # A tibble: 9 × 3
-#&gt;    year donor       un_sg           
-#&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;           
-#&gt; 1  2007 Greece      ban_kimoon      
-#&gt; 2  2012 Poland      ban_kimoon      
-#&gt; 3  2006 Zimbabwe    ban_kimoon      
-#&gt; 4  2017 Lebanon     antonio_guterres
-#&gt; 5  2012 Peru        ban_kimoon      
-#&gt; 6  2020 UN          antonio_guterres
-#&gt; 7  2019 OPEC        antonio_guterres
-#&gt; 8  2007 Albania     ban_kimoon      
-#&gt; 9  2001 Netherlands kofi_annan
+#&gt; # A tibble: 5 × 3
+#&gt;    year donor              un_sg           
+#&gt;   &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;           
+#&gt; 1  2013 Djibouti           ban_kimoon      
+#&gt; 2  2017 Russian Federation antonio_guterres
+#&gt; 3  2019 Pakistan           antonio_guterres
+#&gt; 4  2014 Saint Lucia        ban_kimoon      
+#&gt; 5  2019 Morocco            antonio_guterres
 ```
 ]
 
@@ -949,23 +945,19 @@ io_income%&gt;%
       year &lt; 2006 ~ "kofi_annan",
       year &lt; 2016 ~ "ban_kimoon",
       year &gt;= 2016 ~"antonio_guterres"))%&gt;% #case_when respects order!
-  slice_sample(n=9)%&gt;%
+  slice_sample(n=5)%&gt;%
   select(year, donor,un_sg)
 ```
 
 ```
-#&gt; # A tibble: 9 × 3
-#&gt;    year donor             un_sg           
-#&gt;   &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;           
-#&gt; 1  2001 New Zealand       kofi_annan      
-#&gt; 2  2006 Andorra           ban_kimoon      
-#&gt; 3  2001 Cuba              kofi_annan      
-#&gt; 4  2001 Equatorial Guinea kofi_annan      
-#&gt; 5  2009 Estonia           ban_kimoon      
-#&gt; 6  2020 Timor-Leste       antonio_guterres
-#&gt; 7  2007 Azerbaijan        ban_kimoon      
-#&gt; 8  2010 Ireland           ban_kimoon      
-#&gt; 9  2016 Sweden            antonio_guterres
+#&gt; # A tibble: 5 × 3
+#&gt;    year donor       un_sg     
+#&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;     
+#&gt; 1  2008 Spain       ban_kimoon
+#&gt; 2  2013 Lebanon     ban_kimoon
+#&gt; 3  2007 Sweden      ban_kimoon
+#&gt; 4  2007 New Zealand ban_kimoon
+#&gt; 5  2002 China       kofi_annan
 ```
 ]
     </textarea>

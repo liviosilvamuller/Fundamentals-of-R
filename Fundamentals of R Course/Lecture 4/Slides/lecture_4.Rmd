@@ -209,6 +209,13 @@ display.brewer.all(colorblindFriendly = TRUE)
 ]
 
 ---
+## In line legend with `geom_textlabel()`
+
+![:scale 65%](assets/images/Figure_3.png)
+
+
+.fifty[Check out: [GeomTextPath](https://github.com/AllanCameron/geomtextpath)]
+---
 #Tufte's Law: Reduce data-to-ink ratio
 
 ![:scale 100%](assets/images/tufte1.png)
@@ -365,9 +372,7 @@ p <- p + geom_point()
 .pull-right[
 
 ```{r echo=FALSE}
-
 p
-
 ```
 ]
 ---
@@ -413,7 +418,7 @@ p
 ```{r}
 
 p<- p +
-  scale_x_log10(labels=scales::dollar) 
+  scale_x_log10(labels=scales::dollar)
 # scale_x_log10() rescales our x to improve visualization
 ```
 
@@ -489,7 +494,6 @@ p
 ## with a few details,we get a nicer plot: read at home
 
 ```{r echo=FALSE, out.width="100%"}
-
 ggplot(data=gapminder, mapping=aes(x=gdpPercap, y=lifeExp)) +
   geom_point(color="grey", alpha=.5)+
   geom_smooth(se=FALSE, size=.75, color="gold")+
@@ -696,24 +700,31 @@ plot
 ]
 ---
 
-## Repository: replace_na
+## Repository: exporting high-resolution images in four quick steps
 
-- `tidyr::replace_na()` replaces NAs with specified values.
- 
-```{r eval=FALSE, message=TRUE, warning=TRUE, include=TRUE, paged.print=TRUE}
-io_income_rs %>% 
-  mutate(donor=replace_na(donor,"individuals")) 
-#all NAs in donor are now "individuals"
+```{r}
+# 1 Set your working directory: 
+setwd("~/Desktop")
 
-io_income_rs$donor %>% 
-  replace_na("individual") 
-#all NAs in donor are now "individuals"
+# 2 Run a 'graphics devices': tiff(); jpeg(); png()...
+tiff("figure_money.tiff", units="in", width=10, height=7,res=1800)
+# Tag Image Format File (.tiff) -> very high-quality, but sizable files.
+# Image size increases with resolution (measured in ppi)
 
-io_income_rs %>% 
-  replace_na(list(donor="individuals",amount_nominal=0)) 
-#all NAs in donor are now individuals, and all NAs in amount_nominal are now 0
+# 3 Run your ggplot code OR call the object: 
+ggplot(data=gapminder, mapping=aes(x=gdpPercap, y=lifeExp)) +
+  geom_point(color="grey", alpha=.5, size=3)+
+  geom_smooth(se=FALSE, size=1.25, color="gold")+
+  scale_x_log10(labels=scales::dollar)+
+  labs( y="Life Expectancy", x=" GDP per Capita",
+        title= "People in richer countries live longer.",
+        subtitle=" Dataset composed of 142 countries from 1952 to 2007",
+        caption= "Source: Gapminder Dataset" )+
+  theme(title = element_text(color="black", size=10, face="bold"),
+        axis.text = element_text(color="black", size=10),
+        plot.subtitle = element_text(color="black", size=10, face= "plain"),
+        plot.caption = element_text(color="black", size=8, face="bold"))
 
-io_income_rs%>% 
-  replace_na(list(0)) 
-#all NAs in the dataset are now 0
+#  4 Turn off the graphic device, file placed in your working directory:
+dev.off()
 ```

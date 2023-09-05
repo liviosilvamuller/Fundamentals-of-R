@@ -771,7 +771,7 @@ io_income%>%
     ifelse (year<2006, "kofi_annan", 
       ifelse(year>=2016,
         "antonio_guterres", "ban_kimoon")))%>%
-  slice_sample(n=9)%>%
+  slice_sample(n=5)%>%
   select(year, donor,un_sg)
 ```
 ]
@@ -785,7 +785,7 @@ io_income%>%
       year < 2006 ~ "kofi_annan",
       year < 2016 ~ "ban_kimoon",
       year >= 2016 ~"antonio_guterres"))%>% #case_when respects order!
-  slice_sample(n=9)%>%
+  slice_sample(n=5)%>%
   select(year, donor,un_sg)
 ```
 ]
