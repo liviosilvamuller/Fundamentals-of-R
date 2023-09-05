@@ -11,7 +11,7 @@
     <script src="lecture_3_files/tile-view/tile-view.js"></script>
     <link href="lecture_3_files/panelset/panelset.css" rel="stylesheet" />
     <script src="lecture_3_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xed8e94424354d3db7ab8c651789466c","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xb17f18fbd674143b09af4984f01bba5","expires":14}</script>
     <script src="lecture_3_files/himalaya/himalaya.js"></script>
     <script src="lecture_3_files/js-cookie/js.cookie.js"></script>
     <link href="lecture_3_files/editable/editable.css" rel="stylesheet" />
@@ -530,7 +530,7 @@ slice_head(io_income, n = 10)
 
 # Wrangling (3/8)
 
-Let's `select()` some variables
+Let's `select()` some variables (by column)
 
 
 ```r
@@ -560,7 +560,7 @@ select(io_income, donor, type_donor)
 
 # Wrangling (4/8)
 
-`filter ()` subsets data by a condition in the observations
+`filter ()` subsets data by a condition in the observations (by rows)
 
 
 ```r
@@ -603,19 +603,18 @@ io_income_mutate &lt;- mutate(io_income,
 
 ```
 #&gt; # A tibble: 10 × 5
-#&gt;     year donor                                  type_donor amount_nomi…¹ thous…²
-#&gt;    &lt;dbl&gt; &lt;chr&gt;                                  &lt;chr&gt;              &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1  2000 Maldives                               public             1057.    1.06
-#&gt;  2  2000 Estonia                                public            18192.   18.2 
-#&gt;  3  2000 Burundi                                public             2082.    2.08
-#&gt;  4  2000 Mozambique                             public             1057.    1.06
-#&gt;  5  2000 Morocco                                public            43350.   43.3 
-#&gt;  6  2000 Mozambique                             public             3580     3.58
-#&gt;  7  2000 Sasakawa Endowment Fund Interest (JPN) private          105000   105   
-#&gt;  8  2000 China                                  public          1052019. 1052.  
-#&gt;  9  2000 New Zealand                            public            70848    70.8 
-#&gt; 10  2000 Mc Henry Tichenor (USA)                private           25000    25   
-#&gt; # … with abbreviated variable names ¹​amount_nominal, ²​thousands_USD
+#&gt;     year donor                           type_donor amount_nominal thousands_USD
+#&gt;    &lt;dbl&gt; &lt;chr&gt;                           &lt;chr&gt;               &lt;dbl&gt;         &lt;dbl&gt;
+#&gt;  1  2000 Maldives                        public              1057.          1.06
+#&gt;  2  2000 Estonia                         public             18192.         18.2 
+#&gt;  3  2000 Burundi                         public              2082.          2.08
+#&gt;  4  2000 Mozambique                      public              1057.          1.06
+#&gt;  5  2000 Morocco                         public             43350.         43.3 
+#&gt;  6  2000 Mozambique                      public              3580           3.58
+#&gt;  7  2000 Sasakawa Endowment Fund Intere… private           105000         105   
+#&gt;  8  2000 China                           public           1052019.       1052.  
+#&gt;  9  2000 New Zealand                     public             70848          70.8 
+#&gt; 10  2000 Mc Henry Tichenor (USA)         private            25000          25
 ```
 
 ---
@@ -666,13 +665,13 @@ sample_n(country_region, 5)
 
 ```
 #&gt; # A tibble: 5 × 2
-#&gt;   donor           region       
-#&gt;   &lt;chr&gt;           &lt;chr&gt;        
-#&gt; 1 Macao, China    Asia         
-#&gt; 2 Hong Kong       Asia         
-#&gt; 3 Uruguay         Latin America
-#&gt; 4 Belize          Latin America
-#&gt; 5 Solomon Islands Oceania
+#&gt;   donor   region       
+#&gt;   &lt;chr&gt;   &lt;chr&gt;        
+#&gt; 1 Taiwan  Asia         
+#&gt; 2 Brazil  Latin America
+#&gt; 3 Lebanon Middle East  
+#&gt; 4 Nigeria Africa       
+#&gt; 5 Austria Europe
 ```
 
 ---
@@ -702,7 +701,7 @@ left_join(io_income, country_region)
 #&gt;  8  2000 China                                  public           1052019. Asia  
 #&gt;  9  2000 New Zealand                            public             70848  Ocean…
 #&gt; 10  2000 Mc Henry Tichenor (USA)                private            25000  &lt;NA&gt;  
-#&gt; # … with 4,376 more rows
+#&gt; # ℹ 4,376 more rows
 ```
 
 ---
@@ -925,13 +924,13 @@ io_income%&gt;%
 
 ```
 #&gt; # A tibble: 5 × 3
-#&gt;    year donor              un_sg           
-#&gt;   &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;           
-#&gt; 1  2013 Djibouti           ban_kimoon      
-#&gt; 2  2017 Russian Federation antonio_guterres
-#&gt; 3  2019 Pakistan           antonio_guterres
-#&gt; 4  2014 Saint Lucia        ban_kimoon      
-#&gt; 5  2019 Morocco            antonio_guterres
+#&gt;    year donor            un_sg           
+#&gt;   &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;           
+#&gt; 1  2020 Norway           antonio_guterres
+#&gt; 2  2017 South Africa     antonio_guterres
+#&gt; 3  2017 Andorra          antonio_guterres
+#&gt; 4  2004 Papua New Guinea kofi_annan      
+#&gt; 5  2018 Congo            antonio_guterres
 ```
 ]
 
@@ -951,13 +950,13 @@ io_income%&gt;%
 
 ```
 #&gt; # A tibble: 5 × 3
-#&gt;    year donor       un_sg     
-#&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;     
-#&gt; 1  2008 Spain       ban_kimoon
-#&gt; 2  2013 Lebanon     ban_kimoon
-#&gt; 3  2007 Sweden      ban_kimoon
-#&gt; 4  2007 New Zealand ban_kimoon
-#&gt; 5  2002 China       kofi_annan
+#&gt;    year donor    un_sg           
+#&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;           
+#&gt; 1  2016 Liberia  antonio_guterres
+#&gt; 2  2004 Syria    kofi_annan      
+#&gt; 3  2018 UN       antonio_guterres
+#&gt; 4  2011 Slovakia ban_kimoon      
+#&gt; 5  2002 Libya    kofi_annan
 ```
 ]
     </textarea>
