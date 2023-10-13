@@ -64,7 +64,7 @@ class: split two center
 
 ![:scale 70%](assets/Images/livio.jpeg)
 
-[***Livio***](https://www.graduateinstitute.ch/discover-institute/livio-silva-muller)
+[***Livio***](https://www.silvamuller.com/)
 
 ]
 
