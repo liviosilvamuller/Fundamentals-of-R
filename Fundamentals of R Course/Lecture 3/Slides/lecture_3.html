@@ -11,7 +11,7 @@
     <script src="lecture_3_files/tile-view/tile-view.js"></script>
     <link href="lecture_3_files/panelset/panelset.css" rel="stylesheet" />
     <script src="lecture_3_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xb17f18fbd674143b09af4984f01bba5","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x86df349e8d04137bd9db3035c668495","expires":14}</script>
     <script src="lecture_3_files/himalaya/himalaya.js"></script>
     <script src="lecture_3_files/js-cookie/js.cookie.js"></script>
     <link href="lecture_3_files/editable/editable.css" rel="stylesheet" />
@@ -386,18 +386,18 @@ pivot_longer(tidy_population,
 
 # Tidying (5/6)
 
-Another untidy example
+One last example
 
 
 ```r
-untidy_burgers &lt;- data.frame(Lecturer = c("Henrique", "Livio",
+long_burgers &lt;- data.frame(Lecturer = c("Henrique", "Livio",
                                           "Henrique", "Livio",
                                           "Henrique", "Livio"),
                              Burger_joint = c("Inglewoods", "Inglewoods",
                                               "H. Foundation", "H. Foundation",
                                               "Holy Cow", "Holy Cow"),
                              Grade = c(7, 10, 5, 5, 9, 7))
-untidy_burgers
+long_burgers
 ```
 
 ```
@@ -410,7 +410,7 @@ untidy_burgers
 #&gt; 6    Livio      Holy Cow     7
 ```
 
-How to make this data tidier?
+How could we get each burger joint in a column with cells containing grades?
 
 ---
 
@@ -424,7 +424,7 @@ Let's pivot this data wide
 
 
 ```r
-pivot_wider(untidy_burgers,
+pivot_wider(long_burgers,
             names_from = Burger_joint,
             values_from = Grade)
 ```
@@ -603,18 +603,19 @@ io_income_mutate &lt;- mutate(io_income,
 
 ```
 #&gt; # A tibble: 10 × 5
-#&gt;     year donor                           type_donor amount_nominal thousands_USD
-#&gt;    &lt;dbl&gt; &lt;chr&gt;                           &lt;chr&gt;               &lt;dbl&gt;         &lt;dbl&gt;
-#&gt;  1  2000 Maldives                        public              1057.          1.06
-#&gt;  2  2000 Estonia                         public             18192.         18.2 
-#&gt;  3  2000 Burundi                         public              2082.          2.08
-#&gt;  4  2000 Mozambique                      public              1057.          1.06
-#&gt;  5  2000 Morocco                         public             43350.         43.3 
-#&gt;  6  2000 Mozambique                      public              3580           3.58
-#&gt;  7  2000 Sasakawa Endowment Fund Intere… private           105000         105   
-#&gt;  8  2000 China                           public           1052019.       1052.  
-#&gt;  9  2000 New Zealand                     public             70848          70.8 
-#&gt; 10  2000 Mc Henry Tichenor (USA)         private            25000          25
+#&gt;     year donor                                  type_donor amount_nomi…¹ thous…²
+#&gt;    &lt;dbl&gt; &lt;chr&gt;                                  &lt;chr&gt;              &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1  2000 Maldives                               public             1057.    1.06
+#&gt;  2  2000 Estonia                                public            18192.   18.2 
+#&gt;  3  2000 Burundi                                public             2082.    2.08
+#&gt;  4  2000 Mozambique                             public             1057.    1.06
+#&gt;  5  2000 Morocco                                public            43350.   43.3 
+#&gt;  6  2000 Mozambique                             public             3580     3.58
+#&gt;  7  2000 Sasakawa Endowment Fund Interest (JPN) private          105000   105   
+#&gt;  8  2000 China                                  public          1052019. 1052.  
+#&gt;  9  2000 New Zealand                            public            70848    70.8 
+#&gt; 10  2000 Mc Henry Tichenor (USA)                private           25000    25   
+#&gt; # … with abbreviated variable names ¹​amount_nominal, ²​thousands_USD
 ```
 
 ---
@@ -665,13 +666,13 @@ sample_n(country_region, 5)
 
 ```
 #&gt; # A tibble: 5 × 2
-#&gt;   donor   region       
-#&gt;   &lt;chr&gt;   &lt;chr&gt;        
-#&gt; 1 Taiwan  Asia         
-#&gt; 2 Brazil  Latin America
-#&gt; 3 Lebanon Middle East  
-#&gt; 4 Nigeria Africa       
-#&gt; 5 Austria Europe
+#&gt;   donor        region       
+#&gt;   &lt;chr&gt;        &lt;chr&gt;        
+#&gt; 1 Mexico       Latin America
+#&gt; 2 Belgium      Europe       
+#&gt; 3 South Sudan  Africa       
+#&gt; 4 New Zealand  Oceania      
+#&gt; 5 Turkmenistan Asia
 ```
 
 ---
@@ -701,7 +702,7 @@ left_join(io_income, country_region)
 #&gt;  8  2000 China                                  public           1052019. Asia  
 #&gt;  9  2000 New Zealand                            public             70848  Ocean…
 #&gt; 10  2000 Mc Henry Tichenor (USA)                private            25000  &lt;NA&gt;  
-#&gt; # ℹ 4,376 more rows
+#&gt; # … with 4,376 more rows
 ```
 
 ---
@@ -924,13 +925,13 @@ io_income%&gt;%
 
 ```
 #&gt; # A tibble: 5 × 3
-#&gt;    year donor            un_sg           
-#&gt;   &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;           
-#&gt; 1  2020 Norway           antonio_guterres
-#&gt; 2  2017 South Africa     antonio_guterres
-#&gt; 3  2017 Andorra          antonio_guterres
-#&gt; 4  2004 Papua New Guinea kofi_annan      
-#&gt; 5  2018 Congo            antonio_guterres
+#&gt;    year donor      un_sg           
+#&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;           
+#&gt; 1  2008 Belgium    ban_kimoon      
+#&gt; 2  2005 San Marino kofi_annan      
+#&gt; 3  2014 Turkey     ban_kimoon      
+#&gt; 4  2001 Syria      kofi_annan      
+#&gt; 5  2017 Hungary    antonio_guterres
 ```
 ]
 
@@ -950,13 +951,13 @@ io_income%&gt;%
 
 ```
 #&gt; # A tibble: 5 × 3
-#&gt;    year donor    un_sg           
-#&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;           
-#&gt; 1  2016 Liberia  antonio_guterres
-#&gt; 2  2004 Syria    kofi_annan      
-#&gt; 3  2018 UN       antonio_guterres
-#&gt; 4  2011 Slovakia ban_kimoon      
-#&gt; 5  2002 Libya    kofi_annan
+#&gt;    year donor   un_sg           
+#&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;           
+#&gt; 1  2001 Sudan   kofi_annan      
+#&gt; 2  2014 Poland  ban_kimoon      
+#&gt; 3  2016 Iran    antonio_guterres
+#&gt; 4  2007 Austria ban_kimoon      
+#&gt; 5  2011 Somalia ban_kimoon
 ```
 ]
     </textarea>

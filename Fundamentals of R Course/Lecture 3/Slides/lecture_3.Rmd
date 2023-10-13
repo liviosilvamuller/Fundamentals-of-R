@@ -362,20 +362,20 @@ pivot_longer(tidy_population,
 
 # Tidying (5/6)
 
-Another untidy example
+One last example
 
 ```{r}
-untidy_burgers <- data.frame(Lecturer = c("Henrique", "Livio",
+long_burgers <- data.frame(Lecturer = c("Henrique", "Livio",
                                           "Henrique", "Livio",
                                           "Henrique", "Livio"),
                              Burger_joint = c("Inglewoods", "Inglewoods",
                                               "H. Foundation", "H. Foundation",
                                               "Holy Cow", "Holy Cow"),
                              Grade = c(7, 10, 5, 5, 9, 7))
-untidy_burgers
+long_burgers
 ```
 
-How to make this data tidier?
+How could we get each burger joint in a column with cells containing grades?
 
 ---
 
@@ -388,7 +388,7 @@ Let's pivot this data wide
 --
 
 ```{r, eval=FALSE}
-pivot_wider(untidy_burgers,
+pivot_wider(long_burgers,
             names_from = Burger_joint,
             values_from = Grade)
 ```
@@ -396,7 +396,7 @@ pivot_wider(untidy_burgers,
 --
 
 ```{r, echo=FALSE}
-pivot_wider(untidy_burgers,
+pivot_wider(long_burgers,
             names_from = Burger_joint,
             values_from = Grade)
 ```
