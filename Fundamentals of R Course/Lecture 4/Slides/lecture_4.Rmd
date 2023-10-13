@@ -236,9 +236,12 @@ display.brewer.all(colorblindFriendly = TRUE)
 #One plot, one clear story!
 
 .pull-left[
-![:scale 100%](assets/images/inter_story.png)
+![:scale 100%](assets/images/inter_story.jpeg)
+
+  - Overlap shape and color to the same variable to maximize results!
 
 ]
+
 
 --
 

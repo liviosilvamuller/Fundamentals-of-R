@@ -11,7 +11,7 @@
     <script src="lecture_4_files/tile-view/tile-view.js"></script>
     <link href="lecture_4_files/panelset/panelset.css" rel="stylesheet" />
     <script src="lecture_4_files/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x200a9da5c974b6684a4e0543655e6fc","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"fa9b002240424173877c9f872b0cd5c3","expires":14}</script>
     <script src="lecture_4_files/himalaya/himalaya.js"></script>
     <script src="lecture_4_files/js-cookie/js.cookie.js"></script>
     <link href="lecture_4_files/editable/editable.css" rel="stylesheet" />
@@ -244,9 +244,12 @@ display.brewer.all(colorblindFriendly = TRUE)
 #One plot, one clear story!
 
 .pull-left[
-![:scale 100%](assets/images/inter_story.png)
+![:scale 100%](assets/images/inter_story.jpeg)
+
+  - Overlap shape and color to the same variable to maximize results!
 
 ]
+
 
 --
 
@@ -332,23 +335,23 @@ sample_n(gapminder,15) #showing a random sample
 
 ```
 #&gt; # A tibble: 15 × 6
-#&gt;    country           continent  year lifeExp       pop gdpPercap
-#&gt;    &lt;fct&gt;             &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
-#&gt;  1 Sri Lanka         Asia       1972    65.0  13016733     1213.
-#&gt;  2 Ireland           Europe     1982    73.1   3480000    12618.
-#&gt;  3 Guinea-Bissau     Africa     1992    43.3   1050938      746.
-#&gt;  4 Norway            Europe     1997    78.3   4405672    41283.
-#&gt;  5 Paraguay          Americas   1977    66.4   2984494     3248.
-#&gt;  6 Montenegro        Europe     1977    73.1    560073     9596.
-#&gt;  7 Botswana          Africa     1992    62.7   1342614     7954.
-#&gt;  8 Nicaragua         Americas   1962    48.6   1590597     3634.
-#&gt;  9 Greece            Europe     1997    77.9  10502372    18748.
-#&gt; 10 Equatorial Guinea Africa     1962    37.5    249220      583.
-#&gt; 11 Cote d'Ivoire     Africa     1967    47.4   4744870     2052.
-#&gt; 12 Mozambique        Africa     1987    42.9  12891952      390.
-#&gt; 13 Indonesia         Asia       1992    62.7 184816000     2383.
-#&gt; 14 Malaysia          Asia       1987    69.5  16331785     5250.
-#&gt; 15 Syria             Asia       1997    71.5  15081016     4014.
+#&gt;    country               continent  year lifeExp      pop gdpPercap
+#&gt;    &lt;fct&gt;                 &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+#&gt;  1 Togo                  Africa     1987    56.9  3154264     1202.
+#&gt;  2 Argentina             Americas   1977    68.5 26983828    10079.
+#&gt;  3 Yemen, Rep.           Asia       2007    62.7 22211743     2281.
+#&gt;  4 Panama                Americas   1992    72.5  2484997     6619.
+#&gt;  5 Benin                 Africa     1992    53.9  4981671     1191.
+#&gt;  6 Sao Tome and Principe Africa     2002    64.3   170372     1353.
+#&gt;  7 Lesotho               Africa     1987    57.2  1599200      774.
+#&gt;  8 Trinidad and Tobago   Americas   1977    68.3  1039009     7900.
+#&gt;  9 Germany               Europe     1982    73.8 78335266    22032.
+#&gt; 10 Taiwan                Asia       1997    75.2 21628605    20207.
+#&gt; 11 Equatorial Guinea     Africa     1952    34.5   216964      376.
+#&gt; 12 Botswana              Africa     2007    50.7  1639131    12570.
+#&gt; 13 Cambodia              Asia       1962    43.4  6083619      497.
+#&gt; 14 Bulgaria              Europe     1962    69.5  8012946     4254.
+#&gt; 15 Botswana              Africa     1952    47.6   442308      851.
 ```
 
 ---
@@ -670,23 +673,23 @@ sample_n(gapminder,15) #showing a random sample
 
 ```
 #&gt; # A tibble: 15 × 6
-#&gt;    country             continent  year lifeExp      pop gdpPercap
-#&gt;    &lt;fct&gt;               &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
-#&gt;  1 Trinidad and Tobago Americas   2007    69.8  1056608    18009.
-#&gt;  2 Slovak Republic     Europe     2007    74.7  5447502    18678.
-#&gt;  3 Lesotho             Africa     1982    55.1  1411807      797.
-#&gt;  4 Mozambique          Africa     1972    40.3  9809596      725.
-#&gt;  5 United Kingdom      Europe     1987    75.0 56981620    21665.
-#&gt;  6 Nigeria             Africa     1982    45.8 73039376     1577.
-#&gt;  7 Israel              Asia       1987    75.6  4203148    17122.
-#&gt;  8 South Africa        Africa     2002    53.4 44433622     7711.
-#&gt;  9 Austria             Europe     1967    70.1  7376998    12835.
-#&gt; 10 Djibouti            Africa     1972    44.4   178848     3694.
-#&gt; 11 Vietnam             Asia       1987    62.8 62826491      821.
-#&gt; 12 Botswana            Africa     1962    51.5   512764      984.
-#&gt; 13 Mali                Africa     1952    33.7  3838168      452.
-#&gt; 14 Paraguay            Americas   1992    68.2  4483945     4196.
-#&gt; 15 Ghana               Africa     1977    51.8 10538093      993.
+#&gt;    country        continent  year lifeExp      pop gdpPercap
+#&gt;    &lt;fct&gt;          &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+#&gt;  1 Libya          Africa     1987    66.2  3799845    11771.
+#&gt;  2 El Salvador    Americas   1962    52.3  2747687     3777.
+#&gt;  3 Uruguay        Americas   1982    70.8  2953997     6920.
+#&gt;  4 Senegal        Africa     1962    41.5  3430243     1655.
+#&gt;  5 Botswana       Africa     1992    62.7  1342614     7954.
+#&gt;  6 Tanzania       Africa     1987    51.5 23040630      832.
+#&gt;  7 Ireland        Europe     1997    76.1  3667233    24522.
+#&gt;  8 Cote d'Ivoire  Africa     1972    49.8  6071696     2378.
+#&gt;  9 Afghanistan    Asia       1987    40.8 13867957      852.
+#&gt; 10 Montenegro     Europe     1962    63.7   474528     4650.
+#&gt; 11 Austria        Europe     1992    76.0  7914969    27042.
+#&gt; 12 Pakistan       Asia       1972    51.9 69325921     1050.
+#&gt; 13 Czech Republic Europe     1997    74.0 10300707    16049.
+#&gt; 14 Netherlands    Europe     1952    72.1 10381988     8942.
+#&gt; 15 Egypt          Africa     1972    51.1 34807417     2024.
 ```
 
 ---
@@ -748,9 +751,6 @@ dev.off()
 #&gt; quartz_off_screen 
 #&gt;                 2
 ```
-
-
- 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
