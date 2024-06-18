@@ -94,7 +94,7 @@ Now that you know the fundamentals, you will want to share results and ask for h
 - [How to make a reprex?](https://www.r-bloggers.com/2020/10/how-to-make-a-reprex/) - Blog Post
 - [R Markdown (Chapter 27)](https://r4ds.had.co.nz/r-markdown.html) in Wickham, H., & Grolemund, G. (2017). [R for data science: import, tidy, transform, visualize, and model data.](https://r4ds.had.co.nz/index.html)
 
-## Adittional Materials
+## Additional Materials
 
 Besides the great open-source books mentioned above, we also recommend recommend the following books:
 
